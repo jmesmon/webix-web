@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../echarts/echarts.js"></script>
+    <script src="../echarts/theme.js"></script>
+    <script src="../echarts/map/map-all.js"></script>
+    <script src="../echarts/jquery-1.9.1.min.js"></script>
+    <style>
+        .contain {
+            color: #fff;
+            margin-right: 2px;
+        }
+        tr, td {
+            /*border: 1px solid red;*/
+            /*vertical-align: top;*/
+        }
+        .def_bk {
+            background-color: rgba(0, 0, 0, 0.07);
+        }
+        .title{
+            font-weight: bold; margin: 8px 0 0 8px
+        }
+        .table-c table{border-right:1px solid rgba(255, 255, 255, 0.47);border-bottom:1px solid rgba(255, 255, 255, 0.47)
+        }
+        .table-c table tr{height: 30px}
+        .table-c table td{border-left:1px solid rgba(255, 255, 255, 0.47);border-top:1px solid rgba(255, 255, 255, 0.47); text-align: center}
+        .point td {
+            cursor: pointer;
+        }
+        a {
+            color: #fff;
+            text-decoration:none
+        }
+        a:hover{
+            color: yellow;
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+<div class="contain">
+    <!--分局工作情况-->
+    <table width="100%" height="510">
+        <tr>
+            <td class="def_bk" style="width:45%" valign="top">
+                <div style="font-weight: bold; margin: 16px 0 0 8px; ">各分局工作情况</div>
+                <div id="order" class="table-c" style="height:520px;padding: 16px">
+                    <!--<div style="height: 25px">全国警犬技术排名前三名：北京、贵州、海南&nbsp;<a>查看明细</a></div>-->
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr style="height: 40px" class="point" onclick="doOrder" id="tab_header">
+                            <td style="width: 140px" id="tab_1">分局</td>
+                            <td style="width: 95px" onclick="doOrder(2)" id="tab_2">民警总数</td>
+                            <td style="width: 90px" onclick="doOrder(3)" id="tab_3">警犬总数</td>
+                            <td style="width: 100px" onclick="doOrder(4)" id="tab_4">民警/警犬<br>比例↓</td>
+                            <td style="width: 100px" onclick="doOrder(5)" id="tab_5">上月工作量<br>（小时）</td>
+                            <td style="width: 120px" onclick="doOrder(6)" id="tab_6">上月新闻数量</td>
+                        </tr>
+                        <tbody id="orderTable">
+
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 16px"></td>
+            <td valign="top">
+                <div class="def_bk" style="height:300px;">
+                    <div style="height:18px;"></div>
+                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">动态新闻</div>
+                    <div style="height:10px;"></div>
+                    <div>
+                        <!--<marquee direction=up behavior=scroll loop=3 scrollamount=1 scrolldelay=10 align=top-->
+                                 <!--height=236 width=95% hspace=20 vspace=10 onmouseover=this.stop()-->
+                                 <!--onmouseout=this.start()>-->
+                            <table width="100%" id="newList">
+                                <tr><td><div align="center"><img src="../assets/imgs/loading.gif" height="45px" width="45px"></div></td></tr>
+                            </table>
+
+                        <!--</marquee>-->
+                    </div>
+                </div>
+                <div style="height: 16px"></div>
+                <div class="def_bk" style="height:280px">
+                    <div style="height: 16px;"></div>
+                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">通知公告</div>
+                    <div style="height:10px;"></div>
+                    <div>
+                        <!--<marquee direction=up behavior=scroll loop=3 scrollamount=1 scrolldelay=10 align=top-->
+                                 <!--height=236 width=95% hspace=20 vspace=10 onmouseover=this.stop()-->
+                                 <!--onmouseout=this.start()>-->
+                            <table width="100%" id="newList2">
+                            </table>
+
+                        <!--</marquee>-->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="height: 16px;" id="gold_sp"></div>
+    <!--全局各项指标-->
+    <table width="100%" id="gold_area">
+        <tr style="height: 220px">
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col1"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬比例</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col2"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬力分布图</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col3"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬专业分布图</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col4"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">培训比例</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col5"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">配发比例</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 8px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col6"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">繁育完成比</div>
+                </div>
+            </td>
+            <td style="width: 14.2%;">
+                <div style="margin: 0 0px 0 0;height: 220px" class="def_bk">
+                    <div style="height: 190px" id="qj_col7"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">淘汰死亡</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!--警犬工作-->
+    <div style="height: 16px;" id="gold_work_sp"></div>
+    <div style="height: 290px" class="def_bk" id="gold_work_area">
+        <table width="100%">
+            <tr>
+                <td style="width: 200px">
+                    <div style="padding: 16px 0 0 8px;font-weight: bold;">警犬工作</div>
+                </td>
+                <td align="right" style="padding-right: 8px" class="table-c">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="width: 50px; background-color: #002F75;cursor: pointer" onclick="workChange(1)" id="work_type_1">安检</td>
+                            <td style="width: 50px;cursor: pointer" onclick="workChange(2)" id="work_type_2">巡逻</td>
+                            <td style="width: 50px;cursor: pointer" onclick="workChange(3)" id="work_type_3">刑侦</td>
+                            <td style="width: 50px;cursor: pointer" onclick="workChange(4)" id="work_type_4">其他</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <div id="work_contain"><div style="height: 240px;" id="qj_work"></div></div>
+    </div>
+    <!-- 北京市各区警犬数量分布 -->
+    <div style="height: 16px;"></div>
+    <table width="100%">
+        <tr>
+            <td id="col1" class="def_bk" style="width: 50%" valign="top">
+                <div style="font-weight: bold; margin: 16px 0 0 8px; ">警犬技术力量分布</div>
+                <div style="height: 30px"></div>
+                <div id="main" style="height:520px;"></div>
+                <div style="height: 30px"></div>
+                <div style=" height: 117px; margin: 2px 10px 0px 10px" class="table-c" id="specialData_id">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr onclick="onSpecialDataClick">
+                            <td width="60px"></td>
+                            <td width="60px" onclick="('刑侦总队')" style="cursor: pointer;color: #00F1FF">刑侦总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('onSpecialDataClick公交总队')" style="cursor: pointer;color: #00F1FF">公交总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('特警总队')" style="cursor: pointer;color: #00F1FF">特警总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('天安门分局')" style="cursor: pointer;color: #00F1FF">天安门<br>分局</td>
+                            <td width="60px" onclick="onSpecialDataClick('西站分局')" style="cursor: pointer;color: #00F1FF">西站分局</td>
+                            <td width="60px" onclick="onSpecialDataClick('开发局分局')" style="cursor: pointer;color: #00F1FF">开发局<br>分局</td>
+                            <td width="60px" onclick="onSpecialDataClick('清河分局')" style="cursor: pointer;color: #00F1FF">清河分局</td>
+                        </tr>
+                        <tbody id="special_da"> </tbody>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 16px"></td>
+            <td valign="top" class="def_bk">
+                <div>
+                    <div style="padding: 8px;">
+                        <div style="font-weight: bold;margin-top:8px" id="area_name"></div>
+                        <div style="margin: 16px 0 0 16px; line-height: 25px">
+                            <table>
+                                <tr style="height: 200px">
+                                    <td style="width: 262px" valign="top"><div style=""><span id="policeman_num">
+                                        <img src="" id="workUnitPic" width="260" height="200">
+                                    </span></div></td>
+                                    <td valign="top"><div style="height: 200px; overflow: hidden"><span style="font-weight: bold;">简介：</span><span id="workUnitDesc"></span></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="height: 140px; padding:10px">
+                            <table width="100%">
+                                <tr>
+                                    <td style="width: 20%">
+                                        <div id="fj_col1" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">人犬比</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col2" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">警犬专业</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col3" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">培训工作</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col4" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">警犬配发</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col5" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">淘汰死亡</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td style="width: 300px">
+                                                    <div style="padding: 16px 0 0 8px;font-weight: bold;">警犬工作</div>
+                                                </td>
+                                                <td align="right" style="padding-right: 8px" class="table-c">
+                                                    <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                                        <tr>
+                                                            <td style="width: 50px;font-size:12px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">安检</td>
+                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">巡逻</td>
+                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦</td>
+                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">其他</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="chart_1_contain">
+                            <div id="chart_1" style="height: 250px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!--警犬品种，警犬年龄-->
+    <div style="height: 16px;"></div>
+    <table width="100%" id="breed_age_area">
+        <tr style="height: 350px">
+            <td style="width: 50%;"  class="def_bk">
+                <div class="title">
+                    <table width="100%">
+                        <tr>
+                            <td style="width: 300px">
+                                <div style="font-weight: bold;">民警分析</div>
+                            </td>
+                            <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
+                                <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                    <tr>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer; background-color: #002F75;" onclick="workChangeUser(3)" id="change_user_3">类别</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(2)" id="change_user_2">职务</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(1)" id="change_user_1">职称</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(4)" id="change_user_4">学历</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(5)" id="change_user_5">性别</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="user_analysis" style="height: 330px"></div>
+            </td>
+            <td style="width: 16px;"></td>
+            <td class="def_bk">
+                <div class="title">
+                    <table width="100%">
+                        <tr>
+                            <td style="width: 300px">
+                                <div style="font-weight: bold;">警犬分析</div>
+                            </td>
+                            <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
+                                <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                    <tr>
+                                        <td style="width: 50px;font-size:12px; background-color: #002F75;cursor: pointer" onclick="workChangeBreed(1)" id="breed_1">品种</td>
+                                        <!--<td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(2)" id="breed_2">毛色</td>-->
+                                        <!--<td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(3)" id="breed_3">毛型</td>-->
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(4)" id="breed_4">专业</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(6)" id="breed_6">年龄</td>
+                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">淘汰</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="dog_analysis" style="height: 330px"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    (function(){
+        var w = $(window).width();
+//        var left = (w - 16)/5 * 2;
+//        $('#col1').css('width', left + 'px');
+//        console.log(w);
+    })();
+
+    var USER_INFO = parent.USER_INFO;
+    console.log(USER_INFO);
+    var USER_ROLE = USER_INFO.userRole;
+    console.log(USER_ROLE);
+
+    var is_show_all = true;
+    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang' && USER_ROLE != "GuanLiYuan"  ) {
+        is_show_all = false;
+        //全局各项指标不可见
+        $('#gold_sp').hide();
+        $('#gold_area').hide();
+        $('#breed_age_area').hide();
+        $('#gold_work_area').hide();
+        $('#gold_work_sp').hide();
+    }
+
+    function showNews(id){
+        sessionStorage.removeItem("newId");
+        sessionStorage.setItem("newId", id);
+        parent.window.open('../#!/app/news.detail:id=' + id, '_blank');
+    }
+    //加载动态新闻
+    function loadDNews(data){
+        var params = {newsType: '动态新闻', workUnit: USER_INFO.workUnit};
+        if(is_show_all){
+            params = {newsType: '动态新闻'};
+        }
+        parent.doPost('news/getList/11/1', params, function(resp){
+            var data = resp.result;
+            var ht = '';
+            for(var i =0; i<data.length; i++){
+                var ne = data[i];
+                var title = ne.title;
+                if(title.length > 24){
+                    title = title.substr(0, 23) + '...';
+                }
+                ht += '<tr>' +
+                    '<td style="width: 120px" align="center">【' + ne.workUnit + '】</td>' +
+                    '<td><a href="javascript:void(0)"><div style="overflow: hidden" onclick="showNews('+ne.id+')">' + title + '</div></a></td>' +
+                    '<td style="width: 120px" align="center">' + ne.publishDate.split(' ')[0] + '</td>' +
+                    '</tr>';
+            }
+            $('#newList').empty();
+            $('#newList').append(ht);
+        });
+    }
+    loadDNews();
+
+    //加载通知公告
+    function loadBullent(data){
+        var params = {newsType: '通知公告'};
+        if(!is_show_all){
+            params = {newsType: '动态新闻', workUnit: USER_INFO.workUnit};
+        }
+        parent.doPost('news/getList/10/1', params, function(resp){
+            var data = resp.result;
+            var ht = '';
+            for(var i =0; i<data.length; i++){
+                var ne = data[i];
+                var title = ne.title;
+                if(title.length > 24){
+                    title = title.substr(0, 23) + '...';
+                }
+                ht += '<tr>' +
+                    '<td style="width: 120px" align="center">【' + ne.workUnit + '】</td>' +
+                    '<td><a href="javascript:void(0)"><div style="overflow: hidden" onclick="showNews('+ne.id+')">' + title + '</div></a></td>' +
+                    '<td style="width: 120px" align="center">' + ne.publishDate.split(' ')[0] + '</td>' +
+                    '</tr>';
+            }
+            $('#newList2').empty();
+            $('#newList2').append(ht);
+        });
+    }
+    loadBullent();
+
+    // **** 全局各指标start ****//
+    function getAnalysisData() {
+        if (is_show_all) {
+            parent.doPost('dogBaseInfo/getAnalysisData', {}, function (resp) {
+                if (resp.success) {
+                    var arr = resp.result;
+                    var data = {};
+                    var pr_name = [];
+                    var pr_data = [];
+                    for (var i = 0; i < arr.length; i++) {
+                        var key = arr[i].att_name;
+                        data[key] = arr[i].val;
+                        if (key.indexOf("pro_") != -1) {
+                            pr_name.push(key.replace('pro_', ''));
+                            pr_data.push({value: arr[i].val, name: key.replace('pro_', '')});
+                        }
+                    }
+                    renderUserDog(data);
+                    renderUser(data);
+                    renderDogPro(pr_name, pr_data); //
+                    renderTrainInfo(data);
+                    renderAllot(data);
+                    renderBreed(data);
+                    renderTickoutDie(data);
+                }
+            });
+        }
+    }
+    getAnalysisData();
+    // **** 全局各指标end ****//
+    // 每月工作量
+    var workData = {
+        '安检': [],
+        '巡逻': [],
+        '刑侦': [],
+        '其他': []
+    };
+    function getWorkData(){
+        var params = {};
+        if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' ) {
+            params = {workUnit: USER_INFO.workUnit};
+        }
+        parent.doPost('dogBaseInfo/getWorkData', params, function (resp) {
+            if (resp.success) {
+                for (var i = 0; i < resp.result.length; i++) {
+                    var item = resp.result[i];
+                    workData[item.work_type].push(item);
+                }
+                renderMonthWork('安检');
+            }
+        });
+    }
+    getWorkData();
+    // 每月工作量 ++++++
+
+    var table = $('#orderTable');
+    var fjda = [];
+
+    function renderOrder(){
+        table.empty();
+        var htm = '<tr style="height: 40px" class="point" onclick="doOrder" id="tab_header">' +
+            '<td style="width: 140px" id="tab_1">分局</td>' +
+            '<td style="width: 95px" onclick="doOrder(2)" id="tab_2">民警总数</td>' +
+            '<td style="width: 90px" onclick="doOrder(3)" id="tab_3">警犬总数</td>' +
+            '<td style="width: 100px" onclick="doOrder(4)" id="tab_4">民警/警犬<br>比例↓</td>' +
+            '<td style="width: 100px" onclick="doOrder(5)" id="tab_5">上月工作量<br>（小时）</td>' +
+            '<td style="width: 120px" onclick="doOrder(6)" id="tab_6">上月新闻数量</td>' +
+            '</tr>';
+        htm = '';
+        var si = 112/51;
+        for(var i = 0; i<fjda.length; i++){
+            var it = fjda[i];
+            it.workCount = Math.abs(it.workCount);
+            var bi = '';
+            if(it.per >= 50){
+                bi = '<span style="color: red"> ' + it.per+ ' </span>'
+            }else if(it.per >= 40){
+                bi = '<span style="color: yellow"> ' + it.per+ ' </span>'
+            }else{
+                bi = '<span style="color: #00FFF5"> ' + it.per+ ' </span>'
+            }
+            htm += '<tr>' +
+                '<td>' + it.fj + '</td>' +
+                '<td>' + it.policeCount + '</td>' +
+                '<td>' + it.dogCount + '</td>' +
+                '<td>' + bi + '</td>' +
+                '<td>' + (it.workCount || 0)+ '</td>' +
+                '<td>' + (it.newsCount || 0) + '</td>' +
+                '</tr>';
+        }
+        table.append(htm);
+    }
+
+    function orderByPer(perName, lastDesc){
+        fjda.sort(function(a, b){
+            var rst = 1;
+            if( a[perName] < b[perName] ) {
+                rst = 1
+            }else if( a[perName] > b[perName] ){
+                rst = -1;
+            }else{
+                rst = 0;
+            }
+            if(lastDesc == 'asc'){
+                rst = 0 - rst;
+            }
+            return rst;
+        });
+    }
+    var lastClick = 4;
+    var lastDesc = 'desc';
+    function doOrder(tag) {
+        if(lastClick != tag){
+            $('#tab_' + lastClick).text($('#tab_' + lastClick).text().replace('↓', ''));
+            $('#tab_' + lastClick).text($('#tab_' + lastClick).text().replace('↑', ''));
+            $('#tab_' + tag).text( $('#tab_' + tag).text() + '↓');
+            lastClick = tag;
+            lastDesc = 'desc';
+        }else{
+            if(lastDesc == 'desc'){
+                $('#tab_' + lastClick).text($('#tab_' + lastClick).text().replace('↓', '↑'));
+            }else{
+                $('#tab_' + lastClick).text($('#tab_' + lastClick).text().replace('↑', '↓'));
+            }
+            lastDesc = (lastDesc == 'desc' ?  'asc' : 'desc');
+        }
+
+        switch (tag){
+            case 2:
+                orderByPer('policeCount', lastDesc);
+                renderOrder();
+                break;
+            case 3:
+                orderByPer('dogCount', lastDesc);
+                renderOrder();
+                break;
+            case 4:
+                orderByPer('per', lastDesc);
+                renderOrder();
+                break;
+            case 5:
+                orderByPer('workCount', lastDesc);
+                renderOrder();
+                break;
+            case 6:
+                orderByPer('newsCount', lastDesc);
+                renderOrder();
+                break;
+
+        }
+    }
+
+    //======================
+
+    //非区域分局
+    var otherFj = [];
+    function renderOrgFj(){
+        /*var userCount = "<tr style=\"height: 23px\">\n" +
+            "                            <td>民警总数</td>\n" +
+            "                            <td>1032</td>\n" +
+            "                            <td>892</td>\n" +
+            "                            <td>2000</td>\n" +
+            "                            <td>800</td>\n" +
+            "                            <td>870</td>\n" +
+            "                            <td>987</td>\n" +
+            "                            <td>876</td>\n" +
+            "                        </tr>\n" +
+            "                        <tr style=\"height: 23px\">\n" +
+            "                            <td>警犬总数</td>\n" +
+            "                            <td>30</td>\n" +
+            "                            <td>25</td>\n" +
+            "                            <td>50</td>\n" +
+            "                            <td>30</td>\n" +
+            "                            <td>35</td>\n" +
+            "                            <td>38</td>\n" +
+            "                            <td>33</td>\n" +
+            "                        </tr>\n" +
+            "                        <tr style=\"height: 23px\">\n" +
+            "                            <td>人犬比</td>\n" +
+            "                            <td>40:1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                            <td>1</td>\n" +
+            "                        </tr>";*/
+        var userCount = '<tr style="height: 23px"><td>民警总数</td>';
+        var docCount = '<tr style="height: 23px"><td>警犬总数</td>';
+        var perCount = '<tr style="height: 23px"><td>人犬比</td>';
+        for(var i = 0; i<otherFj.length; i++) {
+            var item = otherFj[i];
+            item.per = parseInt(item.policeCount / item.dogCount);
+            userCount += '<td>' + item.policeCount + '</td>';
+            docCount += '<td>' + item.dogCount + '</td>';
+            perCount += '<td>' + item.per + ':1</td>';
+        }
+        console.log(otherFj);
+        userCount += '</tr>';
+        docCount += '</tr>';
+        perCount += '</tr>';
+        $('#special_da').empty();
+        $('#special_da').html( userCount + docCount + perCount);
+    }
+    function onSpecialDataClick(name){
+        if(USER_ROLE == 'JuZhang' || USER_ROLE == 'SuperMan' || USER_ROLE == 'JiuZhiDui' ) {
+            renderAreaData(name);
+            renderOrgDesc(name);
+            getWorkDataByOrgName(name);
+        }
+    };
+
+    //工作量切换整理
+    var lastTab = 1;
+    function workChange(tag){
+        if(tag != lastTab){
+            $('#work_type_' + lastTab).css('backgroundColor', '');
+            $('#work_type_' + tag).css('backgroundColor', '#002F75');
+            lastTab = tag;
+            switch (tag){
+                case 1:
+                    renderMonthWork('安检');
+                    break;
+                case 2:
+                    renderMonthWork('巡逻');
+                    break;
+                case 3:
+                    renderMonthWork('刑侦');
+                    break;
+                default:
+                    renderMonthWork('其他');
+                    break;
+
+            }
+        }
+    }
+
+
+    //加载分局工作量
+    var org_workData = {
+        '安检': [],
+        '巡逻': [],
+        '刑侦': [],
+        '其他': []
+    };
+    function getWorkDataByOrgName(orgName){
+        var params = {workUnit: orgName};
+        org_workData = {
+            '安检': [],
+            '巡逻': [],
+            '刑侦': [],
+            '其他': []
+        };
+        parent.doPost('dogBaseInfo/getWorkData', params, function (resp) {
+            if (resp.success) {
+                for (var i = 0; i < resp.result.length; i++) {
+                    var item = resp.result[i];
+                    org_workData[item.work_type].push(item);
+                }
+                renderOrgMonthWork('安检');
+                $('#work_type_org_' + lastTab_org).css('backgroundColor', '');
+                $('#work_type_org_1').css('backgroundColor', '#002F75');
+                lastTab_org = 1;
+            }
+        });
+    }
+    //分局工作量渲染
+    function renderOrgMonthWork(type) {
+        console.log(org_workData);
+        var legendData = [];
+        var series = [];
+        if(type == '安检'){
+            var da = org_workData.安检;
+            legendData = ['人', '物', '车辆', '面积'];
+            var per_data = [],wp_data = [],car_data = [],area_data = [];
+            for(var i = 0; i<da.length; i++){
+                per_data.push(da[i].perTotal);
+                wp_data.push(da[i].wpTotal);
+                car_data.push(da[i].catTotal);
+                area_data.push(da[i].areaTotal);
+            }
+            series = [
+                {
+                    name: '人',
+                    type: 'bar',
+                    data: per_data
+                },
+                {
+                    name: '物',
+                    type: 'bar',
+                    data: wp_data
+                },
+                {
+                    name: '车辆',
+                    type: 'bar',
+                    data: car_data
+                },
+                {
+                    name: '面积',
+                    type: 'bar',
+                    data: area_data
+                }
+            ];
+        }else {
+            var da = org_workData[type];
+            legendData = ['人', '物'];
+            var per_data = [],wp_data = [];
+            for(var i = 0; i<da.length; i++){
+                per_data.push(da[i].perTotal);
+                wp_data.push(da[i].wpTotal);
+            }
+            series = [
+                {
+                    name: '人',
+                    type: 'bar',
+                    data: per_data
+                },
+                {
+                    name: '物',
+                    type: 'bar',
+                    data: wp_data
+                }
+            ];
+        }
+        $('#chart_1_contain').html('<div id="chart_1" style="height: 250px;"></div>');
+        echarts.init(document.getElementById('chart_1'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: 60,
+                right: 30,
+                bottom: 30
+            },
+            legend: {
+                data: legendData
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    axisLabel: {
+//                    rotate: 60
+                    },
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '工作量',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    min: 0,
+//                    max: 1500
+                }
+            ],
+            series: series
+        });
+    }
+    //分局工作量切换类型
+    var lastTab_org = 1;
+    function workChangeOrg(tag){
+        if(tag != lastTab_org){
+            $('#work_type_org_' + lastTab_org).css('backgroundColor', '');
+            $('#work_type_org_' + tag).css('backgroundColor', '#002F75');
+            lastTab_org = tag;
+            switch (tag){
+                case 1:
+                    renderOrgMonthWork('安检');
+                    break;
+                case 2:
+                    renderOrgMonthWork('巡逻');
+                    break;
+                case 3:
+                    renderOrgMonthWork('刑侦');
+                    break;
+                default:
+                    renderOrgMonthWork('其他');
+                    break;
+
+            }
+        }
+    }
+
+    //警犬分析
+    var lastBreed = 1;
+    function workChangeBreed(tag){
+        if(tag != lastBreed){
+            $('#breed_' + lastBreed).css('backgroundColor', '');
+            $('#breed_' + tag).css('backgroundColor', '#002F75');
+            lastBreed = tag;
+            switch (tag){
+                case 1:
+                    renderDogByType('breed', '品种');
+                    break;
+                case 2:
+                    renderDogByType('dog_colour', '毛色');
+                    break;
+                case 3:
+                    renderDogByType('hair_type', '毛型');
+                    break;
+                case 4:
+                    renderDogByType('pro', '专业');
+                    break;
+                case 5:
+                    renderDogByType('work_stage', '淘汰');
+                    break;
+                case 6:
+                    renderDogByType('age', '年龄');
+                    break;
+                default:
+                    renderDogByType('breed', '专业');
+                    break;
+
+            }
+        }
+    }
+    //民警分析
+    var lastUser = 3;
+    function workChangeUser(tag){
+        if(tag != lastUser){
+            $('#change_user_' + lastUser).css('backgroundColor', '');
+            $('#change_user_' + tag).css('backgroundColor', '#002F75');
+            lastUser = tag;
+            switch (tag){
+                case 1:
+                    renderUserByType('job_title', '职称');
+                    break;
+                case 2:
+                    renderUserByType('job', '职务');
+                    break;
+                case 3:
+                    renderUserByType('work_type', '类别');
+                    break;
+                case 4:
+                    renderUserByType('degree', '学历');
+                    break;
+                default:
+                    renderUserByType('sex', '性别');
+                    break;
+
+            }
+        }
+    }
+</script>
+
+</body>
+
+<script type="text/javascript">
+    function renderWork(){
+        // 基于准备好的dom，初始化echarts实例
+        var myChartA = echarts.init(document.getElementById('chart_1'), 'vintage');
+
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: 40,
+                right: 20,
+                bottom: 40
+            },
+            legend: {
+                data:['安检','侦查','巡逻', '其他']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    axisLabel: {
+//                    rotate: 60
+                    },
+                    data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '工作量',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    min: 0,
+                    max: 1500
+                }
+            ],
+            series: [
+                {
+                    name:'安检',
+                    type:'bar',
+                    data: [ parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000),
+                        parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
+                },
+                {
+                    name:'侦查',
+                    type:'bar',
+                    data: [ parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000),
+                        parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
+                },
+                {
+                    name:'巡逻',
+                    type:'bar',
+                    data: [ parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000),
+                        parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
+                },
+                {
+                    name:'其他',
+                    type:'bar',
+                    data: [ parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000),
+                        parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChartA.setOption(option);
+    }
+
+    function randomData() {
+        return Math.round(Math.random()*1000);
+    }
+
+    //======================================
+    var data = {
+        密云区: { orgName: '密云分局', policeman: 1072, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538662.jpg', desc: ''},
+        怀柔区: { orgName: '怀柔分局', policeman: 936, dog: 39, pic: '/policeDog/resource/2017-10-04/1507106538679.jpg', desc: ''},
+        延庆区: { orgName: '延庆县分局', policeman: 917, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538719.jpg', desc: ''},
+        昌平区: { orgName: '昌平分局', policeman: 2000, dog: 40, pic: '/policeDog/resource/2017-10-04/1507106538856.jpg', desc: ''},
+        顺义区: { orgName: '顺义分局', policeman: 1631, dog: 54, pic: '/policeDog/resource/2017-10-04/1507106538961.jpg', desc: ''},
+        平谷区: { orgName: '平谷分局', policeman: 838, dog: 35, pic: '/policeDog/resource/2017-10-07/1507378384611.jpg', desc: ''},
+        门头沟区: { orgName: '门头沟分局', policeman: 773, dog: 42, pic: '/policeDog/resource/2017-10-07/1507378386863.jpg', desc: ''},
+        海淀区: { orgName: '海淀分局', policeman: 5050, dog: 51, pic: '/policeDog/resource/2017-10-07/1507378389648.jpg', desc: ''},
+        朝阳区: { orgName: '朝阳分局', policeman: 4599, dog: 115, pic: '/policeDog/resource/2017-10-07/1507378389648.jpg', desc: ''},
+        东城区: { orgName: '东城分局', policeman: 3200, dog: 87, pic: '/policeDog/resource/2017-10-07/1507378389804.jpg', desc: ''},
+        西城区: { orgName: '西城分局', policeman: 3615, dog: 85, pic: '/policeDog/resource/2017-10-06/1507294921071.jpg', desc: ''},
+        石景山区: { orgName: '石景山分局', policeman: 1073, dog: 30, pic: '/policeDog/resource/2017-10-04/1507121919501.jpg', desc: ''},
+        通州区: { orgName: '通州分局', policeman: 3260, dog: 65, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        丰台区: { orgName: '丰台分局', policeman: 3148, dog: 42, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        房山区: { orgName: '房山分局', policeman: 1596, dog: 39, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区: { orgName: '大兴分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区2: { orgName: '刑侦总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区3: { orgName: '公交总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区4: { orgName: '特警总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区5: { orgName: '天安门分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区6: { orgName: '西站分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区7: { orgName: '开发局分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区8: { orgName: '清河分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+    };
+    data = {};
+    parent.doIPost('config/getOrgList', {}, function(rsp){
+        console.log(rsp);
+        data = {};
+        if(rsp.success){
+            otherFj = [];
+            for(var i = 0; i<rsp.result.length; i++){
+                var org = rsp.result[i];
+                var per = 0;
+                if(org.dogQty){
+                    per = parseInt( org.empQty / org.dogQty);
+                }
+                if(["警院", "机场", "警卫局", "振远", "消防"].indexOf(org.orgName) != -1){
+
+                }else if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "开发局分局", "清河分局"].indexOf(org.orgName) != -1){
+                    otherFj.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty} );
+
+                    data[org.orgArea + '_' +i] = {
+                        orgName: org.orgName,
+                        policeman: org.empQty,
+                        dog: org.dogQty,
+                        pic: org.orgPic,
+                        desc: org.orgDesc
+                    };
+                }else {
+                    fjda.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty} );
+                    data[org.orgArea] = {
+                        orgName: org.orgName,
+                        policeman: org.empQty,
+                        dog: org.dogQty,
+                        pic: org.orgPic,
+                        desc: org.orgDesc
+                    };
+                }
+            }
+            renderOrgFj();
+            orderByPer('per', lastDesc);
+            renderOrder();
+
+            var map_data = [];
+            for(var n in data){
+                var info = data[n];
+                var selected = false;
+                if(info.orgName == USER_INFO.workUnit){
+                    selected = true;
+                }
+                map_data.push({name: n, /*selected: !selected,*/ value: parseInt(info.policeman/info.dog), policeman: info.policeman, dog: info.dog});
+            }
+            var myChart = echarts.init(document.getElementById('main'), 'vintage');
+            myChart.setOption(option = {
+//        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+                visualMap: {
+                    left: -10000,
+                    type: 'piecewise',
+                    pieces: [
+                        {min: 0, max: 40, color: '#6cfe2b'},
+                        {min: 41, max: 60, color: '#fcfe1d'},
+                        {min: 61, max: 1000, color: '#e73c43'}
+                    ],
+                    color: ['#E0022B', '#E09107', '#A3E00B']
+                },
+//        visualMap: {
+//            min: 0,
+//            max: 100,
+//            left: -1000,
+//            inRange: {
+//                color: ['#006edd', '#e0ffff']
+//            },
+//            calculable : true
+//        },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function(params){
+                        var d = params.data;
+                        return '<div style="font-weight: bold;">' + d.name + '</div>带犬民警：' + d.policeman + '<br>警犬数量：' + d.dog + '<br>人员比例：' + d.value + ':1';
+                    }
+                },
+                grid:{
+                    x: 80,
+                    width:'90%',
+                    borderWidth: 0
+                },
+                series: [
+                    {
+                        type: 'map',
+                        mapType: '北京',
+                        mapLocation:{
+                            x:'center',
+                            y: 'center',
+                            height: 500
+                        },
+                        label: {
+                            emphasis: {
+                                position: ['50%', '50%'],
+                                textStyle: {
+                                    color: 'rgba(0, 0, 0, 0)'
+                                }
+                            }
+                        },
+                        data: map_data,
+                        itemStyle: {
+                            normal: {
+                                borderColor: '#fff',
+                                areaColor: '#fff',
+                            },
+                            emphasis: {
+                                areaColor: 'rgba(0, 0, 0, 0.5)',
+                                borderWidth: 0
+                            }
+                        },
+                        animation: false
+                    }
+                ]
+            });
+            myChart.on('click', function (params) {
+                if(USER_ROLE == 'JuZhang' || USER_ROLE == 'SuperMan' || USER_ROLE == 'JiuZhiDui' ) {
+                    var city = params.name;
+                    var orgName = data[city].orgName;
+//            renderWork();
+                    renderOrgDesc(orgName);
+                    renderAreaData(orgName);
+                }
+            });
+
+            //分局只可以看自己分局下的信息
+            if(!is_show_all){
+                renderAreaData(USER_INFO.workUnit);
+                getWorkDataByOrgName(USER_INFO.workUnit);
+                for(var n in data){
+                    var item = data[n];
+                    if(item.orgName == USER_INFO.workUnit){
+                        $('#workUnitDesc').text(item.desc);
+                        $('#area_name').text(item.orgName);
+                        document.getElementById('workUnitPic').src = item.pic;
+                    }
+                }
+                $('#specialData_id').hide();
+            }else{
+                renderOrgDesc(USER_INFO.workUnit);
+                renderAreaData(USER_INFO.workUnit);
+                getWorkDataByOrgName(USER_INFO.workUnit);
+            }
+        }
+    });
+
+    function renderOrgDesc(name){
+        for(var i in data){
+            var item = data[i];
+            if(item.orgName == name){
+                document.getElementById('workUnitPic').src = item.pic;
+                $('#workUnitDesc').text(item.desc);
+                $('#area_name').text(item.orgName);
+                break;
+            }
+        }
+    }
+
+    //人犬比
+    function renderUserDog(data, domId) {
+        var fontSize = '16';
+        if(domId) fontSize = "12";
+        domId = domId || 'qj_col1';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            color: ["#00e35b", "#ffec1d"],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: ['总人数', '总警犬数']
+            },
+            series: [
+                {
+                    name: '人犬比',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: fontSize,
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: data.totalEmp || 0, name: '总人数'},
+                        {value: data.totalDog || 0, name: '总警犬数'},
+                    ]
+                }
+            ]
+        });
+    }
+    //带犬民警
+    function renderUser(data) {
+        echarts.init(document.getElementById('qj_col2'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: ['民警', '边消警', '辅警', '保安', '其他']
+            },
+            series: [
+                {
+                    name: '带犬民警',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: data.pt_民警 || 0, name: '民警'},
+                        {value: data.pt_文职 || 0, name: '文职'},
+                        {value: data.pt_边消警 || 0, name: '边消警'},
+                        {value: data.pt_辅警 || 0, name: '辅警'},
+                        {value: data.pt_保安 || 0, name: '保安'},
+                        {value: data.pt_其他 || 0, name: '其他'},
+                    ]
+                }
+            ]
+        });
+    }
+    //警犬专业
+    function renderDogPro(keyArr, data, domId) {
+        var fontSize = '16';
+        if(domId) fontSize = "12";
+        domId = domId || 'qj_col3';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: keyArr
+            },
+            series: [
+                {
+                    name: '警犬专业',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: fontSize,
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: data
+                }
+            ]
+        });
+    }
+    //培训、待培训
+    function renderTrainInfo(data, domId) {
+        var fontSize = '16';
+        if(domId) fontSize = "12";
+        domId = domId || 'qj_col4';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            color: ["#a2e500", "#ffec1d"],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: ['已培训', '待培训']
+            },
+            series: [
+                {
+                    name: '培训工作',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: fontSize,
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: data.hasTrain || 0, name: '已培训'},
+                        {value: data.waitTrain || 0, name: '待培训'},
+                    ]
+                }
+            ]
+        });
+    }
+    //警犬配发
+    function renderAllot(data, domId) {
+        var fontSize = '16';
+        if(domId) fontSize = "12";
+        domId = domId || 'qj_col5';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: ['已配发', '待配发']
+            },
+            series: [
+                {
+                    name: '警犬配发',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: fontSize,
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: data.hasAllot || 0, name: '已配发'},
+                        {value: data.waitAllot || 0, name: '待配发'},
+                    ]
+                }
+            ]
+        });
+    }
+    //繁育工作
+    function renderBreed(data){
+        echarts.init(document.getElementById('qj_col6'), 'vintage').setOption({
+            color:["#e2e08f", "#cbb3dd"],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data:['繁育数','繁育任务']
+            },
+            series: [
+                {
+                    name:'繁育工作',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value: data.breedCount || 0, name:'繁育数'},
+                        {value: 1000, name:'繁育任务'},
+                    ]
+                }
+            ]
+        });
+    }
+    //淘汰死亡
+    function renderTickoutDie(data, domId) {
+        var fontSize = '16';
+        if(domId) fontSize = "12";
+        domId = domId || 'qj_col7';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            color: ["#00e35b", "#00FEFE", '#e54300'],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                bottom: -400,
+                data: ['警犬总数', '淘汰数量', '死亡数量']
+            },
+            series: [
+                {
+                    name: '淘汰死亡',
+                    type: 'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: fontSize,
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: (data.totalDog || 0), name: '警犬总数'},
+                        {value: (data.淘汰 || 0), name: '淘汰数量'},
+                        {value: (data.死亡 || 0), name: '死亡数量'},
+                    ]
+                }
+            ]
+        });
+    }
+
+    //全局工作量
+    function renderMonthWork(type) {
+        console.log(workData);
+        var legendData = [];
+        var series = [];
+        if(type == '安检'){
+            var da = workData.安检;
+            legendData = ['人', '物', '车辆', '面积'];
+            var per_data = [],wp_data = [],car_data = [],area_data = [];
+            for(var i = 0; i<da.length; i++){
+                per_data.push(da[i].perTotal);
+                wp_data.push(da[i].wpTotal);
+                car_data.push(da[i].catTotal);
+                area_data.push(da[i].areaTotal);
+            }
+            series = [
+                {
+                    name: '人',
+                    type: 'bar',
+                    data: per_data
+                },
+                {
+                    name: '物',
+                    type: 'bar',
+                    data: wp_data
+                },
+                {
+                    name: '车辆',
+                    type: 'bar',
+                    data: car_data
+                },
+                {
+                    name: '面积',
+                    type: 'bar',
+                    data: area_data
+                }
+            ];
+        }else {
+            var da = workData[type];
+            legendData = ['人', '物'];
+            var per_data = [],wp_data = [];
+            for(var i = 0; i<da.length; i++){
+                per_data.push(da[i].perTotal);
+                wp_data.push(da[i].wpTotal);
+            }
+            series = [
+                {
+                    name: '人',
+                    type: 'bar',
+                    data: per_data
+                },
+                {
+                    name: '物',
+                    type: 'bar',
+                    data: wp_data
+                }
+            ];
+        }
+        console.log(wp_data);
+        $('#work_contain').html('<div style="height: 240px;" id="qj_work"></div>');
+        echarts.init(document.getElementById('qj_work'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: 60,
+                right: 30,
+                bottom: 30
+            },
+            legend: {
+                data: legendData
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    axisLabel: {
+//                    rotate: 60
+                    },
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '工作量',
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            type: 'dashed'
+                        }
+                    },
+                    min: 0,
+//                    max: 1500
+                }
+            ],
+            series: series
+        });
+    }
+
+    //警犬分析
+    function renderDog(name, legendData, data) {
+        echarts.init(document.getElementById('dog_analysis'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                right: 'right',
+                bottom: 10,
+                data: legendData
+            },
+            series: [
+                {
+                    name: name,
+                    type: 'pie',
+                    center: ['40%', '50%'],
+                    data: data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+    //警犬分析-数据提取分析
+    function renderDogByType(name, cName){
+        var ori_data = dogAnalysis[name];
+        var legendData = [], da = [];
+        var workStageMapping = {"1": "待申领", "2": "已被申领", "3": "淘汰", "4": "死亡" };
+        for(var i = 0 ; i<ori_data.length; i++){
+            var ite = ori_data[i];
+            if(name == 'work_stage'){
+                var ntitle = workStageMapping[ite.att_name] || ite.att_name;
+                legendData.push(ntitle);
+                da.push({"name": ntitle, "value": ite.val});
+            }else {
+                legendData.push(ite.att_name);
+                da.push({"name": ite.att_name, "value": ite.val});
+            }
+        }
+        renderDog(cName, legendData, da);
+    }
+    //民警分析
+    function renderAllUser(name, legendData, data) {
+        echarts.init(document.getElementById('user_analysis'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                right: 'left',
+                bottom: 10,
+                data: legendData
+            },
+            series: [
+                {
+                    name: name,
+                    type: 'pie',
+                    center: ['40%', '50%'],
+                    data: data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+    //民警分析-数据提取分析
+    function renderUserByType(name, cName){
+        var ori_data = userAnalysis[name];
+        var legendData = [], da = [];
+        for(var i = 0 ; i<ori_data.length; i++){
+            var ite = ori_data[i];
+            legendData.push(ite.att_name);
+            da.push( {"name": ite.att_name, "value": ite.val} );
+        }
+        renderAllUser(cName, legendData, da);
+    }
+
+    //分局警犬年龄
+    function randerPie(){
+        echarts.init(document.getElementById('fj_col1'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'bottom',
+                x: 'bottom',
+                bottom: 0,
+                data:['小于1岁','1-3岁','3-6岁','6-8岁','大于8岁']
+            },
+            series: [
+                {
+                    name:'警犬年龄',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:  parseInt(Math.random() * 1000), name:'小于1岁'},
+                        {value:  parseInt(Math.random() * 1000), name:'1-3岁'},
+                        {value:  parseInt(Math.random() * 1000), name:'3-6岁'},
+                        {value:  parseInt(Math.random() * 1000), name:'6-8岁'},
+                        {value:  parseInt(Math.random() * 1000), name:'大于8岁'},
+                    ]
+                }
+            ]
+        });
+        echarts.init(document.getElementById('fj_col2'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'bottom',
+                x: 'bottom',
+                bottom: 0,
+                data:['金毛','史宾格','拉布拉多','德国牧羊犬','昆明犬']
+            },
+            series: [
+                {
+                    name:'警犬品种',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:  parseInt(Math.random() * 1000), name:'金毛'},
+                        {value:  parseInt(Math.random() * 1000), name:'史宾格'},
+                        {value:  parseInt(Math.random() * 1000), name:'拉布拉多'},
+                        {value:  parseInt(Math.random() * 1000), name:'德国牧羊犬'},
+                        {value:  parseInt(Math.random() * 1000), name:'昆明犬'},
+                    ]
+                }
+            ]
+        });
+        echarts.init(document.getElementById('fj_col3'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'bottom',
+                x: 'bottom',
+                bottom: 0,
+                data:['搜爆','搜寻','追踪','治安防范','搜毒']
+            },
+            series: [
+                {
+                    name:'警犬专业',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value: parseInt(Math.random() * 1000), name:'搜爆'},
+                        {value: parseInt(Math.random() * 1000), name:'搜寻'},
+                        {value: parseInt(Math.random() * 1000), name:'追踪'},
+                        {value: parseInt(Math.random() * 1000), name:'治安防范'},
+                        {value: parseInt(Math.random() * 1000), name:'搜毒'},
+                    ]
+                }
+            ]
+        });
+        echarts.init(document.getElementById('fj_col4'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'bottom',
+                x: 'bottom',
+                bottom: 0,
+                data:['20-30岁','30-40岁','40-50岁','大于50岁']
+            },
+            series: [
+                {
+                    name:'民警年龄',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value: parseInt(Math.random() * 1000), name:'20-30岁'},
+                        {value: parseInt(Math.random() * 1000), name:'30-40岁'},
+                        {value: parseInt(Math.random() * 1000), name:'40-50岁'},
+                        {value: parseInt(Math.random() * 1000), name:'大于50岁'}
+                    ]
+                }
+            ]
+        });
+        echarts.init(document.getElementById('fj_col5'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'bottom',
+                x: 'bottom',
+                bottom: 0,
+                data:['科员','科长','队长','中队长','处长']
+            },
+            series: [
+                {
+                    name:'警犬年龄',
+                    type:'pie',
+                    radius: ['45%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value: parseInt(Math.random() * 1000), name:'科员'},
+                        {value: parseInt(Math.random() * 1000), name:'科长'},
+                        {value: parseInt(Math.random() * 1000), name:'队长'},
+                        {value: parseInt(Math.random() * 1000), name:'中队长'},
+                        {value: parseInt(Math.random() * 1000), name:'处长'},
+                    ]
+                }
+            ]
+        });
+    }
+
+    var workData_unit = {
+        '安检': [],
+        '巡逻': [],
+        '刑侦': [],
+        '其他': []
+    };
+
+    function renderAreaData(workUnit) {
+        workUnit = workUnit || '刑侦总队';
+        parent.doPost('dogBaseInfo/getAnalysisData', {workUnit: workUnit}, function (resp) {
+            if (resp.success) {
+                var arr = resp.result;
+                var data = {};
+                var pr_name = [];
+                var pr_data = [];
+                for (var i = 0; i < arr.length; i++) {
+                    var key = arr[i].att_name;
+                    data[key] = arr[i].val;
+                    if (key.indexOf("pro_") != -1) {
+                        pr_name.push(key.replace('pro_', ''));
+                        pr_data.push({value: arr[i].val, name: key.replace('pro_', '')});
+                    }
+                }
+                renderUserDog(data, 'fj_col1');
+                renderDogPro(pr_name, pr_data, 'fj_col2'); //
+                renderTrainInfo(data, 'fj_col3');
+                renderAllot(data, 'fj_col4');
+                renderTickoutDie(data, 'fj_col5');
+            }
+        });
+    }
+    renderAreaData();
+
+    var dogAnalysis = {
+        breed: [],
+        dog_colour: [],
+        hair_type: [],
+        dog_level: [],
+        work_stage: [],
+        pro: [],
+        age: []
+    };
+    parent.doPost('config/getDogAnalysis', {}, function(resp){
+        if(resp.success){
+            var arr = resp.result;
+            for(var i = 0; i<arr.length; i++){
+                var item = arr[i];
+                var a = dogAnalysis[item.ctype];
+                if(a){
+                    a.push(item);
+                }
+            }
+            console.log(dogAnalysis);
+            renderDogByType('breed', '品种');
+        }
+    });
+
+    var userAnalysis = {
+        sex: [],
+        degree: [],
+        work_type: [],
+        job_title: [],
+        job: []
+    };
+
+    var user_params = {};
+    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang' && USER_ROLE != "GuanLiYuan"  ) {
+        user_params = {workUnit: USER_INFO.workUnit};
+    }
+    parent.doPost('config/getUserAnalysis', {}, function(resp){
+        if(resp.success){
+            var arr = resp.result;
+            for(var i = 0; i<arr.length; i++){
+                var item = arr[i];
+                var a = userAnalysis[item.ctype];
+                if(a){
+                    a.push(item);
+                }
+            }
+            renderUserByType('work_type', '类别');
+        }
+    });
+</script>
+</html>

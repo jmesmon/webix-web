@@ -1,0 +1,560 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>微软用户</Author>
+  <LastAuthor>Cheng Xiangdong</LastAuthor>
+  <LastPrinted>2012-10-10T08:35:02Z</LastPrinted>
+  <Created>2012-04-03T02:15:02Z</Created>
+  <LastSaved>2017-12-27T16:33:12Z</LastSaved>
+  <Company>微软中国</Company>
+  <Version>15.00</Version>
+ </DocumentProperties>
+ <CustomDocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <KSOProductBuildVer dt:dt="string">2052-6.6.0.2671</KSOProductBuildVer>
+ </CustomDocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8655</WindowHeight>
+  <WindowWidth>15480</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="12"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s34" ss:Name="百分比">
+   <NumberFormat ss:Format="0%"/>
+  </Style>
+  <Style ss:ID="m688734484">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="20"/>
+  </Style>
+  <Style ss:ID="m688734624">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+  <Style ss:ID="m688733444" ss:Parent="s34">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="12"/>
+  </Style>
+  <Style ss:ID="s62">
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s63">
+   <Borders/>
+  </Style>
+  <Style ss:ID="s64">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+  <Style ss:ID="s65">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+  </Style>
+  <Style ss:ID="s82">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders/>
+   <NumberFormat ss:Format="Long Date"/>
+  </Style>
+  <Style ss:ID="s83">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+  <Style ss:ID="s84">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+  <Style ss:ID="s86">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="9"/>
+  </Style>
+  <Style ss:ID="s90">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+  <Style ss:ID="s98">
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s101" ss:Parent="s34">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s103">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="宋体" x:CharSet="134" ss:Size="11"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="22" ss:ExpandedRowCount="33" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="33" ss:DefaultRowHeight="12.9375">
+   <Column ss:Index="19" ss:AutoFitWidth="0" ss:Width="48.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="50.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="36"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeAcross="21" ss:MergeDown="2" ss:StyleID="m688734484"><Data
+      ss:Type="String">北京市公安局警犬技术工作量化表 （${yearMonth}）</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Span="1"/>
+   <Row ss:Index="4" ss:AutoFitHeight="0" ss:Height="15.75">
+    <Cell ss:MergeAcross="21" ss:StyleID="m688733444"><Data ss:Type="String">单位：${workUnit}</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">类别</Data></Cell>
+    <Cell ss:MergeAcross="18" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">分    类   小   计</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"><Data ss:Type="String">统计</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"><Data ss:Type="String">备注</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeDown="3" ss:StyleID="s83"><Data ss:Type="String">人员   情况</Data></Cell>
+    <Cell ss:MergeAcross="15" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">现 有 带 犬 民 警 人 数</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String"> ${ry_民警}</Data></Cell>
+    <Cell ss:MergeDown="3" ss:StyleID="s64" ss:Formula="=RC[-3]+R[2]C[-3]"><Data
+      ss:Type="Error">#VALUE!</Data></Cell>
+    <Cell ss:MergeDown="3" ss:StyleID="s64"/>
+   </Row>
+   <Row ss:AutoFitHeight="0"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="2" ss:MergeAcross="15" ss:MergeDown="1" ss:StyleID="s83"><Data
+      ss:Type="String">现 有 带 犬 协 警 人 数</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s83"><Data
+      ss:Type="String"> ${ry_辅警}</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeDown="13" ss:StyleID="s83"><Data ss:Type="String">警犬   情况</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="3" ss:StyleID="s83"><Data
+      ss:Type="String">按警犬种类小计</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s83"><Data
+      ss:Type="String">德国牧羊犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s83"><Data
+      ss:Type="String">昆明犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s83"><Data
+      ss:Type="String">荷兰牧羊犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">罗维纳犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">拉布拉多犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">马里努阿犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">史宾格犬</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">其他</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"><Data ss:Type="String">合计</Data></Cell>
+    <Cell ss:MergeDown="13" ss:StyleID="m688734624"/>
+   </Row>
+   <Row ss:Height="14.25"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="5" ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_德国牧羊犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_昆明犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_荷兰牧羊犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_罗威纳犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_拉布拉多犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_马里努阿犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_史宾格犬}</ss:Data></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${pz_其他}</ss:Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"
+     ss:Formula="=RC[-16]+RC[-14]+RC[-12]+RC[-10]+RC[-8]+RC[-6]+RC[-4]+RC[-2]"><Data
+      ss:Type="Error">#VALUE!</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="7.5"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="2" ss:MergeAcross="2" ss:MergeDown="9" ss:StyleID="s64"><Data
+      ss:Type="String">按工作犬类别小计</Data></Cell>
+    <Cell ss:MergeAcross="15" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">刑    侦   犬</Data></Cell>
+    <Cell ss:MergeDown="9" ss:StyleID="s101"
+     ss:Formula="=CONCATENATE(&quot;                工作犬总数   (&quot;, R[-2]C, &quot;) 头     &quot;)"><Data
+      ss:Type="Error">#VALUE!</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="8.25"/>
+   <Row ss:AutoFitHeight="0" ss:Height="9.75">
+    <Cell ss:Index="5" ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">追踪犬</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">鉴别犬</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s86"><Data
+      ss:Type="String">物证搜索犬                （含血迹搜索）</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">搜捕犬</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"><Data ss:Type="String">合计</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="12.75"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="5" ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_追踪}</ss:Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_鉴别}</ss:Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_搜索}</ss:Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_搜捕}</ss:Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"
+     ss:Formula="=RC[-15]+RC[-11]+RC[-7]+RC[-3]"><Data ss:Type="Error">#VALUE!</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="6.75"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="5" ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">治安防范犬</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">搜爆犬</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">搜毒犬</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">救援犬</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">其他犬种</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="6.75"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="5" ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><Data
+      ss:Type="String">${jn_治安防范}</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_搜爆}</ss:Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_搜毒}</ss:Data></Cell>
+    <Cell ss:MergeAcross="2" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_搜救}</ss:Data></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="s64"><ss:Data
+      ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">${jn_其他}</ss:Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="5.25"/>
+   <Row ss:AutoFitHeight="0" ss:Height="18.75">
+    <Cell ss:MergeDown="5" ss:StyleID="s83"><Data ss:Type="String">警犬使用情况</Data></Cell>
+    <Cell ss:MergeAcross="7" ss:StyleID="s64"><Data ss:Type="String">出 勤 使 用 情 况</Data></Cell>
+    <Cell ss:MergeAcross="10" ss:StyleID="s64"><Data ss:Type="String">发 挥 作 用 情 况</Data></Cell>
+    <Cell ss:MergeDown="5" ss:StyleID="s83"
+     ss:Formula="=R[4]C[-19]+R[4]C[-18]+R[4]C[-17]+R[4]C[-16]+R[4]C[-15]+R[4]C[-14]+R[4]C[-13]+R[4]C[-12]+R[4]C[-11]+R[4]C[-10]+R[4]C[-9]+R[4]C[-8]+R[4]C[-7]+R[4]C[-6]+R[4]C[-5]+R[4]C[-4]+R[4]C[-3]+R[4]C[-2]+R[4]C[-1]"><Data
+      ss:Type="Error">#VALUE!</Data></Cell>
+    <Cell ss:MergeDown="5" ss:StyleID="s90"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18.75">
+    <Cell ss:Index="2" ss:MergeAcross="3" ss:StyleID="s64"><Data ss:Type="String">出勤次数</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s64"><Data ss:Type="String">使用次数</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s64"><Data ss:Type="String">起作用数</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s64"><Data ss:Type="String">破案数</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s64"><Data ss:Type="String">破案数</Data></Cell>
+    <Cell ss:MergeDown="2" ss:StyleID="s86"><Data ss:Type="String">搜出违禁品数量（件）</Data></Cell>
+    <Cell ss:MergeDown="2" ss:StyleID="s86"><Data ss:Type="String">搜出毒品数量（件）</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="2" ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">刑侦侦查</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">治安防范</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">搜爆安检</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">其他</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">刑侦侦查</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">治安防范</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">搜爆安检</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">其他</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">刑事侦查</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">治安防范</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">搜爆安检</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">其他</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">刑事</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">其他</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">一般</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">重特大</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s83"><Data ss:Type="String">待破</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="19.5"/>
+   <Row ss:AutoFitHeight="0" ss:Height="22.5">
+    <Cell ss:Index="2" ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_刑侦}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_巡逻}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">${cq_安检出勤}</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">${qt_cq}</Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_刑侦}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_巡逻}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_安检}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${sy_其他}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${work_刑侦}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${work_巡逻}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${work_安检}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${work_其他}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"/>
+    <Cell ss:StyleID="s64"/>
+    <Cell ss:StyleID="s64"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40">${pa_一般}</ss:Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">${pa_重特大}</Data></Cell>
+    <Cell ss:StyleID="s64"/>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"/>
+    <Cell ss:MergeDown="1" ss:StyleID="s64"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.75" ss:StyleID="s65">
+    <Cell ss:Index="2" ss:MergeAcross="3" ss:StyleID="s84"
+     ss:Formula="=R[-1]C+R[-1]C[1]+R[-1]C[2]+R[-1]C[3]"><Data ss:Type="Error">#VALUE!</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s84"
+     ss:Formula="=R[-1]C+R[-1]C[1]+R[-1]C[2]+R[-1]C[3]"><Data ss:Type="Error">#VALUE!</Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s84"
+     ss:Formula="=R[-1]C+R[-1]C[1]+R[-1]C[2]+R[-1]C[3]"><Data ss:Type="Error">#VALUE!</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s103"><Data ss:Type="String">合计：</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s103"><Data ss:Type="String">合计：</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+    <Cell ss:StyleID="s62"/>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s63"><Data ss:Type="String">填表人：</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">${tbr}</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">审核人：</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">${shr}</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">填表日期：</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:MergeAcross="1" ss:StyleID="s82"><Data ss:Type="String">${tbrq}</Data></Cell>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+    <Cell ss:StyleID="s63"/>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+    <Header x:Margin="0.51181102362204722"/>
+    <Footer x:Margin="0.51181102362204722"/>
+    <PageMargins x:Bottom="0.98425196850393704" x:Left="0.74803149606299213"
+     x:Right="0.74803149606299213" x:Top="0.98425196850393704"/>
+   </PageSetup>
+   <Unsynced/>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <Scale>95</Scale>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <PageBreakZoom>60</PageBreakZoom>
+   <Selected/>
+   <TopRowVisible>9</TopRowVisible>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>29</ActiveRow>
+     <ActiveCol>23</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="填表说明">
+  <Table ss:ExpandedColumnCount="256" ss:ExpandedRowCount="19" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="14.25">
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="21"><Data ss:Type="String">填表说明；</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255" ss:StyleID="s98"><Data ss:Type="String">（1）一头工作犬同时具有多项作业技能时，仅按主项进行统计。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255" ss:StyleID="s98"><Data ss:Type="String">（2）工作犬总数必须等同于刑侦犬、治安防范犬、搜爆犬、搜毒犬、救援犬、其他犬数六项之和；</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     刑侦犬数小计必须等同于追踪犬、鉴别犬、物证搜索犬、搜捕犬数四项之和。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255" ss:StyleID="s98"><Data ss:Type="String">（3）刑事侦查的出勤使用，均以接到指令的任务（含缉毒、刑事搜爆）次数为统计依据，不以出勤地点数等累计，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255" ss:StyleID="s98"><Data ss:Type="String">     使用次数、起作用数必须小于或等于出勤次数；</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     起作用数中，包括指明方向、找到物证、提供线索、抓获嫌疑人等各类技术支持，不局限于直接破案，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255" ss:StyleID="s98"><Data ss:Type="String">     一次任务中提供多项技术支持的计数为1次，不重复计数。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">（4）治安防范的出勤使用，均以接到指令的任务次数为统计依据，不以分时段巡逻地点、盘查人员车辆数等累计，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s98">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     使用次数、起作用数必须小于或等于出勤次数；</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s98">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     起作用数中，包括巡逻中抓获嫌疑人、发现侦查线索等各类技术支持，不局限于直接破案，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     一次任务中提供多项技术支持的计数为1次，不重复计数。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">（5）搜爆安检的出勤使用，均以接到指令的任务（不含刑事搜爆）次数为统计依据，不以搜爆地点、车辆数等累计，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     使用次数、起作用数必须小于或等于出勤次数；</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     起作用数中，包括确认搜索区域无爆炸物、搜获违禁品等技术支持，一次任务中提供多项技术支持的计数为1次，不重复计数。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">（6）破案数中的刑事、其他案件之和，必须等同于一般、重特大、带破案件之和，案件的分类与定性以卷宗表述为准。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">（7）违禁品包含易燃易爆、枪支弹药、管制刀具等各类国家规定的违禁品，不含毒品，以“件”计数。</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">（8）毒品包含鸦片、海洛因、冰毒、吗啡、大麻、可卡因以及国家规定管制的其他能够使人形成瘾癖的麻醉药品和精神药品，</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18">
+    <Cell ss:MergeAcross="255"><Data ss:Type="String">     以“克”计数。</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageBreakZoom>60</PageBreakZoom>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>22</ActiveRow>
+     <ActiveCol>4</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chxd.policeDog.dao.IApplyDogDao">
+
+    <!-- worm seelct  -->
+    <sql id="pageCondition">
+        limit #{page.startRow}, #{page.pageSize}
+    </sql>
+
+    <sql id="condition">
+        <if test="vo.id != null" > and id=#{vo.id}</if>
+        <if test="vo.workUnit != null" > and work_unit=#{vo.workUnit}</if>
+        <if test="vo.applyAmount != null" > and apply_amount=#{vo.applyAmount}</if>
+        <if test="vo.dogId != null" > and dog_id=#{vo.dogId}</if>
+        <if test="vo.policeMan != null" > and police_man=#{vo.policeMan}</if>
+        <if test="vo.policeId != null" > and police_id=#{vo.policeId}</if>
+        <if test="vo.applyState != null" > and apply_state=#{vo.applyState}</if>
+        <if test="vo.applyDesc != null" > , apply_desc=#{vo.applyDesc}</if>
+        <if test="vo.approveDetail != null" > and approve_detail=#{vo.approveDetail}</if>
+        <if test="vo.creationDate != null" > and creation_date=#{vo.creationDate}</if>
+        <if test="vo.lastUpdateDate != null" > and last_update_date=#{vo.lastUpdateDate}</if>
+    </sql>
+
+    <select id="getList" resultType="com.chxd.policeDog.vo.ApplyDogVO">
+        select
+            id as id,
+            work_unit as workUnit,
+            apply_amount as applyAmount,
+            dog_id as dogId,
+            police_man as policeMan,
+            police_id as policeId,
+            apply_state as applyState,
+            apply_desc as applyDesc,
+            approve_detail as approveDetail,
+            creation_date as creationDate,
+            last_update_date as lastUpdateDate
+        from t_apply_dog where 1=1
+        <include refid="condition"/>
+        <include refid="pageCondition"/>
+    </select>
+
+    <select id="getListCount" resultType="java.lang.Integer">
+        select count(1) from t_apply_dog where 1=1
+        <include refid="condition"/>
+    </select>
+
+    <insert id="add" parameterType="com.chxd.policeDog.vo.ApplyDogVO">
+        insert into t_apply_dog (id, work_unit, apply_amount, dog_id, police_man, police_id, apply_state, apply_desc, approve_detail, creation_date, last_update_date)
+        values
+            (#{item.id}, #{item.workUnit}, #{item.applyAmount}, #{item.dogId}, #{item.policeMan}, #{item.policeId}, #{item.applyState}, #{item.applyDesc}, #{item.approveDetail}, #{item.creationDate}, #{item.lastUpdateDate})
+    </insert>
+
+    <delete id="del">
+        delete from t_apply_dog where id in
+        <foreach collection="list" item="item" index="index" separator=","  open="(" close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="com.chxd.policeDog.vo.ApplyDogVO">
+        update t_apply_dog set last_update_date=now()
+        <if test="vo.id != null" > , id=#{vo.id}</if>
+        <if test="vo.workUnit != null" > , work_unit=#{vo.workUnit}</if>
+        <if test="vo.applyAmount != null" > , apply_amount=#{vo.applyAmount}</if>
+        <if test="vo.dogId != null" > , dog_id=#{vo.dogId}</if>
+        <if test="vo.policeMan != null" > , police_man=#{vo.policeMan}</if>
+        <if test="vo.policeId != null" > , police_id=#{vo.policeId}</if>
+        <if test="vo.applyState != null" > , apply_state=#{vo.applyState}</if>
+        <if test="vo.applyDesc != null" > , apply_desc=#{vo.applyDesc}</if>
+        <if test="vo.approveDetail != null" > , approve_detail=#{vo.approveDetail}</if>
+        <if test="vo.creationDate != null" > , creation_date=#{vo.creationDate}</if>
+        <if test="vo.lastUpdateDate != null" > , last_update_date=#{vo.lastUpdateDate}</if>
+        where id=#{vo.id}
+    </update>
+</mapper>
