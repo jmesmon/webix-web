@@ -21,7 +21,7 @@ define([
             // {view: "icon", icon: "search",  width: 45, popup: "searchPopup"},
             // {view: "icon", icon: "envelope-o", value: 3, width: 45, popup: "mailPopup"},
             {template: '<div style="line-height: 38px;font-size:14px"><a href="#!/app/adult.adultList" style="color: #FFF900;font-weight:bold">进入系统</a></div>', borderless: true, width: 100},
-            {view: "icon", icon: "comments-o", value: '..', width: 45, id:'todoTip', click: function(){showTodoList('1')}},
+            {view: "icon", icon: "comments-o", value: '0', width: 45, id:'todoTip', click: function(){showTodoList('1')}},
             {
                 height: 46, id: "person_template", css: "header_person", borderless: true, width: 150,
                 data: {id: 3, name: USER_INFO.policeName},
@@ -80,43 +80,42 @@ define([
 
     window.showTodoList = function (isShowTodoList){
         doIPost('todo/getMyTodo', {}, function (resp) {
-            console.log(resp);
             if(resp.success && resp.result.length > 0) {
                 var arr = resp.result;
 
                 var html = '<div style="font-size: 14px;color:#fff;line-height: 25px;">';
                 html += '<div>您有如下待办事项需要处理，请及时处理：</div>';
                 var label = {
-                    worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00">立刻处理</a>',
-                    immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00">立刻处理</a>',
-                    dogApply: '<span style="color:#fff">警犬申请：</span>有<span style="color:#F9FF00">#val#</span>个警犬申请单，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.list" style="color:#F9FF00">立刻处理</a>',
-                    tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00">立刻处理</a>',
-                    die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00">立刻处理</a>',
-                    train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00">立刻处理</a>',
+                    worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                    immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                    dogApply: '<span style="color:#fff">警犬申请：</span>有<span style="color:#F9FF00">#val#</span>个警犬申请单，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.list" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                    tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                    die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                    train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                 };
                 if(USER_INFO.userRole == 'SuperMan' || USER_INFO.userRole == 'JiuZhiDui' ){
                     label = {
-                        worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00">立刻处理</a>',
-                        immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00">立刻处理</a>',
-                        dogApply: '<span style="color:#fff">警犬申请：</span>有<span style="color:#F9FF00">#val#</span>个警犬申请单，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.list" style="color:#F9FF00">立刻处理</a>',
-                        tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00">立刻处理</a>',
-                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00">立刻处理</a>',
-                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00">立刻处理</a>',
+                        worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        dogApply: '<span style="color:#fff">警犬申请：</span>有<span style="color:#F9FF00">#val#</span>个警犬申请单，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.list" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'GuanLiYuan'){
                     label = {
-                        tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00">立刻处理</a>',
-                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00">立刻处理</a>',
-                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00">立刻处理</a>',
+                        tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'JingYuan' || USER_INFO.userRole == 'PeiXunRenYuan'){
                     label = {
-                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00">立刻处理</a>',
+                        train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'FanZhiRenYuan'){
                     label = {
-                        worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00">立刻处理</a>',
-                        immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00">立刻处理</a>',
+                        worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }
                 if(USER_INFO.userRole == 'JuZhang'){
@@ -143,7 +142,7 @@ define([
                     var datatableId = webix.uid().toString();
                     var win = getWin('待办事项', {
                         rows: [
-                            {template: html, borderless: true},
+                            {template: html, borderless: true, onClick: {gotoProcess: function(){win.close()} }},
                             {template: '<div>收到的通知</div>', height: 30, borderless: true},
                             {
                                 id: datatableId,
@@ -177,7 +176,6 @@ define([
                                 onClick: {
                                     markRead: function(a, b, c) {
                                         var item = $$(datatableId).getItem(b.row);
-                                        console.log(item);
                                         doIPost('notice/update', {id: item.id, isRead: 2}, function (resp) {
                                             $$(datatableId).reload();
                                         })

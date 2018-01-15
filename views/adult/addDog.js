@@ -35,8 +35,8 @@ define([
                                                     {id: '2', value: "母犬"}
                                                 ]},
                                                 {view: "datepicker", label: "出生日期", name: "birthdayStr", format:"%Y-%m-%d", stringResult: true},
-                                                {view: "text", label: "繁育员", name: "breeder", disabled: false},
-                                                {view: "text", label: "训导员", name: "tutor", disabled: false},
+                                                {view: "text", label: "繁殖单位", name: "breeder", disabled: false},
+                                                {view: "text", label: "训导员", name: "tutor", disabled: false, hidden: true},
 
                                             ]
                                         }, {
@@ -44,13 +44,22 @@ define([
                                         }, {
                                             width: 300,
                                             rows: [
-                                                {view: "richselect", label: "成长阶段", name: 'growthStage', value:"-1", options: constant.getGrowthStage()},
-                                                {view: "richselect", label: "品种", name: 'breed', value:"-1", options: constant.getBreedTypeOptions() },
+                                                {view: "richselect", label: "成长阶段", name: 'growthStage', value:"2", options: constant.getGrowthStage(), hidden: true},
+                                                {view: "richselect", label: "品种", name: 'breed', value:"-1", options: constant.getBreedTypeOptions(), on: {
+                                                    onChange: function(newVal){
+                                                        var def = constant.getDefaultTypeColor(newVal);
+                                                        $$('dogPhoto').setValue(def.photo);
+                                                        $$('dogColor').setValue(def.dogColor);
+                                                        $$('hairType').setValue(def.hairType);
+                                                    }
+                                                } },
                                                 {view: "richselect", label: "来源", name: 'dogSource', value:"-1", options: constant.getDogSourceOptions() },
-                                                {view: "richselect", label: "毛色", name: 'dogColour', value:"-1", options: constant.getDogColorOptions() },
-                                                {view: "richselect", label: "毛型", name: 'hairType', value:"-1", options: constant.getHairTypeOptions() },
-                                                {view: "richselect", label: "工作类型", name: 'dogType', value:"-1", options: constant.getWorkType() },
-                                                {view: "richselect", label: "犬种等级", name: 'dogLevel', value:"-1", options: constant.getDogLevel() },
+                                                {view: "richselect", label: "毛色", id: 'dogColor', name: 'dogColour', value:"-1", options: constant.getDogColorOptions() },
+                                                {view: "richselect", label: "毛型", id: 'hairType', name: 'hairType', value:"-1", options: constant.getHairTypeOptions() },
+                                                {view: "richselect", label: "工作类型", name: 'dogType', value:"1", options: constant.getWorkType() },
+                                                {view: "multiselect", label: "专业方向", name: 'dogPro', options: constant.getDogPro() },
+                                                {view: "richselect", label: "犬种等级", name: 'dogLevel', value:"", options: constant.getDogLevel(), hidden: true },
+                                                {view: "richselect", label: "犬种等级", id: 'dogPhoto', name: 'dogPhoto', value:"", options: constant.getDogLevel(), hidden: true },
                                             ]
                                         }, {
                                             width: DEFAULT_PADDING * 2
@@ -58,9 +67,13 @@ define([
                                             width: 300,
                                             rows: [
                                                 {template: "<div style='line-height: 4px'>带犬民警：&nbsp;请先创建警犬信息，然后在分配带犬人员</div>", height: 20, borderless: true },
-                                                {view: "richselect", label: "工作状态", value:"-1", options: constant.getWorkStage()},
+                                                {view: "richselect", label: "工作状态", name: 'workStage', value:"2", options: constant.getWorkStage()},
                                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
-                                                {view: "text", label: "复训成绩", name: "trainScore", disabled: false},
+                                                {view: "richselect", label: "复训成绩", name: "trainScore", options: [
+                                                    {id: '不合格', value: "不合格"},
+                                                    {id: '合格', value: "合格"},
+                                                    {id: '优秀', value: "优秀"}
+                                                ]},
                                                 {view: "richselect", label: "工作单位", name: "workPlace", options: constant.getUnitOptions()},
                                                 {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea() }
 
@@ -257,17 +270,24 @@ define([
                                 delete item.id;
                                 removeEmptyProperty(item);
                             });
-                            console.log(baseInfo);
-                            console.log(trainData);
-                            console.log(wormImmueData);
+                            var dogPro = baseInfo.dogPro;
+                            var _ar = dogPro.split(',');
+                            for(var i = 0; i<_ar.length; i++){
+                                trainData.push({
+                                trainAddr: 'MAIN',
+                                trainEndDateStr:"1900-01-01",
+                                trainName: _ar[i],
+                                trainStartDateStr: "1900-01-01",
+                                trainStage:"-2"});
+                            }
                             // baseInfo.trainInfo = trainData;
                             // baseInfo.wormImmueInfo = wormImmueData;
-                            doIPost('dogBaseInfo/addDogInfo', {
+                            var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
                                 trainData: trainData,
                                 wormImmueData: wormImmueData
                             }, function (data) {
-                                console.log(data);
+                                load.close();
                                 if(data.success){
                                     var trainCount = trainData.length - data.trainCount;
                                     var msg = '';

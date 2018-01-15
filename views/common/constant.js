@@ -180,6 +180,19 @@ define([
                 {id: '2', value: '非工作犬'}
             ];
         },
+        getDogPro: function () {
+            return [
+                {id: '追踪', value: "追踪"},
+                {id: '鉴别', value: "鉴别"},
+                {id: '物证搜索', value: "物证搜索"},
+                {id: '搜捕', value: "搜捕"},
+                {id: '治安防范', value: "治安防范"},
+                {id: '搜爆', value: "搜爆"},
+                {id: '搜毒', value: "搜毒"},
+                {id: '救援', value: "救援"},
+                {id: '其他', value: "其他"}
+            ];
+        },
         getDogLevel: function () {
             return [
                 {id: '1', value: '一级'},
