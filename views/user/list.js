@@ -242,7 +242,8 @@ define([
                     {id: "userRole", header: "系统角色", width: 80, sort: "string", template: function (item) {
                         return {
                             "JingYuan": "带犬民警",
-                            "JuZhang": "分局局长",
+                            "JuZhang": "市局局长",
+                            "FJ_JuZhang": "分局局长",
                             "JiuZhiDui": "九支队",
                             "GuanLiYuan": "分局管理员",
                             "FanZhiRenYuan": "繁殖人员",
@@ -268,7 +269,7 @@ define([
                     {id: "certQuali", header: "证书资格", width: 80, sort: "string"},
                     {id: "certNum", header: "证书编号", width: 80, sort: "string"},
                     {id: "rewardInfo", header: "立功授奖信息", width: 80, sort: "string"},
-                    {id: "approveRole", header: "是否审批人", width: 80, sort: "string", template: function(item){ if(item.approveRole) return '是'; else return '' }},
+                    // {id: "approveRole", header: "是否审批人", width: 80, sort: "string", template: function(item){ if(item.approveRole) return '是'; else return '' }},
                     {id: "creationDate", header: "创建日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
                 ],
                 on: {

@@ -62,7 +62,7 @@ define(["models/orders"], function (orders) {
                     {id: "payment_method", header: "窝编号", width: 130, sort: "string"},
                     {id: "taxes", header: "犬名", width: 90, format: webix.i18n.priceFormat},
                     {id: "status", header: "芯片号", width: 90},
-                    {id: "fee", header: "芯片注入日期", width: 90, format: webix.i18n.priceFormat},
+                    // {id: "fee", header: "芯片注入日期", width: 90, format: webix.i18n.priceFormat},
                     {id: "total", header: "性别", width: 90, format: webix.i18n.priceFormat},
                     {id: "shipping_company", header: "出生日期", sort: "string"},
                     {id: "status", header: "父亲芯片号", width: 90},

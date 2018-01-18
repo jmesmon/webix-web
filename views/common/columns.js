@@ -143,7 +143,7 @@ define([
             for(var i = 0; i<headers.length; i++){
                 if(typeof(headers[i]) == 'object'){
                     cols.push(headers[i]);
-                }else {
+                }else if(headers[i] != '芯片注入日期') {
                     cols.push(methods.get(headers[i]));
                 }
             }

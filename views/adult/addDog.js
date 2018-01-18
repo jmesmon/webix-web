@@ -29,7 +29,7 @@ define([
                                             rows: [
                                                 {view: "text", label: "警犬名称", name: "dogName", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "text", label: "芯片编号", name: "chipNo", attributes:{ maxlength: 128 }},
-                                                {view: "datepicker", label: "注入日期", name: "chipNoInjectStr", format:"%Y-%m-%d", stringResult: true},
+                                                // {view: "datepicker", label: "注入日期", name: "chipNoInjectStr", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "richselect", label: "性别", value:"1", name: 'sex', options:[
                                                     {id: '1', value: "公犬"},
                                                     {id: '2', value: "母犬"}
@@ -37,6 +37,7 @@ define([
                                                 {view: "datepicker", label: "出生日期", name: "birthdayStr", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "text", label: "繁殖单位", name: "breeder", disabled: false},
                                                 {view: "text", label: "训导员", name: "tutor", disabled: false, hidden: true},
+                                                {template: "<div style='line-height: 4px'>带犬民警：&nbsp;请先创建警犬信息，然后在分配带犬人员</div>", height: 20, borderless: true },
 
                                             ]
                                         }, {
@@ -66,7 +67,6 @@ define([
                                         }, {
                                             width: 300,
                                             rows: [
-                                                {template: "<div style='line-height: 4px'>带犬民警：&nbsp;请先创建警犬信息，然后在分配带犬人员</div>", height: 20, borderless: true },
                                                 {view: "richselect", label: "工作状态", name: 'workStage', value:"2", options: constant.getWorkStage()},
                                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
                                                 {view: "richselect", label: "复训成绩", name: "trainScore", options: [
@@ -278,6 +278,7 @@ define([
                                 trainEndDateStr:"1900-01-01",
                                 trainName: _ar[i],
                                 trainStartDateStr: "1900-01-01",
+                                trainResult: "合格",
                                 trainStage:"-2"});
                             }
                             // baseInfo.trainInfo = trainData;

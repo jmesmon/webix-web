@@ -20,7 +20,7 @@ define([
                             rows: [
                                 {view: "text", label: "警犬名称", name: "dogName"},
                                 {view: "text", label: "芯片编号", name: "chipNo", attributes:{ maxlength: 128 }},
-                                {view: "datepicker", label: "注入日期", name: "chipNoInjectStr", format:"%Y-%m-%d", stringResult: true},
+                                // {view: "datepicker", label: "注入日期", name: "chipNoInjectStr", format:"%Y-%m-%d", stringResult: true},
                                 {view: "richselect", label: "性别", name: 'sex', value:"-1", options:[
                                     {id: '1', value: "公犬"},
                                     {id: '2', value: "母犬"}
@@ -31,18 +31,17 @@ define([
                                 {view: "richselect", label: "毛色", name: 'dogColour',  value:"-1", options: constant.getDogColorOptions() },
                                 {view: "richselect", label: "毛型", name: 'hairType',  value:"-1", options: constant.getHairTypeOptions() },
                                 {view: "richselect", label: "工作类型", name: 'dogType',  value:"-1", options: constant.getWorkType() },
-                                {view: "richselect", label: "犬种等级", name: 'dogLevel',  value:"-1", options: constant.getDogLevel() }
+                                // {view: "richselect", label: "犬种等级", name: 'dogLevel',  value:"-1", options: constant.getDogLevel() }
                             ]
                         },{width: DEFAULT_PADDING/2},{
                             rows: [
-                                {height: 28},
                                 {view: "text", label: "父犬芯片号", name: "fatherId", disabled: false},
                                 {view: "text", label: "母犬芯片号", name: "motherId", disabled: false},
                                 {view: "richselect", label: "成长阶段", name:"growthStage", options: constant.getGrowthStage()},
                                 {view: "richselect", label: "工作状态", name:"workStage", options: constant.getWorkStage()},
                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
-                                {view: "text", label: "繁育员", name: "breeder", disabled: false},
-                                {view: "text", label: "训导员", name: "tutor", disabled: false},
+                                {view: "text", label: "繁育单位", name: "breeder", disabled: false},
+                                // {view: "text", label: "训导员", name: "tutor", disabled: false},
                                 {view: "richselect", label: "复训成绩", name: "trainScore", disabled: false, options: [
                                         {id: '优秀', value: '优秀'},
                                         {id: '合格', value: '合格'},

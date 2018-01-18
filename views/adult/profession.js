@@ -183,9 +183,9 @@ define([
                     {id: "profName", header: "专业名称", width: 100},
                     {id: "creationDate", header: "获得日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "dogInfo.chipNo", header: "芯片号", width: 110, template: function(obj){ return obj.dogInfo.chipNo || ''; } },
-                    {id: "dogInfo.chipNoInject", header: "芯片注入日期", width: 90, template: function(item){
-                        return webix.Date.dateToStr("%Y-%m-%d")(item.dogInfo.chipNoInject);
-                    }},
+                    // {id: "dogInfo.chipNoInject", header: "芯片注入日期", width: 90, template: function(item){
+                    //     return webix.Date.dateToStr("%Y-%m-%d")(item.dogInfo.chipNoInject);
+                    // }},
                     {id: "dogInfo.sex", header: "性别", width: 50, template: function(obj){ return '<div align="center">' + (obj.dogInfo.sex == 1 ? '公' : '母') + '</div>'; } },
                     {id: "dogInfo.birthday", header: "出生日期", width: 85, sort: "string", template: function(item){
                         return webix.Date.dateToStr("%Y-%m-%d")(item.dogInfo.birthday);
