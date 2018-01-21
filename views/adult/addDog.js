@@ -49,9 +49,15 @@ define([
                                                 {view: "richselect", label: "品种", name: 'breed', value:"-1", options: constant.getBreedTypeOptions(), on: {
                                                     onChange: function(newVal){
                                                         var def = constant.getDefaultTypeColor(newVal);
-                                                        $$('dogPhoto').setValue(def.photo);
-                                                        $$('dogColor').setValue(def.dogColor);
-                                                        $$('hairType').setValue(def.hairType);
+                                                        if(def) {
+                                                            $$('dogPhoto').setValue(def.photo);
+                                                            $$('dogColor').setValue(def.dogColor);
+                                                            $$('hairType').setValue(def.hairType);
+                                                        }else{
+                                                            $$('dogPhoto').setValue('');
+                                                            $$('dogColor').setValue('');
+                                                            $$('hairType').setValue('');
+                                                        }
                                                     }
                                                 } },
                                                 {view: "richselect", label: "来源", name: 'dogSource', value:"-1", options: constant.getDogSourceOptions() },
@@ -74,7 +80,7 @@ define([
                                                     {id: '合格', value: "合格"},
                                                     {id: '优秀', value: "优秀"}
                                                 ]},
-                                                {view: "richselect", label: "工作单位", name: "workPlace", options: constant.getUnitOptions()},
+                                                {view: "richselect", label: "工作单位", name: "workPlace", options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: (USER_INFO.workUnit != 'JiuZhiDui')},
                                                 {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea() }
 
                                             ]
@@ -148,6 +154,15 @@ define([
                                             {view: "text", label: "驱虫/免疫", name: "name"},
                                             {view: "button", label: "新增一条", width: 70, click: function () {
                                                 var fom = $$('immueForm');
+                                                var values = fom.getValues();
+                                                if(!values.date){
+                                                    msgBox("请填写完成日期");
+                                                    return ;
+                                                }
+                                                if(!values.name){
+                                                    msgBox("请填写驱虫周期，或者免疫疫苗信息");
+                                                    return ;
+                                                }
                                                 $$('wormImmueData').add( fom.getValues() );
                                                 fom.clear();
                                             }},
@@ -236,8 +251,13 @@ define([
                                                         {},
                                                         {view: "button", label: "新增一条", width: 70, click: function () {
                                                             var fom = $$('trainForm');
-                                                            $$('trainData').add( fom.getValues() );
-                                                            fom.clear();
+                                                            if(fom.validate()){
+                                                                var values = fom.getValues();
+                                                                $$('trainData').add( fom.getValues() );
+                                                                fom.clear();
+                                                            }else{
+                                                                msgBox("请填写必要信息");
+                                                            }
                                                         }}
                                                     ]
                                                 },
@@ -245,7 +265,15 @@ define([
                                             ]
                                         },{}]
                                     }
-                                ]
+                                ],
+                                rules:{
+                                    "trainStartDateStr":webix.rules.isNotEmpty,
+                                    "trainEndDateStr":webix.rules.isNotEmpty,
+                                    "trainName":webix.rules.isNotEmpty,
+                                    "trainUnit":webix.rules.isNotEmpty,
+                                    "trainUser":webix.rules.isNotEmpty,
+                                    "trainAddr":webix.rules.isNotEmpty
+                                }
                             }
                         ]
                     }
@@ -303,6 +331,7 @@ define([
                                     $$('baseInfoForm').clear();
                                     $$('trainData').remove(trainIdArr);
                                     $$('wormImmueData').remove(wiIdArr);
+                                    location.reload();
                                 }else{
                                     msgBox('操作失败，请检查各项信息是否填写正确，<br>错误信息：' + data.message)
                                 }

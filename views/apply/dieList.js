@@ -161,6 +161,109 @@ define([
             msgBox("请至少选择一条数据");
             return ;
         }
+        var options = [
+            {id: '2', value: "通过"},
+            {id: '4', value: "驳回"}
+        ];
+        var arr = [], arr2 = [], state = "";
+        if(isFinal){
+            stateMsg = "等待终审";
+            options = [
+                {id: '3', value: "终审通过"},
+                {id: '4', value: "驳回"}
+            ];
+            for(var i = 0; i<data.length; i++){
+                if(data[i].applyState == 2){
+                    //等待九支队审批的
+                    arr.push(data[i]);
+                }else{
+                    webix.message('编号为：' + data[i].id + ' 的申请，当前状态不是等待九支队审批状态，跳过该记录');
+                    arr2.push(data[i]);
+                }
+            }
+        }
+        if(!isFinal){
+            stateMsg = "等待局长审批";
+            for(var i = 0; i<data.length; i++){
+                console.log(data[i]);
+                if(data[i].applyState == 1){
+                    arr.push(data[i]);
+                }else{
+                    webix.message('编号为：' + data[i].id + ' 的申请，当前状态不是局长审批状态，跳过该记录');
+                    arr2.push(data[i]);
+                }
+            }
+        }
+        if(arr.length == 0){
+            msgBox("您一共选择"+data.length+"条数据，没有符合"+stateMsg+"的数据，请重新选择");
+            return ;
+        }
+        var win = getWin("批量审批", {
+            rows: [{
+                height: 30,
+                borderless: true,
+                template: '一共选择了'+data.length+'条申请，其中'+arr.length+'条可以符合当前审批条件，请审批'
+            }, {
+                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '2', labelWidth: 60,
+                options: options
+            },
+                {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 60, width: 280},
+                {width: 400},
+                {
+                    cols:[
+                        {},
+                        {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
+                            win.close();
+                        }},
+                        {width: DEFAULT_PADDING/2},
+                        {view: "button", label: "提交", width: 65, click: function () {
+                            var da = [];
+                            var applyState = $$('applyState').getValue();
+                            var approveDetail = $$('approveDetail').getValue();
+                            var data = arr;
+                            for(var i = 0; i<data.length; i++){
+                                if(isFinal){
+                                    da.push({
+                                        id: data[i].id,
+                                        dogId: data[i].dogId,
+                                        applyState: applyState,
+                                        applyDateStr: webix.Date.dateToStr("%Y-%m-%d")(new Date()) ,
+                                        approveDetail: approveDetail,
+                                        approver: USER_INFO.policeName + '/' + USER_INFO.policeId
+                                    });
+                                }else{
+                                    da.push({
+                                        id: data[i].id,
+                                        dogId: data[i].dogId,
+                                        applyState: applyState,
+                                        unitApproveDateStr: webix.Date.dateToStr("%Y-%m-%d")(new Date()) ,
+                                        unitApproveDetail: approveDetail,
+                                        unit_approver: USER_INFO.policeName + '/' + USER_INFO.policeId
+                                    });
+                                }
+                            }
+                            doIPost('apply/die/update', da, function(res){
+                                win.close();
+                                if(res.success){
+                                    $$(datatableId).reload();
+                                }else{
+                                    msgBox('操作失败<br>' + res.message)
+                                }
+                            });
+                        }}
+                    ]
+                }]
+        }, {width: 400, height: 160});
+        win.show();
+    };
+
+    var approve_ = function (isFinal) {
+        var datatable = $$(datatableId);
+        var data = datatable.getCheckedData();
+        if(data.length == 0){
+            msgBox("请至少选择一条数据");
+            return ;
+        }
 
         var options = [
             {id: '2', value: "通过"},
@@ -339,7 +442,6 @@ define([
                             "4": "申请驳回"}[value] || "";
                     }},
                     {id: "dogInfo", header: "警犬名称", width: 100, sort: "string", template: '#dogInfo.dogName#'},
-                    {id: "dogInfo", header: "警犬芯片号", width: 100, sort: "string", template: '#dogInfo.chipNo#'},
                     {id: "applyDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "sickReason", header: "病因", width: 150, sort: "string"},
                     {id: "sickDate", header: "生病日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
@@ -347,7 +449,13 @@ define([
                     {id: "dieDate", header: "死亡日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "dieReason", header: "死亡原因", width: 100, sort: "string"},
                     {id: "conclus", header: "结论", width: 150, sort: "string"},
-                    {id: "photos", header: "附件", width: 50, sort: "string"},
+                    {id: "photos", header: "附件", width: 50, template: function(item){
+                        if(!item.photos || item.photos == '[]'){
+                            return '无';
+                        }else{
+                            return '<a class="showAddti" href="javascript:void(-1)">查看</a>'
+                        }
+                    }},
 
                     {id: "unitApproveDate", header: "分局日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "unitApproveDetail", header: "分局审批意见", width: 150},
@@ -368,6 +476,35 @@ define([
                         var item = datatable.getItem(obj.row);
                         console.log(item);
                         update(item);
+                    },
+                    showAddti: function(e, obj){
+                        var datatable = $$(datatableId);
+                        var item = datatable.getItem(obj.row);
+                        console.log(item);
+                        if(!item.photos || item.photos == '[]'){
+                            msgBox('没有上传附件');
+                            return ;
+                        }
+                        var data = JSON.parse(item.photos);
+                        var win = getWin("查看附件", {
+                            rows: [
+                                {
+                                    view: "datatable",
+                                    select: true,
+                                    height: 400,
+                                    columns: [
+                                        {id: "fileName", header: "附件名称", width: 600, template: function(item){
+                                            return '<a href="' + item.url + '" target="_blank">' + item.fileName + '</a>';
+                                        }}
+                                    ],
+                                    tooltip:true,
+                                    minHeight: 80,
+                                    datafetch: 20,//default
+                                    data: data
+                                }
+                            ]
+                        }, { width: 600});
+                        win.show();
                     },
                     showDetail: function (ev, obj, el) {
                         var datatable = $$(datatableId);

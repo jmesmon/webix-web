@@ -454,6 +454,179 @@ define([
                 ]
             }, {height: 500, width: 800});
             win.show();
+        },
+        setDog: function (textObj, valObj, params, callback) {
+            // if(USER_INFO.userRole == 'JingYuan') {
+            params = webix.extend({workPlace: USER_INFO.workUnit}, params);
+            // }else{
+            //     params = {policeId: USER_INFO.id};
+            // }
+            params = webix.extend({workPlace: USER_INFO.workUnit}, params);
+            var datatableId = webix.uid().toString();
+            var pageId = webix.uid().toString();
+            var cols = [
+                {
+                    id: "$check",
+                    header: {content: "masterCheckbox"},
+                    checkValue: true,
+                    uncheckValue: false,
+                    template: "{common.checkbox()}",
+                    width: 40
+                },
+                {id: "$index", header: "NO.", width: 45},
+                {id: "dogName", header: "犬名", width: 90},
+                {id: "chipNo", header: "芯片号", width: 110},
+                {id: "sex", header: "性别", width: 50, template: function(obj){ return '<div align="center">' + (obj.sex == 1 ? '公' : '母') + '</div>'; } },
+                {id: "birthday", header: "出生日期", width: 85, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
+                {id: "breed", header: "品种", width: 90, sort: "string"},
+                {id: "dogSource", header: "来源", width: 60, sort: "string"},
+                {id: "dogColour", header: "毛色", width: 75, sort: "string"},
+                {id: "hairType", header: "毛型", width: 70, sort: "string"}
+            ];
+            var win = getWin('选择警犬', {
+                rows: [
+                    {
+                        id: datatableId,
+                        view: "datatable",
+                        select: false,
+                        minHeight: 80,
+                        datafetch: 20,//default
+                        tooltip:false,
+                        columns: cols,
+                        on: {
+                            onBeforeLoad: function () {
+                                this.showOverlay("Loading...");
+                            },
+                            onAfterLoad: function () {
+                                this.hideOverlay();
+                            },
+                            onCheck: function(row, column, state){
+                                var item = $$(datatableId).getItem(row);
+                                if(valObj) {
+                                    $$(valObj).setValue(item.id);
+                                }
+                                if(textObj) {
+                                    $$(textObj).attachEvent('onChange', function(){
+                                        if($$(textObj).config.val){
+                                            $$(textObj).setValue($$(textObj).config.val);
+                                        }
+                                    });
+                                    $$(textObj).setValue(item.dogName);
+                                    $$(textObj).config.val = item.dogName;
+                                }
+                                callback && callback(item);
+                                win.close();
+                            }
+                        },
+                        customUrl: {
+                            url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getAll/{pageSize}/{curPage}'),
+                            httpMethod: 'post',
+                            params: params,
+                            datatype: 'customJson'
+                        },
+                        pager: pageId
+                    },
+                    {
+                        view: "pager",
+                        id: pageId,
+                        size: 20,
+                        group: 5,
+                        template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>&nbsp;&nbsp;&nbsp;&nbsp;总共#count#条</div>"
+                    },
+                    {
+                        cols: [
+                            {
+                                template: '请选择一条警犬，如果选择了多个，只以第一个为准', borderless: true
+                            },
+                            {
+                                view: "button", label: "关闭", css: 'non-essential', width: 65, click: function () {
+                                win.close();
+                            }
+                            },
+                            {width: DEFAULT_PADDING / 2},
+                            {view: "button", label: "确定", width: 65, click: function(){
+                                var datatable = $$(datatableId);
+                                callback && callback(datatable);
+                                win.close();
+                            }}
+                        ]
+                    }
+                ]
+            }, {height: 500, width: 730});
+            win.show();
+        },
+        setUser: function(textObj, valObj, callback){
+            var datatableId = webix.uid().toString();
+            var win = getWin('选择带犬民警', {
+                rows: [{
+                    id: datatableId,
+                    view: "datatable",
+                    select: true,
+                    columns: [
+                        {
+                            id: "$check",
+                            header: {content: "masterCheckbox"},
+                            checkValue: 'on',
+                            uncheckValue: 'off',
+                            template: "{common.checkbox()}",
+                            width: 40
+                        },
+                        {id: "$index", header: "NO.", width: 45},
+                        {id: "policeId", header: "警号", width: 80, sort: "string"},
+                        {id: "policeName", header: "姓名", width: 80, sort: "string"},
+                        {id: "sex", header: "性别", width: 50, sort: "string"},
+                        {id: "contactInfo", header: "联系方式", width: 100, sort: "string"},
+                        {id: "workUnit", header: "工作单位", width: 120, sort: "string"},
+                        {id: "workType", header: "身份类别", width: 80, sort: "string"},
+                        {id: "certQuali", header: "证书资格", width: 80, sort: "string"},
+                        {id: "certNum", header: "证书编号", width: 80, sort: "string"}
+                    ],
+                    on: {
+                        onBeforeLoad: function () {
+                            this.showOverlay("Loading...");
+                        },
+                        onAfterLoad: function () {
+                            this.hideOverlay();
+                        },
+                        onCheck: function(row, column, state){
+                            var item = $$(datatableId).getItem(row);
+                            if(valObj) {
+                                $$(valObj).setValue(item.id);
+                                $$(valObj).config.userInfo = item;
+                            }
+                            if(textObj) {
+                                $$(textObj).config.userInfo = item;
+                                $$(textObj).attachEvent('onChange', function(){
+                                    if($$(textObj).config.val){
+                                        $$(textObj).setValue($$(textObj).config.val);
+                                    }
+                                });
+                                $$(textObj).setValue(item.policeName);
+                                $$(textObj).config.val = item.policeName;
+                            }
+                            callback && callback(item);
+                            win.close();
+                        }
+                    },
+                    tooltip:true,
+                    minHeight: 80,
+                    datafetch: 20,//default
+                    customUrl: {
+                        url: webix.proxy('customProxy','/policeDog/services/user/getList/{pageSize}/{curPage}'),
+                        httpMethod: 'post',
+                        params: {workUnit: USER_INFO.workUnit},
+                        datatype: 'customJson'
+                    },
+                    pager: "pager_user"
+                }, {
+                    view: "pager",
+                    id: "pager_user",
+                    size: 20,
+                    group: 5,
+                    template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>&nbsp;&nbsp;&nbsp;&nbsp;总共#count#条</div>"
+                }]
+            }, {height: 500, width: 775});
+            win.show();
         }
     };
 

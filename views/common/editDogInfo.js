@@ -47,7 +47,7 @@ define([
                                         {id: '合格', value: '合格'},
                                         {id: '不合格', value: '不合格'}
                                 ]},
-                                {view: "richselect", label: "工作单位", name: "workPlace", disabled: false, options: constant.getUnitOptions()},
+                                {view: "richselect", label: "工作单位", name: "workPlace", disabled: true, options: constant.getUnitOptions()},
                                 {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea() }
                             ]
                         }]

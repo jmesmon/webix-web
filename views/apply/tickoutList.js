@@ -164,33 +164,44 @@ define([
             {id: '2', value: "通过"},
             {id: '4', value: "驳回"}
         ];
+        var arr = [], arr2 = [], state = "";
         if(isFinal){
+            stateMsg = "等待终审";
             options = [
                 {id: '3', value: "终审通过"},
                 {id: '4', value: "驳回"}
             ];
-        }
-        var da = [];
-        if(!isFinal){
             for(var i = 0; i<data.length; i++){
-                console.log(data[i]);
-                if(data[i].applyState == 1){
-                    da.push(data[i]);
+                if(data[i].applyState == 2){
+                    //等待九支队审批的
+                    arr.push(data[i]);
                 }else{
-                    webix.message('编号为：' + data[i].id + ' 的申请，当前状态不是局长审批，跳过该记录')
+                    webix.message('编号为：' + data[i].id + ' 的申请，当前状态不是等待九支队审批状态，跳过该记录');
+                    arr2.push(data[i]);
                 }
             }
         }
-        data = da;
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
+        if(!isFinal){
+            stateMsg = "等待局长审批";
+            for(var i = 0; i<data.length; i++){
+                console.log(data[i]);
+                if(data[i].applyState == 1){
+                    arr.push(data[i]);
+                }else{
+                    webix.message('编号为：' + data[i].id + ' 的申请，当前状态不是局长审批状态，跳过该记录');
+                    arr2.push(data[i]);
+                }
+            }
+        }
+        if(arr.length == 0){
+            msgBox("您一共选择"+data.length+"条数据，没有符合"+stateMsg+"的数据，请重新选择");
             return ;
         }
         var win = getWin("批量审批", {
             rows: [{
                 height: 30,
                 borderless: true,
-                template: '一共选择了'+data.length+'条申请，请审批'
+                template: '一共选择了'+data.length+'条申请，其中'+arr.length+'条可以符合当前审批条件，请审批'
             }, {
                 view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '2', labelWidth: 60,
                 options: options
@@ -208,6 +219,7 @@ define([
                             var da = [];
                             var applyState = $$('applyState').getValue();
                             var approveDetail = $$('approveDetail').getValue();
+                            data = arr;
                             for(var i = 0; i<data.length; i++){
                                 if(isFinal){
                                     da.push({
@@ -340,7 +352,6 @@ define([
                             "4": "申请驳回"}[value] || "";
                     }},
                     {id: "dogInfo", header: "警犬名称", width: 100, sort: "string", template: '#dogInfo.dogName#'},
-                    {id: "dogInfo", header: "警犬芯片号", width: 100, sort: "string", template: '#dogInfo.chipNo#'},
                     {id: "creationDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "applyDate", header: "淘汰日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
 

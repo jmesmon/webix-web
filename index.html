@@ -19,11 +19,13 @@
         (function(){
 
             var roles = {
+                //分局局长
                 "FJ_JuZhang": [
                     "work", //警犬工作
                     "dog.list", //成犬列表
                     "dog.edit",
                     "train.prof", //专业技能
+                    "dog.addDog", //外来警犬信息录入
                     "apply.tickout.create",
                     "apply.die.create",
                     'apply.tickout.list', //淘汰申请列表
@@ -36,6 +38,7 @@
                     'org.user',
                     'news.publish',
                     'news.list',
+                    'work.approve',
                 ],
                 //警员
                 "JingYuan": [
@@ -53,7 +56,6 @@
 //                    "apply.dog", //申请配发
 //                    "breed", //繁育模块
                     "dog.list", //成犬列表
-                    "dog.addDog", //外来警犬信息录入
                     "reporter.fbaj",
                     "reporter.work",
 //                    "news.publish", //动态发布
@@ -80,6 +82,8 @@
                     'org.user',
                     'news.publish',
                     'news.list',
+                    'work.approve',
+                    "dog.addDog", //外来警犬信息录入
                 ],
                 //繁殖人员
                 "FanZhiRenYuan": [
@@ -143,9 +147,51 @@
                     'org.config',
                     'org.user',
                     'apply.dog.changeUser'
-                ]
+                ],
+                JiuZhiDui: [
+                    "work", //警犬工作
+                    "apply.dog", //申请配发
+                    "apply.dog.approve", //审批警犬申请
+                    "breed", //繁育模块
+                    "dog.list", //成犬列表
+                    "dog.addDog", //外来警犬信息录入
+                    "dog.edit",
+
+                    "news.publish", //动态发布
+                    "news.list", //动态管理
+                    "news.list.btn.del", //动态管理，删除记录
+
+                    "reporter.fbaj",
+                    "reporter.work",
+
+                    "apply.tickout.create",
+                    "apply.die.create",
+//                    'apply.tickout.approve',//分局审批
+                    'apply.tickout.approve.final',
+                    'apply.tickout.delete',
+
+//                    "apply.die.approve",
+                    "apply.die.approve.final",
+
+                    "apply.tickout.list",
+                    "apply.die.list",
+
+                    "train.publish", //培训、考核信息发布
+                    "train.create", //培训考核名单
+                    "train.score.mgmt", //培训成绩管理
+                    "train.myList", //我的培训
+                    "train.myList.btn.setScore", //我的培训，设置成绩
+                    "train.myList.btn.setProf", //我的培训，设置专业技能
+                    "train.myList.btn.del", //我的培训，删除记录
+                    "train.prof", //专业技能
+                    "train.prof.btn.del", //删除专业技能
+                    'org.config',
+                    'org.user',
+                    'apply.dog.changeUser'
+                ],
             };
-            roles.JiuZhiDui = roles.SuperMan;
+//            roles.JiuZhiDui = roles.SuperMan;
+
             window.permissions = roles[USER_INFO.userRole || ''] || [];
             console.log(window.permissions);
         })();
