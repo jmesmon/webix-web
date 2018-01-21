@@ -163,6 +163,7 @@ function doPost(url, params, success, fail){
 function getWin(title, ui, config){
     var cfg = config || {};
     var width = cfg.width || 600;
+    console.log(width);
     var height = cfg.height || 400;
     var win_id = webix.uid().toString();
     var modal = true;

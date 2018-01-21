@@ -49,10 +49,10 @@ define([
             var uploader = $$('uploader_pic');
             var picList = [];
             uploader.files.data.getRange().each(function(item){
-                picList.push(item.serverName);
+                picList.push({fileName: item.fileName   , url: item.serverName});
             });
 
-            values.workPic = picList.join(',');
+            values.workPic = JSON.stringify(picList);
             var data = [values];
             if(form.validate()){
                 if(!values.ajCar){
@@ -87,7 +87,7 @@ define([
                     view:"scrollview",
                     id:"scrollview",
                     scroll:"y",
-                    height: 330,
+                    height: 450,
                     body:{
                         rows:[
                             {
@@ -101,7 +101,7 @@ define([
                                     {
                                         rows: [
                                             {view: "text", label: "工作类型", name: 'workType', value:workType, width: 240, hidden: true},
-                                            {view: "text", label: "安检编号", name: 'xlNum', value:'', width: 240, hidden: isAj},
+                                            {view: "text", label: "编号", name: 'xlNum', value:'', width: 240},
                                             {
                                                 cols: [
                                                     {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
@@ -120,6 +120,7 @@ define([
                                                             }
                                                         }
                                                     },
+                                                    {width: 50},
                                                     {view: 'text', value: '', name: "dogId", id: 'dogId', hidden: true},
                                                     {view: "text", label: "出勤警犬", id: 'select_dog', placeholder: '点击选择', width: 240,
                                                         on: {
@@ -141,6 +142,7 @@ define([
                                     {
                                         cols: [
                                             {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {width: 50},
                                             {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
                                         ]
                                     },
@@ -158,13 +160,7 @@ define([
                                             {id: '异常', value: "异常"}
                                         ]
                                     },
-                                    {view: "richselect", label: "安检等级", hidden: isAj, value: '一般', name: "ajLevel", width: 240,
-                                        options:[
-                                            {id: '一般', value: "一般"},
-                                            {id: '重大', value: "重大"},
-                                            {id: '特大', value: "特大"}
-                                        ]
-                                    },
+                                    {view: "text", label: "安检等级", hidden: isAj, value: '', placeholder: '一般/重大/特大', name: "ajLevel", width: 240},
                                     {
                                         hidden: isAj,
                                         cols: [
@@ -282,7 +278,7 @@ define([
                         ]
                     }
                 },
-                {width: 550},
+                {width: 800},
                 {
                     cols:[
                         {},
@@ -294,7 +290,7 @@ define([
                     ]
                 }
             ]
-        }, {height: 420});
+        }, {height: 550, width: 800});
         win.show();
     };
 
@@ -448,7 +444,7 @@ define([
                                     {
                                         rows: [
                                             {view: "text", label: "工作类型", name: 'workType', value:workType, width: 240, hidden: true},
-                                            {view: "text", label: "安检编号", name: 'xlNum', value:'', width: 240, hidden: isAj},
+                                            {view: "text", label: "安检编号", name: 'xlNum', value:'', width: 240},
                                             {
                                                 cols: [
                                                     {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
@@ -629,7 +625,7 @@ define([
                         ]
                     }
                 },
-                {width: 550},
+                {width: 650},
                 {
                     cols:[
                         {},
@@ -641,7 +637,7 @@ define([
                     ]
                 }
             ]
-        }, {height: 420});
+        }, {height: 600});
         win.show();
         item.startTimeStr = item.startTime;
         item.endTimeStr = item.endTime;
@@ -718,7 +714,9 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "警犬名", name: "dogNameLike", width: 180, labelWidth: 50},
+                            {view: "text", label: "出勤人员", name: "attPerson", width: 160, labelWidth: 60},
+                            {width: DEFAULT_PADDING},
+                            {view: "text", label: "警犬名", name: "dogNameLike", width: 160, labelWidth: 50},
                             {width: DEFAULT_PADDING},
                             {view: "text", label: "用犬单位", name: "workUnit", width: 180, labelWidth: 60},
                             {width: DEFAULT_PADDING},
@@ -827,28 +825,38 @@ define([
                                 '<div style="line-height:20px"><span class="tab_label">安检车辆：</span>#ajCar#</div>'+
                                 '<div style="line-height:20px"><span class="tab_label">安检等级：</span>#ajLevel#</div>';
                         }
+                        var hasFile = '<a class="showFile" href="javascript:-1">查看附件</a>';
+                        if(!item.workPic || item.workPic == '[]'){
+                            hasFile = '无';
+                        }
                         var html = '<table width="100%">' +
                             '<tr>' +
                             '<td valign="bottom" style="width: 42px; font-size: 16px;line-height:12px;text-align: center">#workType#' +
-                                '<span style="font-size: 12px;color:#fff90d"><br><br><br><a class="showApprove" href="javascript:-1">#workState#</a></span>' +
+                            '<span style="font-size: 12px;color:#fff90d"><br><br><br><a class="showApprove" href="javascript:-1">#workState#</a></span>' +
                             '</td>'+
-                            '<td style="width: 180px" valign="top">' +
-                            '<div style="line-height: 20px"><span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dogInfo.dogName#</div>' +
+                            '<td style="width: 120px" valign="top">' +
+                            '<div style="line-height: 20px"><span class="tab_label">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span>#xlNum#</div>' +
+                            '<div style="line-height: 20px"><span class="tab_label">检查人次：</span>#ajPer#</div>' +
+                            '<div style="line-height: 20px"><span class="tab_label">检查物品：</span>#ajWp#</div>' +
+                            '<div style="line-height: 20px"><span class="tab_label">附件信息：</span>'+hasFile+'</div>' +
+                            '</td>' +
+                            '<td style="width: 160px" valign="top">' +
+                            '<div style="line-height: 20px"><span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>' + (item.dogInfo ? item.dogInfo.dogName || '' : '') + '</div>' +
                             '<div style="line-height: 20px"><span class="tab_label">用犬单位：</span>#workUnit#</div>' +
                             '<div style="line-height: 20px"><span class="tab_label">出勤人员：</span>#attPerson#</div>' +
                             '<div style="line-height: 20px"><span class="tab_label">带队领导：</span>#attLeader#</div>' +
                             '</td>' +
-                            '<td valign="top" style="width: 200px">' +
+                            '<td valign="top" style="width: 260px">' +
                             '<div style="line-height:20px"><span class="tab_label">开始时间：</span>#startTime#</div>' +
                             '<div style="line-height:20px"><span class="tab_label">结束时间：</span>#endTime#</div>' +
                             '<div style="line-height:20px"><span class="tab_label">查获物品：</span>#searchWp#</div>' +
                             '<div style="line-height:20px"><span class="tab_label">是否起作用：</span>#isWork#</div>' +
                             '</td>' +
-                            '<td style="width: 150px" valign="top">' +
+                            '<td style="width: 300px" valign="top">' +
                             caseInfo +
                             '<div style="line-height:20px"><span class="tab_label">补&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;充：</span>#workResult#</div>' +
                             '</td>' +
-                            '<td style="line-height: 20px"><div style="overflow-x: auto; overflow-y: hidden; width:400px">'+picHtml +'</div></td>'+
+                            // '<td style="line-height: 20px"><div style="overflow-x: auto; overflow-y: hidden; width:400px">'+picHtml +'</div></td>'+
                             '</tr>' +
                             '</table>';
                         return webix.template(html)(item);
@@ -865,6 +873,34 @@ define([
                 onClick: {
                     edit: function (a, b, c) {
                         console.log([a, b, c]);
+                    },
+                    showFile: function(a, b ,c){
+                        var item = $$(datatableId).getItem(b.row);
+                        console.log(item);
+                        if(!item.workPic || item.workPic == '[]'){
+                            msgBox('没有上传附件');
+                            return ;
+                        }
+                        var data = JSON.parse(item.workPic);
+                        var win = getWin("查看附件", {
+                            rows: [
+                                {
+                                    view: "datatable",
+                                    select: true,
+                                    height: 400,
+                                    columns: [
+                                        {id: "fileName", header: "附件名称", width: 600, template: function(item){
+                                            return '<a href="' + item.url + '" target="_blank">' + item.fileName + '</a>';
+                                        }}
+                                    ],
+                                    tooltip:true,
+                                    minHeight: 80,
+                                    datafetch: 20,//default
+                                    data: data
+                                }
+                            ]
+                        }, { width: 600});
+                        win.show();
                     },
                     showApprove: function(a,b,c){
                         var item = $$(datatableId).getItem(b.row);

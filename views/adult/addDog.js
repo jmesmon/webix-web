@@ -50,7 +50,7 @@ define([
                                                 {view: "datepicker", label: "出生日期", name: "birthdayStr", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "text", label: "繁殖单位", name: "breeder", disabled: false},
                                                 {view: "text", label: "训导员", name: "tutor", disabled: false, hidden: true},
-                                                {template: "<div style='line-height: 4px'>带犬民警：&nbsp;请先创建警犬信息，然后在分配带犬人员</div>", height: 20, borderless: true },
+                                                {template: "<div style='line-height: 4px'>带犬民警：&nbsp;"+USER_INFO.policeName+"</div>", height: 20, borderless: true },
 
                                             ]
                                         }, {
@@ -322,9 +322,11 @@ define([
                                 trainResult: "合格",
                                 trainStage:"-2"});
                             }
-                            // baseInfo.trainInfo = trainData;
-                            // baseInfo.wormImmueInfo = wormImmueData;
-                            baseInfo.workPlace='刑侦总队';
+
+                            baseInfo.workPlace= USER_INFO.workUnit || '刑侦总队';
+                            baseInfo.policeId=USER_INFO.id;
+                            baseInfo.policeName=USER_INFO.policeName;
+
                             var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
                                 trainData: trainData,

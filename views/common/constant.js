@@ -205,12 +205,13 @@ define([
         },
         getDogArea: function () {
             return [
-                {id: '0', value: '基地'},
+                // {id: '0', value: '基地'},
                 {id: '1', value: '南京片区'},
                 {id: '2', value: '沈阳片区'},
                 {id: '4', value: '昆明片区'},
                 {id: '5', value: '南昌片区'},
-                {id: '6', value: '部队'}
+                // {id: '6', value: '部队'}
+                {id: '99', value: '其他'}
             ];
         },
         showRelative: function (data) {
@@ -294,6 +295,14 @@ define([
             }else{
                 item.dogTypeStr = '';
             }
+            var arr = constant.getDogArea();
+            var areaName = '其他';
+            for(var i = 0; i<arr.length; i++){
+                var it = arr[i];
+                if(it.id == item.workArea){
+                    areaName = it.value;
+                }
+            }
             var win = getWin('警犬详细信息', {
                 css: 'dogDetail',
                 cols: [
@@ -312,11 +321,10 @@ define([
                                 '<span class="tab_label">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>#dogColour#<br>' +
                                 // '<span class="tab_label">外貌特征：</span><br>' +
                                 '<span class="tab_label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#dogTypeStr#<br>' +
-                                '<span class="tab_label">训练成绩：</span>#trainScore#<br>' +
-                                '<span class="tab_label">种犬等级：</span>#dogLevel#<br>' +
                                 '<span class="tab_label">工作单位：</span>#workPlace#<br>' +
-                                '<span class="tab_label">省&nbsp;&nbsp;区&nbsp;&nbsp;市：</span>#workProvince#<br>' +
-                                '<span class="tab_label">警犬专业：</span>#dogPros#',
+                                '<span class="tab_label">省&nbsp;&nbsp;区&nbsp;&nbsp;市：</span>北京<br>' +
+                                '<span class="tab_label">警犬专业：</span>#dogPros#'+
+                                '<div><span class="tab_label"">立功受奖：</span>#rewardInfo#</div>',
                                 data: item
                             }
                         ]
@@ -335,10 +343,8 @@ define([
                                 template:
                                 '<div><span class="tab_label"">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>#hairType#</div>' +
                                 '<div style="height: 58px"></div>' +
-                                '<div><span class="tab_label"">近交系数：</span>#inbreeding#</div>' +
                                 '<div style="height: 30px"></div>' +
-                                '<div><span class="tab_label"">片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>#workArea#</div>' +
-                                '<div><span class="tab_label"">立功受奖：</span></div>',
+                                '<div><span class="tab_label"">片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>'+areaName+'</div>',
                                 data: item
                             },
                             {height: 12},
