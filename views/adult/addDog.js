@@ -27,7 +27,20 @@ define([
                                         cols: [{
                                             width: 300,
                                             rows: [
-                                                {view: "text", label: "警犬名称", name: "dogName", format:"%Y-%m-%d", stringResult: true},
+                                                {view: "text", label: "警犬名称", name: "dogName", format:"%Y-%m-%d", stringResult: true, on: {
+                                                    onChange: function(newVal, oldVal){
+                                                        var input = this;
+                                                        if(newVal == ''){
+                                                            return ;
+                                                        }
+                                                        doIPost('dogBaseInfo/isNameDump', {dogName: newVal}, function (data) {
+                                                            if(!data.success){
+                                                                msgBox("您输入的警犬名称已经存在，不允许重名，请重新修改");
+                                                                input.setValue(oldVal || '');
+                                                            }
+                                                        })
+                                                    }
+                                                }},
                                                 {view: "text", label: "芯片编号", name: "chipNo", attributes:{ maxlength: 128 }},
                                                 // {view: "datepicker", label: "注入日期", name: "chipNoInjectStr", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "richselect", label: "性别", value:"1", name: 'sex', options:[
@@ -311,6 +324,7 @@ define([
                             }
                             // baseInfo.trainInfo = trainData;
                             // baseInfo.wormImmueInfo = wormImmueData;
+                            baseInfo.workPlace='刑侦总队';
                             var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
                                 trainData: trainData,

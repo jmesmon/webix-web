@@ -46,14 +46,15 @@ define([
         '培训科目': {id: "trainName", header: "培训科目", width: 100},
         '班级名称': {id: "trainClassName", header: "班级名称", width: 100},
         '培训单位': {id: "trainUnit", header: "培训单位", width: 140},
-        '培训地点': {id: "trainAddr", header: "培训地点", width: 130},
+        '培训地点': {id: "trainAddr", header: "培训地点", width: 200},
         // '教员': {id: "trainUser", header: "教员", width: 130},
         '基础评分': {id: "trainUser", header: "基础评分", width: 80, template: '<a class="score_detail">点击查看</a>'},
         '总分': {id: "totalScore", header: "总分", width: 80},
         '培训成绩': {id: "trainResult", header: "培训成绩", width: 80},
         '下次培训时间': {id: "nextTrainDate", header: "下次培训时间", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
         '带犬民警': {id: "policeName", header: "带犬民警", width: 80},
-        '教员': {id: "main_train_user", header: "教员", width: 80},
+        '教员': {id: "trainUser", header: "教员", width: 80},
+        '工作单位': {id: "workUnit", header: "工作单位", width: 80},
 
     };
     var methods = {

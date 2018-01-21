@@ -963,8 +963,8 @@ button,
 .webix_modal_box {
   overflow: hidden;
   display: inline-block;
-  min-width: 250px;
-  width: 250px;
+  min-width: 320px;
+  width: 320px;
   text-align: center;
   position: fixed;
   background-color: #ffffff;

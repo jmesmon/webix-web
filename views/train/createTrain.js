@@ -5,27 +5,6 @@ define([
     'views/common/constant',
 ], function (columns, tickout, editDog, constant) {
     var datatableId = webix.uid().toString();
-    /**
-     * 驱虫操作
-     */
-    var doWorm = function () {
-        var datatable = $$(datatableId);
-        var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
-            return ;
-        }
-        var w = loading();
-        doPost('wormImmue/finishWorm', data, function(data){
-            console.log(data);
-            w.close();
-            if(data.success){
-                datatable.reload();
-            }else{
-                msgBox('操作失败<br>' + data.message)
-            }
-        });
-    };
 
     /**
      * 执行搜索
@@ -37,32 +16,6 @@ define([
         params.growthStage = 2;
         datatable.config.customUrl.params = params;
         datatable.reload();
-    };
-
-    /**
-     * 淘汰
-     */
-    var tickOut = function () {
-        var datatable = $$(datatableId);
-        var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
-            return ;
-        }
-        tickout.doTickOut(data, datatable);
-    };
-
-    /**
-     * 死亡
-     */
-    var died = function () {
-        var datatable = $$(datatableId);
-        var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
-            return ;
-        }
-        tickout.doDied(data, datatable);
     };
 
     var signTrain = function () {
@@ -108,7 +61,7 @@ define([
                     policeId: dog.policeId,
                     policeName: dog.policeName,
                     nextTrainDateStr: nextTrainDate,
-                    workUnit: USER_INFO.workUnit,
+                    workUnit: dog.workPlace,
                     mainTrainUser: '',
                 });
             }

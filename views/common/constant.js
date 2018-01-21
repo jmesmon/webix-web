@@ -350,7 +350,7 @@ define([
             }, {height: 530});
             win.show();
         },
-        setDogList: function (textId, valId) {
+        setDogList: function (textId, valId, params) {
             return {
                 onItemClick: function () {
                     constant.showDogList(function (datatable) {
@@ -360,8 +360,8 @@ define([
                         console.log(item.chipNo);
                         $$(textId).setValue(item.dogName);
                         $$(textId).config.val = item.dogName;
-                        $$(valId).setValue(item.chipNo);
-                    });
+                        $$(valId).setValue(item.id);
+                    }, params);
                 },
                 onChange: function (newVal, oldVal) {
                     if($$(textId).config.val){
@@ -457,11 +457,11 @@ define([
         },
         setDog: function (textObj, valObj, params, callback) {
             // if(USER_INFO.userRole == 'JingYuan') {
-            params = webix.extend({workPlace: USER_INFO.workUnit}, params);
+            params = webix.extend({workPlace: USER_INFO.workUnit}, params, true);
             // }else{
             //     params = {policeId: USER_INFO.id};
             // }
-            params = webix.extend({workPlace: USER_INFO.workUnit}, params);
+            params = webix.extend({workPlace: USER_INFO.workUnit}, params, true);
             var datatableId = webix.uid().toString();
             var pageId = webix.uid().toString();
             var cols = [

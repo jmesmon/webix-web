@@ -15,6 +15,9 @@ define([
         if(params.growthStage == 0){
             delete params.growthStage;
         }
+        if(params.workStage == 0){
+            delete params.workStage;
+        }
         var datatable = $$(tableid);
         removeEmptyProperty(params, true);
         datatable.config.customUrl.params = params;
@@ -38,7 +41,7 @@ define([
                                         options:constant.getUnitOptions(),
                                         on: {
                                             onChange: function (newVal, oldVal) {
-                                                loadData(datatableId1, {workPlace: $$('unit1').getValue(), growthStage: $$('child_1').getValue() });
+                                                loadData(datatableId1, {workPlace: $$('unit1').getValue(), workStage: $$('unAllot').getValue(),growthStage: $$('child_1').getValue()   });
                                             }
                                         }
                                     },{}
@@ -51,7 +54,23 @@ define([
                                 value:0,
                                 on: {
                                     onChange: function (newVal, oldVal) {
-                                        loadData(datatableId1, {growthStage: $$('child_1').getValue() });
+                                        if(newVal == 1){
+                                            $$('unit1').disable();
+                                        }else{
+                                            $$('unit1').enable();
+                                        }
+                                        loadData(datatableId1, {workStage: $$('unAllot').getValue(), growthStage: $$('child_1').getValue()   });
+                                    }
+                                }
+                            }, {
+                                view:"checkbox",
+                                id:"unAllot",
+                                label:"待分配",
+                                labelWidth: 50,
+                                value:0,
+                                on: {
+                                    onChange: function (newVal, oldVal) {
+                                        loadData(datatableId1, {workPlace: $$('unit1').getValue(), workStage: $$('unAllot').getValue(),growthStage: $$('child_1').getValue()   });
                                     }
                                 }
                             },{}]
@@ -153,16 +172,9 @@ define([
                                 },
                                 onAfterLoad: function () {
                                     this.hideOverlay();
-                                },
+                                }
                             },
                             data: []
-                            // customUrl: {
-                            //     url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getAll/{pageSize}/{curPage}'),
-                            //     httpMethod: 'post',
-                            //     params: {},
-                            //     datatype: 'customJson'
-                            // },
-                            // pager: "pagerB"
                         },
                         {
                             height: 25,

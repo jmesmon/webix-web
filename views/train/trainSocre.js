@@ -6,8 +6,17 @@ define([
     var del = function(){
         var datatable = $$(datatableId);
         var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
+        var arr = [],erroeArr = [];
+        for(var i=0; i<data.length; i++){
+            var item = data[i];
+            if(item.trainResult){
+                erroeArr.push(item);
+            }else{
+                arr.push(item);
+            }
+        }
+        if(arr.length == 0){
+            msgBox("设置成绩的培训不可以取消报名（删除）<br>您一共选择了"  + data.length + "条培训信息，均不符合取消报名条件");
             return ;
         }
         webix.confirm({
@@ -15,8 +24,8 @@ define([
             callback:function(res){
                 if(res){
                     var w = loading();
-                    var params = data;
-                    doPost('train/delete', data, function(data){
+                    var params = arr;
+                    doPost('train/delete', arr, function(data){
                         w.close();
                         if(data.success){
                             datatable.reload();
@@ -221,7 +230,7 @@ define([
     };
 
     var cols = column.getColumns([//"类型",
-         "开始日期", "结束日期", "培训单位", "犬名_2", "带犬民警", "培训科目", "培训成绩",  "教员", "下次培训时间", "培训地点"
+         "开始日期", "结束日期", "培训科目", "培训单位", "犬名_2", "带犬民警",  "培训成绩",  "教员", "工作单位", "下次培训时间", "培训地点"
     ], []);
 
     var gridPager = {

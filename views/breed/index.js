@@ -83,6 +83,11 @@ define([
         stepInfo.data.step2 = '';
         stepInfo.data.step3 = '';
         stepInfo.refresh();
+        doIPost('dogMating/update', {id: window.pageParams.id, mateState: 4}, function(data){
+            window.open('#!/app/breed.mating', '_self');
+        }, function(){
+            window.open('#!/app/breed.mating', '_self');
+        });
     };
 
     var addChild = function () {
@@ -135,9 +140,9 @@ define([
         var state = true;
         var msg = [];
         var values = $$('reproduce').getValues();
-        if(!values.father_chip_no){
+        if(!values.fatherDogId){
             state = false;
-            msg.push('请填写父犬芯片号');
+            msg.push('请填写父犬ID号');
         }
         if(!values.father_name){
             state = false;
@@ -148,9 +153,9 @@ define([
             msg.push('请填写父犬品种');
         }
 
-        if(!values.mother_chip_no){
+        if(!values.motherDogId){
             state = false;
-            msg.push('请填写母犬芯片号');
+            msg.push('请填写母犬ID号');
         }
         if(!values.mother_name){
             state = false;
@@ -184,7 +189,7 @@ define([
     };
 
     var onChange = function(val, isFather){
-        doPost('dogBaseInfo/get', {chipNo: val}, function (data) {
+        doIPost('dogBaseInfo/get', {id: val}, function (data) {
             console.log(data);
             if(data.success && data.result.length > 0){
                 var dog = data.result[0];
@@ -236,11 +241,11 @@ define([
                 birthdayStr: values.birthday,
                 dogSource: '自繁',
                 breeder: values.breeder,
-                fatherId: values.father_chip_no,
-                motherId: values.mother_chip_no,
+                fatherId: values.fatherDogId,
+                motherId: values.motherDogId,
                 growthStage: 1,
                 workStage: 1,
-                nestNo: nestNo  //窝编号：出生日期 + 数量 + 随机数
+                nestNo: nestNo,  //窝编号：出生日期 + 数量 + 随机数
             };
             children.push(child);
         }
@@ -329,7 +334,7 @@ define([
                         cols: [
                             {
                                 rows: [
-                                    {view: "text", label: "父犬芯片号", name: "father_chip_no", width: 300, on:{onChange: function(){
+                                    {view: "text", label: "父犬芯片号", name: "fatherDogId", width: 300, on:{onChange: function(){
                                         onChange(this.getValue(), true);
                                     }}},
                                     {view: "text", label: "父犬犬名", name: "father_name", id:'father_name', width: 300, readonly: true, placeholder: '自动填充'},
@@ -344,7 +349,7 @@ define([
                             {width: DEFAULT_PADDING},
                             {
                                 rows: [
-                                    {view: "text", label: "母犬芯片号", name: "mother_chip_no", width: 300, on:{onChange: function(){
+                                    {view: "text", label: "母犬芯片号", name: "motherDogId", width: 300, on:{onChange: function(){
                                         onChange(this.getValue(), false);
                                     }}},
                                     {view: "text", label: "母犬犬名", name: "mother_name", id:'mother_name', width: 300, readonly: true, placeholder: '自动填充'},
@@ -418,19 +423,20 @@ define([
     return {
         $ui:layout,
         $oninit: function(scope){
-            console.log(window.pageParams);
             if(window.pageParams){
                 var params = window.pageParams;
-                $$('reproduce').setValues({
-                    father_chip_no: params.fatherDogChipNo,
+                var values = {
+                    fatherDogId: params.fatherDogId,
                     mateDate: params.mateDate,
                     litterSize: params.breedCount,
-                    mother_chip_no: params.motherDogChipNo,
+                    motherDogId: params.motherDogId,
                     birthday: params.expectDate,
                     breeder: USER_INFO.policeName
-                });
+                };
+                $$('reproduce').setValues(values);
                 // window.pageParams = null;
-                console.log(params);
+            }else{
+                window.open('#!/app/breed.mating', '_self');
             }
         }
     };

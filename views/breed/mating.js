@@ -60,10 +60,14 @@ define([
                                 elements:[
                                     {
                                         cols: [
-                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', width: 200,  on: constant.setDogList('father_dog_name', 'fatherDogChipNo') },
-                                            {view: 'text', hidden: true, name: "fatherDogChipNo", id: 'fatherDogChipNo'},
-                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', width: 200,   on: constant.setDogList('motherDogLabel', 'motherDogChipNo') },
-                                            {view: 'text', hidden: true, name: "motherDogChipNo", id: 'motherDogChipNo'}
+                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 200,
+                                                on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'})
+                                            },
+                                            {view: 'text', hidden: true, name: "fatherDogId", id: 'fatherDogId'},
+                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 200,
+                                                on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'})
+                                            },
+                                            {view: 'text', hidden: true, name: "motherDogId", id: 'motherDogId'}
                                         ]
                                     },
                                     {
@@ -89,6 +93,11 @@ define([
                                     },
 
                                     {view: "datepicker", label: "预产期", name: "expectDate", id: 'expectDate', width: 200, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"1", width: 180, options:[
+                                        {id: '1', value: "完成交配"},
+                                        {id: '2', value: "完成B超"},
+                                        {id: '3', value: "完成产仔"}
+                                    ]},
                                     {
                                         cols: [
                                             {view: "text", label: "产仔数量", name: "breedCount", attributes:{ maxlength: 4 }},
@@ -96,11 +105,7 @@ define([
                                             {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
-                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"1", width: 180, options:[
-                                        {id: '1', value: "完成交配"},
-                                        {id: '2', value: "完成B超"},
-                                        {id: '3', value: "完成产仔"}
-                                    ]}
+
                                 ]
                             }
                         ]
@@ -118,14 +123,14 @@ define([
                             //
                             var values = $$('form').getValues();
                             var lod = loading('近亲校验中...');
-                            doPost('dogBaseInfo/relativeCheck/'+values.fatherDogChipNo+'/' + values.motherDogChipNo, {}, function(data){
+                            doPost('dogBaseInfo/relativeCheck/'+values.fatherDogId+'/' + values.motherDogId, {}, function(data){
                                 lod.close();
                                 if(!data.success){
                                     constant.showRelative(data);
                                 }else{
                                     var mateData = {
-                                        fatherDogChipNo: values.fatherDogChipNo,
-                                        motherDogChipNo: values.motherDogChipNo,
+                                        fatherDogId: values.fatherDogId,
+                                        motherDogId: values.motherDogId,
                                         fatherDogName: values.fatherDogName,
                                         motherDogName: values.motherDogName,
                                         mateDateStr: values.mateDate,
@@ -178,10 +183,14 @@ define([
                                     {view: "text", name: "id", hidden:true},
                                     {
                                         cols: [
-                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', width: 200,  on: constant.setDogList('father_dog_name', 'fatherDogChipNo') },
-                                            {view: 'text', hidden: true, name: "fatherDogChipNo", id: 'fatherDogChipNo'},
-                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', width: 200,   on: constant.setDogList('motherDogLabel', 'motherDogChipNo') },
-                                            {view: 'text', hidden: true, name: "motherDogChipNo", id: 'motherDogChipNo'}
+                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 200,
+                                                on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'})
+                                            },
+                                            {view: 'text', hidden: true, name: "fatherDogId", id: 'fatherDogId'},
+                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 200,
+                                                on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'})
+                                            },
+                                            {view: 'text', hidden: true, name: "motherDogId", id: 'motherDogId'}
                                         ]
                                     },
                                     {
@@ -192,6 +201,11 @@ define([
                                     },
 
                                     {view: "datepicker", label: "预产期", name: "expectDate", width: 200, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"-1", width: 180, options:[
+                                        {id: '1', value: "完成交配"},
+                                        {id: '2', value: "完成B超"},
+                                        {id: '3', value: "完成产仔"}
+                                    ]},
                                     {
                                         cols: [
                                             {view: "text", label: "产仔数量", name: "breedCount", attributes:{ maxlength: 4 }},
@@ -199,11 +213,6 @@ define([
                                             {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
-                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"-1", width: 180, options:[
-                                        {id: '1', value: "完成交配"},
-                                        {id: '2', value: "完成B超"},
-                                        {id: '3', value: "完成产仔"}
-                                    ]}
                                 ]
                             }
                         ]
@@ -220,6 +229,10 @@ define([
                         {view: "button", label: "保存", width: 65, click: function(){
                             var values = $$('form').getValues();
                             console.log(values);
+                            if(values.mateState == 3 && values.breedCount == '' ){
+                                msgBox('请设置产仔数量');
+                                return ;
+                            }
                             var mateData = {
                                 id: values.id,
                                 fatherDogChipNo: values.fatherDogChipNo,
@@ -281,7 +294,8 @@ define([
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "完成交配"},
                                 {id: '2', value: "完成B超"},
-                                {id: '3', value: "完成产仔"}
+                                {id: '3', value: "完成产仔"},
+                                {id: '4', value: "已生成幼犬数据"}
                             ]},
                             {width: DEFAULT_PADDING},
                             {view: "button", label: "查找", type: "form", width: 100, paddingX: 10, click: search},
@@ -311,10 +325,19 @@ define([
                     {view: "button", label: "删除", width: 70, click: del},
                     {view: "button", label: "生成幼犬信息", width: 100, click: function () {
                         var datatable = $$(datatableId);
-                        console.log(datatable);
                         var data = datatable.getCheckedData();
                         if(data.length == 0){
-                            msgBox('请至少选择一条数据');
+                            msgBox('请选择要生成幼犬的数据');
+                            return ;
+                        }
+                        var item = data[0];
+                        if(item.mateState != 3){
+                            var state = {"1": '完成交配', '2': '完成B超', '3': '已产仔', '4': '幼犬数据已生成'}[item.mateState] || '';
+                            msgBox('状态为：'+state+'<br>不可以生成幼犬数据，请检重新选择');
+                            return ;
+                        }
+                        if(!item.breedCount){
+                            msgBox('当前选择的数据“产仔数量”不合法（必须大于0），无法进行下一步操作');
                             return ;
                         }
                         window.pageParams = data[0];
@@ -330,10 +353,10 @@ define([
                 columns: [
                     {
                         id: "$check",
-                        header: {content: "masterCheckbox"},
+                        header: '',
                         checkValue: true,
                         uncheckValue: false,
-                        template: "{common.checkbox()}",
+                        template: "{common.radio()}",
                         width: 40
                     },
                     {id: "$index", header: "NO.", width: 45},
@@ -344,18 +367,16 @@ define([
                         tooltip: '编辑',
                         width: 48
                     },
-                    {id: "mateState", header: "状态", width: 65, template: function(obj, common, value){
-                        return {"1": '完成交配', '2': '完成B超', '3': '已生产'}[value] || '';
+                    {id: "mateState", header: "状态", width: 100, template: function(obj, common, value){
+                        return {"1": '完成交配', '2': '完成B超', '3': '已产仔', '4': '幼犬数据已生成'}[value] || '';
                     }},
-                    {id: "fatherDogName", header: "公犬名称", width: 90},
-                    {id: "fatherDogChipNo", header: "公犬芯片号", width: 90},
+                    {id: "fatherDogName", header: "公犬名称", width: 130},
 
-                    {id: "fatherDogName", header: "母犬名称", width: 90},
-                    {id: "motherDogChipNo", header: "母犬芯片号", width: 90},
+                    {id: "motherDogName", header: "母犬名称", width: 130},
 
-                    {id: "mateDate", header: "交配日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "bMuDate", header: "B超日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "expectDate", header: "预产期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "mateDate", header: "交配日期", width: 110, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "bMuDate", header: "B超日期", width: 110, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "expectDate", header: "预产期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "breedCount", header: "产仔数量", width: 100},
                     {id: "liveCount7", header: "7日存活数", width: 100},
                     {id: "liveCount21", header: "21日存活数", width: 100}

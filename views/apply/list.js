@@ -157,15 +157,26 @@ define([
     var approve = function () {
         var datatable = $$(datatableId);
         var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
+        var arr= []; errorArr = [];
+
+        for(var i = 0; i<data.length; i++){
+            var item = data[i];
+            if(item.applyState == 1){
+                arr.push(item);
+            }else{
+                errorArr.push(item);
+            }
+        }
+
+        if(arr.length == 0){
+            msgBox("已审批的不可以重复审批，请选择待审批状态的数据");
             return ;
         }
         var win = getWin("批量审批", {
             rows: [{
-                height: 30,
+                height: 40,
                 borderless: true,
-                template: '一共选择了'+data.length+'条申请，请审批'
+                template: '一共选择了'+data.length+'条申请，其中' + errorArr.length + '条是已经审批过了，不在重复审批，请审批'
             }, {
                 view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '合格', labelWidth: 60,
                 options: [
@@ -173,8 +184,8 @@ define([
                     {id: '3', value: "驳回"}
                 ]
             },
-            {view: "text", label: "备注", name: "approveDetail", id: 'approveDetail', labelWidth: 60, width: 280},
-                {width: 400},
+            {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 60, width: 280},
+                {width: 440},
                 {
                     cols:[
                         {},
@@ -186,8 +197,8 @@ define([
                             var da = [];
                             var applyState = $$('applyState').getValue();
                             var approveDetail = $$('approveDetail').getValue();
-                            for(var i = 0; i<data.length; i++){
-                                da.push({id: data[i].id, applyState: applyState, approveDetail: approveDetail});
+                            for(var i = 0; i<arr.length; i++){
+                                da.push({id: arr[i].id, applyState: applyState, approveDetail: approveDetail});
                             }
                             doIPost('apply/dog/approve', da, function(res){
                                 win.close();
@@ -200,7 +211,7 @@ define([
                         }}
                     ]
                 }]
-        }, {width: 400, height: 160});
+        }, {width: 450, height: 180});
         win.show();
     };
 
