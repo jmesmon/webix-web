@@ -144,6 +144,31 @@ define([
                 cols: [
                     {view: "button", label: "淘汰申请", width: 65, click: tickOut},
                     {view: "button", label: "死亡报告", width: 65, click: died},
+                    {view: "button", label: "删除", width: 60, permission: 'dog.delete',
+                        click: function () {
+                            var datatable = $$(datatableId);
+                            var data = datatable.getCheckedData();
+                            var params = [];
+                            data.each(function (item) {
+                                params.push({id: item.id});
+                            });
+                            webix.confirm({
+                                text:"确定删除？删除后不可恢复", ok:"是", cancel:"否",
+                                callback:function(res){
+                                    if(res){
+                                        doIPost('dogBaseInfo/delete', params, function(data){
+                                            if(data.success){
+                                                datatable.reload();
+                                                msgBox('删除成功')
+                                            }else{
+                                                msgBox('操作失败<br>' + data.message)
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    },
                     {}
                 ]
             },

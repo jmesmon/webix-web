@@ -32,7 +32,7 @@ define(function(){
         ]},
 
         {id: "main", value: "繁育管理", permission: 'breed', open: true, data:[
-            { id: "breed.mating", value: "交配管理", icon: 'venus-mars', $css: "dashboard", details:""},
+            { id: "breed.mating", value: "配种管理", icon: 'venus-mars', $css: "dashboard", details:""},
             // { id: "breed.index", value: "警犬繁殖", icon: 'venus-mars', $css: "dashboard", details:""},
             { id: "youngDog.index", value: "幼犬管理", icon: "github-alt", $css: "orders", details:""},
 

@@ -247,7 +247,20 @@ define([
                                                     cols: [
                                                         {view: "datepicker", label: "开始日期", name: "trainStartDateStr", width: 180, format:"%Y-%m-%d", stringResult: true},
                                                         {view: "datepicker", label: "结束日期", name: "trainEndDateStr", width: 180, format:"%Y-%m-%d", stringResult: true},
-                                                        {view: "text", label: "培训内容", name: "trainName", width: 200},
+                                                        // {view: "text", label: "培训内容", name: "trainName", width: 200},
+                                                        {view: "richselect", label: "培训内容", name: 'trainName', value:"", width: 200, labelWidth: 60,
+                                                            options:[
+                                                                {id: '追踪', value: "追踪"},
+                                                                {id: '鉴别', value: "鉴别"},
+                                                                {id: '物证搜索', value: "物证搜索"},
+                                                                {id: '搜捕', value: "搜捕"},
+                                                                {id: '治安防范', value: "治安防范"},
+                                                                {id: '搜爆', value: "搜爆"},
+                                                                {id: '搜毒', value: "搜毒"},
+                                                                {id: '救援', value: "救援"},
+                                                                {id: '其他', value: "其他"}
+                                                            ]
+                                                        },
                                                         {view: "text", label: "培训单位", name: "trainUnit", width: 200},
                                                         {view: "text", label: "教员", name: "trainUser", labelWidth: 50,width: 150},
                                                         {view: "richselect", label: "成绩", value:"合格", name: 'trainResult', width: 150, labelWidth: 40, options:[

@@ -264,6 +264,31 @@ var checkCount = 0;
                     },
                     {view: "button", label: "淘汰申请", width: 80, click: tickOut, permission: 'apply.tickout.create'},
                     {view: "button", label: "死亡报告", width: 80, click: died, permission: 'apply.die.create'},
+                    {view: "button", label: "删除", width: 60, permission: 'dog.delete',
+                        click: function () {
+                            var datatable = $$(datatableId);
+                            var data = datatable.getCheckedData();
+                            var params = [];
+                            data.each(function (item) {
+                                params.push({id: item.id});
+                            });
+                            webix.confirm({
+                                text:"确定删除？删除后不可恢复", ok:"是", cancel:"否",
+                                callback:function(res){
+                                    if(res){
+                                        doIPost('dogBaseInfo/delete', params, function(data){
+                                            if(data.success){
+                                                datatable.reload();
+                                                msgBox('删除成功')
+                                            }else{
+                                                msgBox('操作失败<br>' + data.message)
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    },
                     {view: "button", label: "警犬调配", width: 80, permission: 'apply.dog.changeUser',
                         click: function(){
                             var datatable = $$(datatableId);
@@ -276,7 +301,9 @@ var checkCount = 0;
                             doIPost('user/getList/3000/1', {}, function(resp){
                                 var userList = [];
                                 webix.toArray(resp.result).each(function(item){
-                                    userList.push({id: item.id + '<_>' + item.policeName, value: item.policeName});
+                                    if(item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
+                                        userList.push({id: item.id + '<_>' + item.policeName, value: item.policeName});
+                                    }
                                 });
                                 var win = getWin('警犬调配', {
                                     rows: [
@@ -290,7 +317,7 @@ var checkCount = 0;
                                                {}
                                            ]
                                         },
-                                        {height: 20},
+                                        {height: 30},
                                         {
                                             cols: [
                                                 {},
@@ -322,7 +349,7 @@ var checkCount = 0;
                                         },
                                         {}
                                     ]
-                                }, {width: 400, height: 170});
+                                }, {width: 500, height: 170});
                                 win.show();
                             });
 

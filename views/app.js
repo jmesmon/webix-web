@@ -132,70 +132,77 @@ define([
                     }
                 }
                 html += '</div>';
-                if(count > 99){
-                    $$('todoTip').config.value = '99+';
-                }else {
-                    $$('todoTip').config.value = count;
-                }
-                $$('todoTip').refresh();
-                if(isShow && isShowTodoList != 'false') {
-                    var datatableId = webix.uid().toString();
-                    var win = getWin('待办事项', {
-                        rows: [
-                            {template: html, borderless: true, onClick: {gotoProcess: function(){win.close()} }},
-                            {template: '<div>收到的通知</div>', height: 30, borderless: true},
-                            {
-                                id: datatableId,
-                                view: "datatable",
-                                tooltip:true,
-                                height: 210,
-                                datafetch: 6,
-                                columns: [
-                                    {id: "$index", header: "NO.", width: 45},
-                                    {id: 'isRead', header: '状态', width: 50, template: function(item){
-                                        return {"1":"<span style='color: #F9FF00'>未读</span>", "2": "已读"}[item.isRead] || "";
-                                    }},
-                                    {id: 'title', header: '标题', fillspace: 1},
-                                    {id: 'creationDate', header: '日期', width: 90,format: webix.Date.dateToStr("%Y-%m-%d")},
-                                    {
-                                        header: "操作",
-                                        template: function(item){
-                                            if(item.isRead == 2) return '';
-                                            return '<a href="javascript:void(0)" class="markRead">标记已读</a>';
+
+                doIPost('notice/getList/1/1', {policeId: USER_INFO.id}, function(data){
+                    try {
+                        count += data.pageVO.totalRows;
+                    }catch(e){}
+                    if(count > 99){
+                        $$('todoTip').config.value = '99+';
+                    }else {
+                        $$('todoTip').config.value = count;
+                    }
+                    $$('todoTip').refresh();
+                    // if(isShow && count>0) {
+                        var datatableId = webix.uid().toString();
+                        var win = getWin('待办事项', {
+                            rows: [
+                                {template: html, borderless: true, onClick: {gotoProcess: function(){win.close()} }},
+                                {template: '<div>收到的通知</div>', height: 30, borderless: true},
+                                {
+                                    id: datatableId,
+                                    view: "datatable",
+                                    tooltip:true,
+                                    height: 210,
+                                    datafetch: 6,
+                                    columns: [
+                                        {id: "$index", header: "NO.", width: 45},
+                                        {id: 'isRead', header: '状态', width: 50, template: function(item){
+                                            return {"1":"<span style='color: #F9FF00'>未读</span>", "2": "已读"}[item.isRead] || "";
+                                        }},
+                                        {id: 'title', header: '标题', fillspace: 1},
+                                        {id: 'creationDate', header: '日期', width: 90,format: webix.Date.dateToStr("%Y-%m-%d")},
+                                        {
+                                            header: "操作",
+                                            template: function(item){
+                                                if(item.isRead == 2) return '';
+                                                return '<a href="javascript:void(0)" class="markRead">标记已读</a>';
+                                            },
+                                            tooltip: '标记已读',
+                                            width: 65
                                         },
-                                        tooltip: '标记已读',
-                                        width: 65
+                                    ],
+                                    customUrl: {
+                                        url: webix.proxy('customProxy','/policeDog/services/notice/getList/{pageSize}/{curPage}'),
+                                        httpMethod: 'post',
+                                        params: {policeId: USER_INFO.id},
+                                        datatype: 'customJson'
                                     },
-                                ],
-                                customUrl: {
-                                    url: webix.proxy('customProxy','/policeDog/services/notice/getList/{pageSize}/{curPage}'),
-                                    httpMethod: 'post',
-                                    params: {policeId: USER_INFO.id},
-                                    datatype: 'customJson'
+                                    onClick: {
+                                        markRead: function(a, b, c) {
+                                            var item = $$(datatableId).getItem(b.row);
+                                            doIPost('notice/update', {id: item.id, isRead: 2}, function (resp) {
+                                                $$(datatableId).reload();
+                                            })
+                                        },
+                                        gotoProcess: function(){win.close()}
+                                    },
+                                    pager: 'notice_page'
                                 },
-                                onClick: {
-                                    markRead: function(a, b, c) {
-                                        var item = $$(datatableId).getItem(b.row);
-                                        doIPost('notice/update', {id: item.id, isRead: 2}, function (resp) {
-                                            $$(datatableId).reload();
-                                        })
-                                    }
-                                },
-                                pager: 'notice_page'
-                            },
-                            {
-                                view: "pager",
-                                id: "notice_page",
-                                size: 6,
-                                group: 5,
-                                template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
-                            }
-                        ]
-                    }, {width: 800, height: 500, modal: 'N'});
-                    win.show();
-                }else if(isShowTodoList == '1'){
-                    msgBox('没有待办消息');
-                }
+                                {
+                                    view: "pager",
+                                    id: "notice_page",
+                                    size: 6,
+                                    group: 5,
+                                    template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
+                                }
+                            ]
+                        }, {width: 800, height: 500, modal: 'N'});
+                        win.show();
+                    // }else{
+                    //     msgBox('没有待办消息');
+                    // }
+                });
             }
         });
     };
