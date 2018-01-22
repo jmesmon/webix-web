@@ -104,8 +104,9 @@ define([
                     };
                 }else if(USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'GuanLiYuan'){
                     label = {
-                        tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
-                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        // tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        // die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        work: '<span style="color:#fff">审批提醒：</span>您有<span style="color:#F9FF00">#val#</span>条警犬工作需要审批，;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/adult.work" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'JingYuan' || USER_INFO.userRole == 'PeiXunRenYuan'){
@@ -121,6 +122,7 @@ define([
                 if(USER_INFO.userRole == 'JuZhang'){
                     label = [];
                 }
+                console.log(label);
                 var isShow = false;
                 var count = 0;
                 for(var i = 0; i<arr.length; i++){
@@ -133,7 +135,7 @@ define([
                 }
                 html += '</div>';
 
-                doIPost('notice/getList/1/1', {policeId: USER_INFO.id}, function(data){
+                doIPost('notice/getList/1/1', {policeId: USER_INFO.id, isRead: 1}, function(data){
                     try {
                         count += data.pageVO.totalRows;
                     }catch(e){}
@@ -143,29 +145,45 @@ define([
                         $$('todoTip').config.value = count;
                     }
                     $$('todoTip').refresh();
-                    // if(isShow && count>0) {
+                    if(isShow && count>0) {
                         var datatableId = webix.uid().toString();
                         var win = getWin('待办事项', {
                             rows: [
-                                {template: html, borderless: true, onClick: {gotoProcess: function(){win.close()} }},
+                                {
+                                    template: html, borderless: true, onClick: {
+                                    gotoProcess: function () {
+                                        win.close()
+                                    }
+                                }
+                                },
                                 {template: '<div>收到的通知</div>', height: 30, borderless: true},
                                 {
                                     id: datatableId,
                                     view: "datatable",
-                                    tooltip:true,
+                                    tooltip: true,
                                     height: 210,
                                     datafetch: 6,
                                     columns: [
                                         {id: "$index", header: "NO.", width: 45},
-                                        {id: 'isRead', header: '状态', width: 50, template: function(item){
-                                            return {"1":"<span style='color: #F9FF00'>未读</span>", "2": "已读"}[item.isRead] || "";
-                                        }},
+                                        {
+                                            id: 'isRead', header: '状态', width: 50, template: function (item) {
+                                            return {
+                                                "1": "<span style='color: #F9FF00'>未读</span>",
+                                                "2": "已读"
+                                            }[item.isRead] || "";
+                                        }
+                                        },
                                         {id: 'title', header: '标题', fillspace: 1},
-                                        {id: 'creationDate', header: '日期', width: 90,format: webix.Date.dateToStr("%Y-%m-%d")},
+                                        {
+                                            id: 'creationDate',
+                                            header: '日期',
+                                            width: 90,
+                                            format: webix.Date.dateToStr("%Y-%m-%d")
+                                        },
                                         {
                                             header: "操作",
-                                            template: function(item){
-                                                if(item.isRead == 2) return '';
+                                            template: function (item) {
+                                                if (item.isRead == 2) return '';
                                                 return '<a href="javascript:void(0)" class="markRead">标记已读</a>';
                                             },
                                             tooltip: '标记已读',
@@ -173,19 +191,21 @@ define([
                                         },
                                     ],
                                     customUrl: {
-                                        url: webix.proxy('customProxy','/policeDog/services/notice/getList/{pageSize}/{curPage}'),
+                                        url: webix.proxy('customProxy', '/policeDog/services/notice/getList/{pageSize}/{curPage}'),
                                         httpMethod: 'post',
                                         params: {policeId: USER_INFO.id},
                                         datatype: 'customJson'
                                     },
                                     onClick: {
-                                        markRead: function(a, b, c) {
+                                        markRead: function (a, b, c) {
                                             var item = $$(datatableId).getItem(b.row);
                                             doIPost('notice/update', {id: item.id, isRead: 2}, function (resp) {
                                                 $$(datatableId).reload();
                                             })
                                         },
-                                        gotoProcess: function(){win.close()}
+                                        gotoProcess: function () {
+                                            win.close()
+                                        }
                                     },
                                     pager: 'notice_page'
                                 },
@@ -199,6 +219,7 @@ define([
                             ]
                         }, {width: 800, height: 500, modal: 'N'});
                         win.show();
+                    }
                     // }else{
                     //     msgBox('没有待办消息');
                     // }

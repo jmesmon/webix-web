@@ -107,6 +107,7 @@ define([
                                                     {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
                                                         on: {
                                                             onItemClick: function () {
+                                                                if(readonly) return ;
                                                                 constant.setUser('attPerson', null, function(){
                                                                     $$('select_dog').config.val = '';
                                                                     $$('select_dog').setValue('');
@@ -450,6 +451,7 @@ define([
                                                     {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
                                                         on: {
                                                             onItemClick: function () {
+                                                                if(readonly) return ;
                                                                 constant.setUser('attPerson', null, function(){
                                                                     $$('select_dog').config.val = '';
                                                                     $$('select_dog').setValue('');
@@ -773,7 +775,7 @@ define([
                 cols: [
                     {view: "button", label: "添加", width: 50, popup:"my_pop"},
                     // {view: "button", label: "修改", width: 50, click: editData},
-                    {view: "button", label: "删除", width: 50, click: del},
+                    {view: "button", label: "删除", permission: 'work.delete', width: 50, click: del},
                     {view: "button", label: "审批", permission: 'work.approve',width: 50, click: approve},
                     {view: "button", label: "导出防爆安检登记表", width: 130, click: exportData},
                     {}

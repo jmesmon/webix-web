@@ -302,7 +302,7 @@ var checkCount = 0;
                                 var userList = [];
                                 webix.toArray(resp.result).each(function(item){
                                     if(item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
-                                        userList.push({id: item.id + '<_>' + item.policeName, value: item.policeName});
+                                        userList.push({id: item.id + '<_>' + item.policeName + '<>' + item.workUnit, value: item.policeName});
                                     }
                                 });
                                 var win = getWin('警犬调配', {
@@ -333,7 +333,8 @@ var checkCount = 0;
                                                         oldPoliceId: item.policeId,
                                                         oldPoliceName: item.policeName,
                                                         newPoliceId: userInfo[0],
-                                                        newPoliceName: userInfo[1]
+                                                        newPoliceName: userInfo[1],
+                                                        newWorkPlace: userInfo[3]
                                                     }, function(resp){
                                                         console.log(resp);
                                                         if(resp.success){
