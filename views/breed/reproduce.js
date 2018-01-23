@@ -239,6 +239,7 @@ define([
                 motherId: values.mother_chip_no,
                 growthStage: 1,
                 workStage: 1,
+                workPlace: '刑侦总队',
                 nestNo: nestNo  //窝编号：出生日期 + 数量 + 随机数
             };
             children.push(child);

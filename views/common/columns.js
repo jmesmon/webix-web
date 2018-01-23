@@ -1,5 +1,5 @@
 define([
-    "./constant"
+    "views/common/constant"
 ], function (constant) {
     var columns = {
         '窝编号': {id: "nestNo", header: "窝编号", width: 120, sort: "string"},
@@ -118,6 +118,8 @@ define([
                         return webix.template(html)(item);// '<div style="height: 50px">22<br>dioi8<br>dioi8<br>dioi8</div>';
                     } catch (e) {
                         console.error(e);
+                        location.reload();
+
                     }
                     return '';
                 }}

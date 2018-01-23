@@ -155,8 +155,11 @@ define([
                 "其他": {dogColor: '黑白',hairType: '短毛', photo: 'assets/dogPic/zj.PNG'}
             }[type];
         },
-        getUnitOptions: function () {
+        getUnitOptions: function (hasAll) {
             var options = [];
+            if(hasAll){
+                options.push({id: '-1', value: '全部'});
+            }
             for(var i = 0; i<constant.work_unit.length; i++){
                 var v = constant.work_unit[i];
                 options.push({id: v, value: v});

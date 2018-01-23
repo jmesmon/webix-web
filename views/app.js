@@ -13,8 +13,8 @@ define([
 
         css: 'load_page_border',
         elements: [
-            {view: "label", label: "<img class='photo' src='assets/imgs/logo_gold.png' height='48'/>", width: 60},
-            {template: '<span style="font-size: 22px; line-height:38px;">北京市公安局警犬技术工作管理与实战应用系统</span>', css: "header_title"},
+            {view: "label", label: "<img class='photo' src='assets/imgs/logo_gold_.png' height='48'/>", width: 60},
+            {template: '<span style="font-size: 22px; line-height:38px;">Webix Demo</span>', css: "header_title"},
             // {template: 'webix-master', css: "header_title"},
 
             {},
@@ -99,14 +99,14 @@ define([
                         immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         dogApply: '<span style="color:#fff">警犬申请：</span>有<span style="color:#F9FF00">#val#</span>个警犬申请单，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.list" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
-                        die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        die: '<span style="color:#fff">死亡申请：</span>您有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'GuanLiYuan'){
                     label = {
                         // tickout: '<span style="color:#fff">淘汰申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬申请淘汰，请及时审批;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.tickoutList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         // die: '<span style="color:#fff">死亡申请：</span>有<span style="color:#F9FF00">#val#</span>头警犬死亡，请审批死亡报告;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/apply.dieList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
-                        work: '<span style="color:#fff">审批提醒：</span>您有<span style="color:#F9FF00">#val#</span>条警犬工作需要审批，;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/adult.work" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
+                        work: '<span style="color:#fff">审批提醒：</span>您有<span style="color:#F9FF00">#val#</span>条警犬工作需要审批&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/adult.work" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                         train: '<span style="color:#fff">培训提醒：</span>您有<span style="color:#F9FF00">#val#</span>头警犬即将到达培训日期，请关注培训信息，及时报名参加;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/train.createTrain" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }else if(USER_INFO.userRole == 'JingYuan' || USER_INFO.userRole == 'PeiXunRenYuan'){
@@ -119,6 +119,8 @@ define([
                         immue: '<span style="color:#fff">免疫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行免疫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.immue" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
                     };
                 }
+                label.eightYearsOld = '<span style="color:#fff">淘汰提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬的年龄超过8岁，请申请淘汰处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/adult.adultList" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>';
+
                 if(USER_INFO.userRole == 'JuZhang'){
                     label = [];
                 }
@@ -217,7 +219,7 @@ define([
                                     template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
                                 }
                             ]
-                        }, {width: 800, height: 500, modal: 'N'});
+                        }, {width: 800, height: 500});
                         win.show();
                     }
                     // }else{

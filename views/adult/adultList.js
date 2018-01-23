@@ -5,26 +5,65 @@ define([
     'views/common/constant',
 ], function (columns, tickout, editDog, constant) {
     var datatableId = webix.uid().toString();
-    /**
-     * 驱虫操作
-     */
-    var doWorm = function () {
-        var datatable = $$(datatableId);
-        var data = datatable.getCheckedData();
-        if(data.length == 0){
-            msgBox("请至少选择一条数据");
-            return ;
-        }
-        var w = loading();
-        doPost('wormImmue/finishWorm', data, function(data){
-            console.log(data);
-            w.close();
-            if(data.success){
-                datatable.reload();
-            }else{
-                msgBox('操作失败<br>' + data.message)
-            }
-        });
+
+    var exportData = function(){
+        var win = {};
+        win = getWin("导出名单", {
+            rows: [{
+                height: 400,
+                view: "datatable",
+                id: 'for_export',
+                select: true,
+                columns: [
+                    {id: "$index", header: "NO.", width: 45},
+                    {"id":"dogName","header":"犬名","width":90},
+                    {"id":"chipNo","header":"芯片号","width":110},
+                    {"id":"policeName","header":"带犬民警","width":80},
+                    {"id":"workPlace","header":"工作单位","width":80},
+                    {"id":"sex","header":"性别","width":50, template: function(obj){ return (obj.sex == 1 ? '公' : '母') ; }},
+                    {"id":"birthday","header":"出生日期","width":85,"sort":"string",format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {"id":"breed","header":"品种","width":90,"sort":"string"},
+                    {"id":"dogSource","header":"所属片区","width":60,"sort":"string"},
+                    {"id":"dogColour","header":"毛色","width":75,"sort":"string"},
+                    {"id":"hairType","header":"毛型","width":70,"sort":"string"},
+                    {"id":"trainScore","header":"复训成绩","width":70,"sort":"string"},
+                    {"id":"breeder","header":"繁殖单位","width":100,"sort":"string"},
+                    {"id":"dogPros","header":"专业技能","width":100},
+                    {"id":"rewardInfo","header":"立功受奖","width":85}
+                ],
+                on: {
+                    onBeforeLoad: function () {
+                        this.showOverlay("Loading...");
+                    },
+                    onAfterLoad: function () {
+                        this.hideOverlay();
+                    }
+                },
+                tooltip:true,
+                minHeight: 80,
+                datafetch: 20,
+                customUrl: {
+                    url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getAll/10000/1'),
+                    httpMethod: 'post',
+                    datatype: 'customJson',
+                    params: $$(datatableId).config.customUrl.params
+                }
+            },{width: 800},
+                {
+                    cols:[
+                        {},
+                        {width: 16},
+                        {view: "button", label: "下载名单", width: 65, click: function(){
+                                var win = loading('正在生成');
+                                setTimeout(function(){
+                                    webix.toExcel($$('for_export'), {filename: '警犬列表_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
+                                    win.close();
+                                }, 10);
+                            }}
+                    ]
+                }]
+        },{width: 800, height: 500});
+        win.show();
     };
 
     /**
@@ -193,23 +232,57 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 60},
+                            {view: "text", label: "带犬民警", name: "policeName", width: 170, labelWidth: 60},
+                            {width: DEFAULT_PADDING},
+                            {view: "text", label: "警犬名称", name: "dogNameLike", width: 170, labelWidth: 60},
                             {width: DEFAULT_PADDING},
                             // {view: "text", label: "父犬芯片号", name: "fatherId", width: 180, labelWidth: 70},
                             // {width: DEFAULT_PADDING},
                             // {view: "text", label: "母犬芯片号", name: "motherId", width: 180, labelWidth: 70},
                             {
-                                view: "richselect", label: "犬种", name: 'breed', width: 150, value: '-1', labelWidth: 40,
+                                view: "richselect", label: "犬种", name: 'breed', width: 150, value: '-1', labelWidth: 35,
                                 options: constant.getBreedTypeOptions(true)
                             },
                             {width: DEFAULT_PADDING},
                             {
-                                view: "richselect", label: "毛色", name: 'dogColour',  width: 150, value: '-1', labelWidth: 40,
-                                options: constant.getDogColorOptions(true)
+                                view: "richselect", label: "工作单位", name: 'workPlace',  width: 150, value: '-1', labelWidth: 60,
+                                options: constant.getUnitOptions(true)
+                            },
+                            {width: DEFAULT_PADDING},
+                            {view: "text", label: "年龄", width: 70, labelWidth: 35,
+                                on: {
+                                    onChange: function (newVal) {
+                                        var currentYear = new Date().getFullYear();
+                                        var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
+                                        var startDate = (currentYear - newVal) + "-01-01";
+                                        var endDate = (currentYear - newVal) + "-12-12";
+                                        // var endDate = currentYear + monthDay;
+                                        $$('start').setValue(startDate);
+                                        if(newVal == ''){
+                                            $$('start').setValue("");
+                                        }
+                                    }
+                                }
+                            },
+                            {view: "text", label: "-", width: 45, labelWidth: 10,
+                                on: {
+                                    onChange: function (newVal) {
+                                        var currentYear = new Date().getFullYear();
+                                        var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
+                                        var startDate = (currentYear - newVal) + "-01-01";
+                                        var endDate = (currentYear - newVal) + "-12-12";
+                                        // var endDate = currentYear + monthDay;
+                                        // $$('start').setValue(startDate);
+                                        $$('end').setValue(startDate);
+                                        if(newVal == ''){
+                                            $$('end').setValue("");
+                                        }
+                                    }
+                                }
                             },
                             {width: DEFAULT_PADDING},
                             {cols: [
-                                {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 180, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
                                 {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
                                 {}
                             ]} ,
@@ -359,7 +432,8 @@ var checkCount = 0;
                     // {view: "button", label: "导出登记卡", width: 90, click: function(){
                     //     window.open('webix/警犬登记卡.doc', '_blank');
                     // }},
-                    {}
+                    {},
+                    {view: "button", label: "导出数据", width: 80, click: exportData},
                 ]
             },
             {

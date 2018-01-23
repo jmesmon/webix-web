@@ -31,10 +31,10 @@ define(function(){
             { id: "adult.allot", value: "警犬调配", permission: 'apply.allot', icon: "table", $css: "products", details:""},
         ]},
 
-        {id: "main", value: "繁育管理", permission: 'breed', open: true, data:[
-            { id: "breed.mating", value: "配种管理", icon: 'venus-mars', $css: "dashboard", details:""},
+        {id: "main", value: "繁育管理", open: true, data:[
+            { id: "breed.mating", value: "配种管理", icon: 'venus-mars', permission: 'breed', $css: "dashboard", details:""},
             // { id: "breed.index", value: "警犬繁殖", icon: 'venus-mars', $css: "dashboard", details:""},
-            { id: "youngDog.index", value: "幼犬管理", icon: "github-alt", $css: "orders", details:""},
+            { id: "youngDog.index", value: "幼犬管理", icon: "github-alt", permission: 'breed', $css: "orders", details:""},
 
             { id: "wormImmue.worm", value: "驱虫管理", icon: "bug", details: "" },
             { id: "wormImmue.immue", value: "免疫管理", icon: "eyedropper", details: ""}

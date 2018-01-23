@@ -2,6 +2,10 @@ define([
     "views/common/constant"
 ], function (constant) {
 
+    var name_start = USER_INFO.workUnit || '';
+    name_start = name_start.substr(0, 2);
+    name_start = '京-' + name_start + '-';
+
     return {
         $ui: {
             type: "space",
@@ -27,13 +31,13 @@ define([
                                         cols: [{
                                             width: 300,
                                             rows: [
-                                                {view: "text", label: "警犬名称", name: "dogName", format:"%Y-%m-%d", stringResult: true, on: {
+                                                {view: "text", label: "警犬名称：" + name_start, name: "dogName", labelWidth: 126, on: {
                                                     onChange: function(newVal, oldVal){
                                                         var input = this;
                                                         if(newVal == ''){
                                                             return ;
                                                         }
-                                                        doIPost('dogBaseInfo/isNameDump', {dogName: newVal}, function (data) {
+                                                        doIPost('dogBaseInfo/isNameDump', {dogName: name_start + newVal}, function (data) {
                                                             if(!data.success){
                                                                 msgBox("您输入的警犬名称已经存在，不允许重名，请重新修改");
                                                                 input.setValue(oldVal || '');
@@ -59,20 +63,35 @@ define([
                                             width: 300,
                                             rows: [
                                                 {view: "richselect", label: "成长阶段", name: 'growthStage', value:"2", options: constant.getGrowthStage(), hidden: true},
-                                                {view: "richselect", label: "品种", name: 'breed', value:"-1", options: constant.getBreedTypeOptions(), on: {
-                                                    onChange: function(newVal){
-                                                        var def = constant.getDefaultTypeColor(newVal);
-                                                        if(def) {
-                                                            $$('dogPhoto').setValue(def.photo);
-                                                            $$('dogColor').setValue(def.dogColor);
-                                                            $$('hairType').setValue(def.hairType);
-                                                        }else{
-                                                            $$('dogPhoto').setValue('');
-                                                            $$('dogColor').setValue('');
-                                                            $$('hairType').setValue('');
-                                                        }
-                                                    }
-                                                } },
+                                                {
+                                                    id: 'breed_field',
+                                                    cols: [
+                                                        {view: "richselect", label: "品种", name: 'breed', value:"-1", width: 200, options: constant.getBreedTypeOptions(),
+                                                            on: {
+                                                                onChange: function(newVal){
+                                                                    if(newVal == '其他'){
+                                                                        $$('other_breed').enable();
+                                                                        return ;
+                                                                    }else{
+                                                                        $$('other_breed').disable();
+                                                                        $$('other_breed').setValue('');
+                                                                    }
+                                                                    var def = constant.getDefaultTypeColor(newVal);
+                                                                    if(def) {
+                                                                        $$('dogPhoto').setValue(def.photo);
+                                                                        $$('dogColor').setValue(def.dogColor);
+                                                                        $$('hairType').setValue(def.hairType);
+                                                                    }else{
+                                                                        $$('dogPhoto').setValue('');
+                                                                        $$('dogColor').setValue('');
+                                                                        $$('hairType').setValue('');
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {view: "text", id: 'other_breed', disabled: false, width: 100, disabled: true, placeholder: '其他品种名称' , attributes:{ maxlength: 16 } }
+                                                    ]
+                                                },
                                                 {view: "richselect", label: "来源", name: 'dogSource', value:"-1", options: constant.getDogSourceOptions() },
                                                 {view: "richselect", label: "毛色", id: 'dogColor', name: 'dogColour', value:"-1", options: constant.getDogColorOptions() },
                                                 {view: "richselect", label: "毛型", id: 'hairType', name: 'hairType', value:"-1", options: constant.getHairTypeOptions() },
@@ -324,7 +343,7 @@ define([
                                 delete item.id;
                                 removeEmptyProperty(item);
                             });
-                            var dogPro = baseInfo.dogPro;
+                            var dogPro = baseInfo.dogPro || '';
                             var _ar = dogPro.split(',');
                             for(var i = 0; i<_ar.length; i++){
                                 trainData.push({
@@ -339,6 +358,20 @@ define([
                             baseInfo.workPlace= USER_INFO.workUnit || '刑侦总队';
                             baseInfo.policeId=USER_INFO.id;
                             baseInfo.policeName=USER_INFO.policeName;
+                            if(!baseInfo.dogName){
+                                msgBox('请输入警犬名称！');
+                                return ;
+                            }
+                            baseInfo.dogName = name_start + baseInfo.dogName;
+
+
+                            var other_breed = $$('other_breed').getValue();
+                            if(baseInfo.breed == '其他' && !other_breed){
+                                msgBox('警告，当警犬为“其他”品种时，需要输入具体品种名称。<br>如果不清楚具体品种，请输入“其他”');
+                                return ;
+                            }else{
+                                baseInfo.breed = other_breed;
+                            }
 
                             var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
@@ -360,7 +393,7 @@ define([
                                     $$('baseInfoForm').clear();
                                     $$('trainData').remove(trainIdArr);
                                     $$('wormImmueData').remove(wiIdArr);
-                                    location.reload();
+                                    window.open('#!/app/adult.adultList', '_self');
                                 }else{
                                     msgBox('操作失败，请检查各项信息是否填写正确，<br>错误信息：' + data.message)
                                 }

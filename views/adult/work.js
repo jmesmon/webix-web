@@ -375,7 +375,10 @@ define([
             return ;
         }
         var item = data[0];
-        console.log(item);
+        if(item.workState != '待审批' &&  item.workState != '驳回' ){
+            msgBox("审批通后，不可以修改");
+            return ;
+        }
 
         var isAj = (item.workType == '安检' ? false:true);
         var isXl = (item.workType == '巡逻' ? false:true);
@@ -390,16 +393,32 @@ define([
         }
         var picMap = {};
         var submit = function () {
-            var form = $$('add_form');
+            var form = $$('update_form');
             var values = form.getValues();
-            var uploader = $$('uploader_pic');
             var picList = [];
-            uploader.files.data.getRange().each(function(item){
-                picList.push(item.serverName);
+            $$('mylist').data.getRange().each(function(item){
+                picList.push({fileName: item.fileName   , url: item.serverName});
             });
+            values.workPic = JSON.stringify(picList);
+            delete values.dogInfo;
+            delete values.$check;
+            delete values.$index;
+            delete values.creationDate;
+            delete values.now;
+            delete values.lastUpdateDate;
+            delete values.dogList;
+            delete values.dogNameLike;
+            delete values.roleList;
+            delete values.todoList;
+            values.startTimeStr = values.startTime;
+            values.endTimeStr = values.endTime;
+            delete values.startTime;
+            delete values.endTime;
 
-            values.workPic = picList.join(',');
-            var data = [values];
+
+            values.workState = '待审批';
+            removeEmptyProperty(values);
+
             if(form.validate()){
                 if(!values.ajCar){
                     values.ajCar=0;
@@ -410,10 +429,11 @@ define([
                 if(!values.ajWp){
                     values.ajWp=0;
                 }
-                doIPost('work/update', data, function (data) {
+                values.approve = '';
+                doIPost('work/update', values, function (data) {
                     if (data.success) {
                         $$(datatableId).reload();
-                        msgBox('操作成功，记录新增成功');
+                        msgBox('提交成功，等待审批后生效');
                         win.close();
                     } else {
                         msgBox('操作失败<br>' + data.message)
@@ -424,6 +444,7 @@ define([
             }
 
         };
+
         var win = {};
         win = getWin("修改使用记录-" + workType, {
             rows: [
@@ -431,7 +452,7 @@ define([
                     view:"scrollview",
                     id:"scrollview",
                     scroll:"y",
-                    height: 330,
+                    height: 450,
                     body:{
                         rows:[
                             {
@@ -444,6 +465,7 @@ define([
                                 elements:[
                                     {
                                         rows: [
+                                            {view: "text", name: 'id', hidden: true},
                                             {view: "text", label: "工作类型", name: 'workType', value:workType, width: 240, hidden: true},
                                             {view: "text", label: "安检编号", name: 'xlNum', value:'', width: 240},
                                             {
@@ -451,7 +473,10 @@ define([
                                                     {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
                                                         on: {
                                                             onItemClick: function () {
-                                                                if(readonly) return ;
+                                                                debugger
+                                                                if(readonly)
+                                                                    return ;
+
                                                                 constant.setUser('attPerson', null, function(){
                                                                     $$('select_dog').config.val = '';
                                                                     $$('select_dog').setValue('');
@@ -490,26 +515,14 @@ define([
                                         ]
                                     },
                                     {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},
-                                    {view: "richselect", label: "案件类型", id: 'case_type', hidden: isXz, name: "caseNo", width: 240,
-                                        options:[
-                                            {id: '一般', value: "一般"},
-                                            {id: '重大', value: "重大"},
-                                            {id: '特大', value: "特大"}
-                                        ]
-                                    },{
+                                    {view: "text", label: "案件类型", id: 'case_type', hidden: isXz, name: "caseNo", width: 240, },{
                                         view: "richselect", label: "检查结果", name: 'isWork', value: "正常", width: 240,
                                         options: [
                                             {id: '正常', value: "正常"},
                                             {id: '异常', value: "异常"}
                                         ]
                                     },
-                                    {view: "richselect", label: "安检等级", hidden: isAj, value: '一般', name: "ajLevel", width: 240,
-                                        options:[
-                                            {id: '一般', value: "一般"},
-                                            {id: '重大', value: "重大"},
-                                            {id: '特大', value: "特大"}
-                                        ]
-                                    },
+                                    {view: "text", label: "安检等级", hidden: isAj, value: '一般', name: "ajLevel", width: 240},
                                     {
                                         hidden: isAj,
                                         cols: [
@@ -600,7 +613,7 @@ define([
                                                 view:"uploader",
                                                 value:"上传附件",
                                                 id: 'uploader_pic',
-                                                name: 'workPic',
+                                                // name: 'workPic',
                                                 link:"mylist",
                                                 upload:"/policeDog/services/file/upload",
                                                 datatype:"json"
@@ -627,7 +640,7 @@ define([
                         ]
                     }
                 },
-                {width: 650},
+                {width: 800},
                 {
                     cols:[
                         {},
@@ -639,12 +652,23 @@ define([
                     ]
                 }
             ]
-        }, {height: 600});
+        }, {height: 550, width: 800});
         win.show();
         item.startTimeStr = item.startTime;
         item.endTimeStr = item.endTime;
         $$('update_form').setValues(item);
         $$('select_dog').setValue(item.dogInfo.dogName);
+
+        setTimeout(function(){
+            try{
+                var arr = JSON.parse(item.workPic);
+                for(var i = 0; i<arr.length; i++){
+                    var da = { serverName: arr[i].url, name: arr[i].fileName, fileName: arr[i].fileName };
+                    $$('mylist').add(da);
+                }
+            }catch(e){}
+        }, 5);
+
     };
     var del = function(){
         var datatable = $$(datatableId);
@@ -774,7 +798,7 @@ define([
                 css: "toolbar",
                 cols: [
                     {view: "button", label: "添加", width: 50, popup:"my_pop"},
-                    // {view: "button", label: "修改", width: 50, click: editData},
+                    {view: "button", label: "修改", width: 50, click: editData},
                     {view: "button", label: "删除", permission: 'work.delete', width: 50, click: del},
                     {view: "button", label: "审批", permission: 'work.approve',width: 50, click: approve},
                     {view: "button", label: "导出防爆安检登记表", width: 130, click: exportData},

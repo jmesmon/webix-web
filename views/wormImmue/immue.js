@@ -1,5 +1,7 @@
 define([
-], function () {
+    "views/common/columns",
+    'views/common/constant',
+], function (column, constant) {
     var datatableId = webix.uid().toString();
 
     var doImmue = function () {
@@ -75,34 +77,38 @@ define([
                                     labelWidth: 70
                                 },
                                 elements:[
-                                    {view: "text", label: "警犬窝编号", name: "nestNo", width: 300, attributes:{ maxlength: 64 }},
-                                    {view: "text", label: "警犬芯片号", name: "dogId", width: 300, attributes:{ maxlength: 64 }},
-                                    {view: "text", label: "疫苗名称", name: "immueDesc", value: '补充', width: 300, attributes:{ maxlength: 64 }},
+                                    {view: "text", name: "dogId", id: 'dog_id', hidden: true},
+                                    {view: "text", label: "警犬名称", name: "dogName", id: 'dog_name', width: 300, readonly: true, placeholder: '点击选择',
+                                        on: {
+                                            onItemClick: function () {
+                                                constant.setDog('dog_name', 'dog_id', {});
+                                            }
+                                        }
+                                    },
+                                    {view: "richselect", label: "完成状态", name: 'immueState', value:"2", width: 300, options:[
+                                            {id: '1', value: "未完成"},
+                                            {id: '2', value: "已完成"},
+                                        ]},
+                                    {view: "text", label: "疫苗名称", name: "immueName", value: '', width: 300, attributes:{ maxlength: 64 }},
                                     {view: "datepicker", label: "免疫日期", name: "immueDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
                                     {view: "text", hidden: true, name: "immueState", value: 2},
                                     {view: "text", label: "操作人员", name: "policeName", width: 300, attributes:{ maxlength: 128 }}
                                 ],
                                 rules:{
-                                    "nestNo":webix.rules.isNotEmpty,
-                                    "dogId":webix.rules.isNotEmpty,
-                                    "immueDesc":webix.rules.isNotEmpty,
-                                    "immueDateStr":webix.rules.isNotEmpty,
-                                    "immueState":webix.rules.isNotEmpty,
-                                    "policeName":webix.rules.isNotEmpty
                                 }
                             }
                         ]
                     }
                 },
-                {width: 400},
+                {width: 600},
                 {
                     cols:[
                         {},
-                        {view: "button", label: "取消申请", css: 'non-essential', width: 65, click: function () {
+                        {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
                             win.close();
                         }},
                         {width: DEFAULT_PADDING/2},
-                        {view: "button", label: "提交申请", width: 65, click: submit}
+                        {view: "button", label: "提交保存", width: 65, click: submit}
                     ]
                 }
             ]
@@ -114,7 +120,7 @@ define([
         var win = {};
         win = getWin("导出名单", {
             rows: [{
-                height: 300,
+                height: 400,
                 view: "datatable",
                 id: 'for_export',
                 select: true,
@@ -132,8 +138,6 @@ define([
                             return '未进行';
                         }
                     }},
-                    {id: "nestNo", header: "窝编号", width: 130, sort: "string"},
-                    {id: "dogInfo.chipNo", header: "芯片号", width: 90, template: function(obj){ return _.get(obj, 'dogInfo.chipNo', ''); } },
                     {id: "dogInfo.sex", header: "性别", width: 50, template: function(obj){ return ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]); } },
                     {id: "dogInfo.birthday", header: "出生日期", width: 85, sort: "string", template: function(item){
                         return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
@@ -142,7 +146,7 @@ define([
                     {id: "dogInfo.dogSource", header: "来源", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogSource', ''); } },
                     {id: "dogInfo.dogColour", header: "毛色", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
                     {id: "dogInfo.hairType", header: "毛型", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.hairType', '') || ''; } },
-                    {id: "dogInfo.breeder", header: "繁育员", width: 80, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breeder', ''); } }
+                    {id: "dogInfo.policeName", header: "繁育员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
                 ],
                 on: {
                     onBeforeLoad: function () {
@@ -156,12 +160,12 @@ define([
                 minHeight: 80,
                 datafetch: 20,
                 customUrl: {
-                    url: webix.proxy('customProxy','/policeDog/services/wormImmue/list/immue/1000/1'),
+                    url: webix.proxy('customProxy','/policeDog/services/wormImmue/list/immue/10000/1'),
                     httpMethod: 'post',
                     datatype: 'customJson',
                     params: $$(datatableId).config.customUrl.params
                 }
-            },
+            },{width: 800},
                 {
                     cols:[
                         {},
@@ -169,13 +173,13 @@ define([
                         {view: "button", label: "下载名单", width: 65, click: function(){
                             var win = loading('正在生成');
                             setTimeout(function(){
-                                webix.toExcel($$('for_export'), {filename: '免疫名单_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
+                                webix.toExcel($$('for_export'), {filename: '免疫信息_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
                                 win.close();
                             }, 10);
                         }}
                     ]
                 }]
-        },{width: 600});
+        },{width: 800, height: 500});
         win.show();
     };
 
@@ -200,7 +204,14 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "警犬芯片号", name: "dogChipNo",labelWidth: 70, width: 180},
+                            {view: "text", name: "dogId", id: 'dog_id2', hidden: true},
+                            {view: "text", label: "警犬名称", id: 'dog_name2', labelWidth: 70, width: 180, readonly: true, placeholder: '点击选择',
+                                on: {
+                                    onItemClick: function () {
+                                        constant.setDog('dog_name2', 'dog_id2', {});
+                                    }
+                                }
+                            },
                             {width: DEFAULT_PADDING},
                             {cols: [
                                 {view: "datepicker", label: "免疫日期", name: "immueDateStart", id: 'start',labelWidth: 60, width: 180, format:"%Y-%m-%d", stringResult: true},
@@ -243,17 +254,17 @@ define([
                 paddingX: 10,
                 height: 36,
                 cols: [
-                    {view: "button", label: "补充记录", width: 70, click: addImmue},
-                    {view: "button", label: "完成免疫", width: 70, click: doImmue},
+                    {view: "button", label: "添加", width: 70, click: addImmue},
+                    {view: "button", label: "完成免疫", width: 70, click: doImmue, permission: 'immue.finishImmue'},
                     {view: "button", label: "删除", width: 70, click: del},
-                    {view: "button", label: "未来7天要免疫的", width: 130, click: function () {
+                    {view: "button", label: "未来7天要免疫的", width: 130, permission: 'immue.next7DImmue', click: function () {
                         $$('breed_from').setValues({
                             immueDateEnd: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate() + 7),
                             immueState: 1
                         });
                         $$('sub_btn').config.click()
                     }},
-                    {view: 'button', label: '设置当前条件下为进行中', width: 160, click: function () {
+                    {view: 'button', label: '设置当前条件下为进行中', width: 160, permission: 'immue.next7DImmue', click: function () {
                         var params = $$(datatableId).config.customUrl.params;
                         params.immueStateSet = 3;
 
@@ -283,7 +294,7 @@ define([
                         width: 40
                     },
                     {id: "$index", header: "NO.", width: 45},
-                    {id: "dogInfo.dogName", header: "犬名", width: 90, template: function(obj){ return _.get(obj, 'dogInfo.dogName', ''); } },
+                    {id: "dogInfo.dogName", header: "犬名", width: 140, template: function(obj){ return _.get(obj, 'dogInfo.dogName', ''); } },
                     {id: "immueDate", header: "免疫日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "immueName", header: "疫苗名称", width: 100},
                     {id: "immueState", header: "状态", width: 60, template: function(obj, common, value){
@@ -298,16 +309,15 @@ define([
                         }
                     }},
                     // {id: "nestNo", header: "窝编号", width: 130, sort: "string"},
-                    {id: "dogInfo.chipNo", header: "芯片号", width: 90, template: function(obj){ return _.get(obj, 'dogInfo.chipNo', ''); } },
                     {id: "dogInfo.sex", header: "性别", width: 50, template: function(obj){ return '<div align="center">' + ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]) + '</div>'; } },
-                    {id: "dogInfo.birthday", header: "出生日期", width: 85, sort: "string", template: function(item){
+                    {id: "dogInfo.birthday", header: "出生日期", width: 100, sort: "string", template: function(item){
                         return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
                     }},
-                    {id: "dogInfo.breed", header: "品种", width: 70, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
-                    {id: "dogInfo.dogSource", header: "来源", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogSource', ''); } },
-                    {id: "dogInfo.dogColour", header: "毛色", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
-                    {id: "dogInfo.hairType", header: "毛型", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.hairType', '') || ''; } },
-                    {id: "dogInfo.breeder", header: "繁育员", width: 80, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breeder', ''); } }
+                    {id: "dogInfo.breed", header: "品种", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
+                    {id: "dogInfo.dogSource", header: "来源", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogSource', ''); } },
+                    {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
+                    {id: "dogInfo.hairType", header: "毛型", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.hairType', '') || ''; } },
+                    {id: "dogInfo.policeName", header: "繁育员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
                 ],
                 on: {
                     onBeforeLoad: function () {
