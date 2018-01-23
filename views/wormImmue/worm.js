@@ -291,7 +291,7 @@ define([
                     {},
                     {view: "button", label: "下载Excel", width: 65, click: function(){
                         var win = loading('正在生成');
-                        webix.toExcel($$('for_export'), {filename: '驱虫信息_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) }));
+                        webix.toExcel($$('for_export'), {filename: '驱虫信息_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
                         win.close();
                     }}
                 ]
