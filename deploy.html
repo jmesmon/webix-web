@@ -42,7 +42,9 @@
                     'work.approve',
                     "train.myList", //我的培训
                     "apply.dog", //申请配发
-                    "apply.dog.changeUser"
+                    "apply.dog.changeUser",
+                    "dog.delete",
+                    "work.delete"
                 ],
                 //警员
                 "JingYuan": [
@@ -61,7 +63,7 @@
 //                    "breed", //繁育模块
                     "dog.list", //成犬列表
                     "reporter.fbaj",
-                    "reporter.work",
+                    "reporter.work"
 //                    "news.publish", //动态发布
 //                    "news.list", //动态管理
 //                    "news.list.btn.del", //动态管理，删除记录
@@ -88,7 +90,9 @@
                     'news.list',
                     'work.approve',
                     "dog.addDog", //外来警犬信息录入
-                    'apply.dog'
+                    'apply.dog',
+                    "dog.delete",
+                    "work.delete"
                 ],
                 //繁殖人员
                 "FanZhiRenYuan": [
@@ -97,6 +101,12 @@
                     "apply.die.list", //死亡申请列表
                     "dog.list", //成犬列表
                     "dog.edit",
+                    "dog.delete",
+                    "worm.finishWorm",
+                    "worm.next7DWorm",
+                    "worm.next7DWorm",
+                    "immue.finishWorm",
+                    "immue.next7DWorm",
 //                    "apply.allot"
                 ],
                 //培训角色
@@ -110,7 +120,7 @@
                     "train.myList.btn.del", //我的培训，删除记录
                     "train.prof", //专业技能
                     "train.prof.btn.del", //删除专业技能
-//                    "dog.list", //成犬列表
+//                    "dog.list", //成犬列表,
                 ],
                 //超级用户
                 "SuperMan": [
@@ -153,7 +163,12 @@
                     'org.config',
                     'org.user',
                     'apply.dog.changeUser',
-                    "apply.allot"
+                    "apply.allot",
+                    "dog.delete",
+                    "worm.finishWorm",
+                    "worm.next7DWorm",
+                    "immue.finishWorm",
+                    "immue.next7DWorm",
                 ],
                 JiuZhiDui: [
                     "work", //警犬工作
@@ -195,12 +210,18 @@
                     'org.config',
                     'org.user',
                     'apply.dog.changeUser',
-                    "apply.allot"
+                    "apply.allot",
+                    "dog.delete",
+                    "worm.finishWorm",
+                    "worm.next7DWorm",
+                    "worm.next7DWorm",
+                    "immue.finishWorm",
+                    "immue.next7DWorm",
                 ],
             };
-            roles.JiuZhiDui = roles.SuperMan;
+//            roles.JiuZhiDui = roles.SuperMan;
+
             window.permissions = roles[USER_INFO.userRole || ''] || [];
-            console.log(window.permissions);
         })();
     </script>
 
