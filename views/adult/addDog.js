@@ -96,7 +96,7 @@ define([
                                                 {view: "richselect", label: "毛色", id: 'dogColor', name: 'dogColour', value:"-1", options: constant.getDogColorOptions() },
                                                 {view: "richselect", label: "毛型", id: 'hairType', name: 'hairType', value:"-1", options: constant.getHairTypeOptions() },
                                                 {view: "richselect", label: "工作类型", name: 'dogType', value:"1", options: constant.getWorkType() },
-                                                {view: "multiselect", label: "专业方向", name: 'dogPro', options: constant.getDogPro() },
+                                                {view: "multiselect", label: "专业方向", name: 'mainPro', options: constant.getDogPro() },
                                                 {view: "richselect", label: "犬种等级", name: 'dogLevel', value:"", options: constant.getDogLevel(), hidden: true },
                                                 {view: "richselect", label: "犬种等级", id: 'dogPhoto', name: 'dogPhoto', value:"", options: constant.getDogLevel(), hidden: true },
                                             ]
@@ -343,17 +343,6 @@ define([
                                 delete item.id;
                                 removeEmptyProperty(item);
                             });
-                            var dogPro = baseInfo.dogPro || '';
-                            var _ar = dogPro.split(',');
-                            for(var i = 0; i<_ar.length; i++){
-                                trainData.push({
-                                trainAddr: 'MAIN',
-                                trainEndDateStr:"1900-01-01",
-                                trainName: _ar[i],
-                                trainStartDateStr: "1900-01-01",
-                                trainResult: "合格",
-                                trainStage:"-2"});
-                            }
 
                             baseInfo.workPlace= USER_INFO.workUnit || '刑侦总队';
                             baseInfo.policeId=USER_INFO.id;
@@ -366,13 +355,14 @@ define([
 
 
                             var other_breed = $$('other_breed').getValue();
-                            if(baseInfo.breed == '其他' && !other_breed){
-                                msgBox('警告，当警犬为“其他”品种时，需要输入具体品种名称。<br>如果不清楚具体品种，请输入“其他”');
-                                return ;
-                            }else{
-                                baseInfo.breed = other_breed;
+                            if(baseInfo.breed == '其他'){
+                                if(!other_breed) {
+                                    msgBox('警告，当警犬为“其他”品种时，需要输入具体品种名称。<br>如果不清楚具体品种，请输入“其他”');
+                                    return;
+                                }else{
+                                    baseInfo.breed = other_breed;
+                                }
                             }
-
                             var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
                                 trainData: trainData,

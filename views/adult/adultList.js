@@ -53,7 +53,7 @@ define([
                     cols:[
                         {},
                         {width: 16},
-                        {view: "button", label: "下载名单", width: 65, click: function(){
+                        {view: "button", label: "下载Excel", width: 65, click: function(){
                                 var win = loading('正在生成');
                                 setTimeout(function(){
                                     webix.toExcel($$('for_export'), {filename: '警犬列表_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
@@ -231,68 +231,71 @@ define([
                 },
                 elements: [
                     {
-                        cols: [
-                            {view: "text", label: "带犬民警", name: "policeName", width: 170, labelWidth: 60},
-                            {width: DEFAULT_PADDING},
-                            {view: "text", label: "警犬名称", name: "dogNameLike", width: 170, labelWidth: 60},
-                            {width: DEFAULT_PADDING},
-                            // {view: "text", label: "父犬芯片号", name: "fatherId", width: 180, labelWidth: 70},
-                            // {width: DEFAULT_PADDING},
-                            // {view: "text", label: "母犬芯片号", name: "motherId", width: 180, labelWidth: 70},
-                            {
-                                view: "richselect", label: "犬种", name: 'breed', width: 150, value: '-1', labelWidth: 35,
-                                options: constant.getBreedTypeOptions(true)
-                            },
-                            {width: DEFAULT_PADDING},
-                            {
-                                view: "richselect", label: "工作单位", name: 'workPlace',  width: 150, value: '-1', labelWidth: 60,
-                                options: constant.getUnitOptions(true)
-                            },
-                            {width: DEFAULT_PADDING},
-                            {view: "text", label: "年龄", width: 70, labelWidth: 35,
-                                on: {
-                                    onChange: function (newVal) {
-                                        var currentYear = new Date().getFullYear();
-                                        var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
-                                        var startDate = (currentYear - newVal) + "-01-01";
-                                        var endDate = (currentYear - newVal) + "-12-12";
-                                        // var endDate = currentYear + monthDay;
-                                        $$('start').setValue(startDate);
-                                        if(newVal == ''){
-                                            $$('start').setValue("");
+                        rows: [{
+                            cols: [
+                                {view: "text", label: "带犬民警", name: "policeName", width: 200, labelWidth: 60},
+                                {width: DEFAULT_PADDING},
+                                {
+                                    view: "richselect", label: "警犬品种", name: 'breed', width: 200, value: '-1', labelWidth: 60,
+                                    options: constant.getBreedTypeOptions(true)
+                                },
+                                {width: DEFAULT_PADDING},
+                                {view: "text", label: "警犬年龄", width: 170, labelWidth: 60, labelAlign: 'right',
+                                    on: {
+                                        onChange: function (newVal) {
+                                            var currentYear = new Date().getFullYear();
+                                            var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
+                                            var startDate = (currentYear - newVal) + "-01-01";
+                                            var endDate = (currentYear - newVal) + "-12-12";
+                                            // var endDate = currentYear + monthDay;
+                                            $$('start').setValue(startDate);
+                                            if(newVal == ''){
+                                                $$('start').setValue("");
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            {view: "text", label: "-", width: 45, labelWidth: 10,
-                                on: {
-                                    onChange: function (newVal) {
-                                        var currentYear = new Date().getFullYear();
-                                        var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
-                                        var startDate = (currentYear - newVal) + "-01-01";
-                                        var endDate = (currentYear - newVal) + "-12-12";
-                                        // var endDate = currentYear + monthDay;
-                                        // $$('start').setValue(startDate);
-                                        $$('end').setValue(startDate);
-                                        if(newVal == ''){
-                                            $$('end').setValue("");
+                                },
+                                {view: "text", label: "-", width: 120, labelWidth: 10,
+                                    on: {
+                                        onChange: function (newVal) {
+                                            var currentYear = new Date().getFullYear();
+                                            var monthDay = webix.Date.dateToStr("-%m-%d")(new Date());
+                                            var startDate = (currentYear - newVal) + "-01-01";
+                                            var endDate = (currentYear - newVal) + "-12-12";
+                                            // var endDate = currentYear + monthDay;
+                                            // $$('start').setValue(startDate);
+                                            $$('end').setValue(startDate);
+                                            if(newVal == ''){
+                                                $$('end').setValue("");
+                                            }
                                         }
                                     }
-                                }
-                            },
-                            {width: DEFAULT_PADDING},
-                            {cols: [
-                                {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
-                                {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                                },
                                 {}
-                            ]} ,
-                            {width: DEFAULT_PADDING},
-                            {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
-                                $$('form').clear();
-                            }},
-                            {view: "button", label: "查找", type: "form", width: 70, paddingX: 10, click: search},
-                            {}
-                        ]
+                            ]
+                        },{
+                            cols: [
+                                {view: "text", label: "警犬名称", name: "dogNameLike", width: 200, labelWidth: 60},
+                                {width: DEFAULT_PADDING},
+                                {
+                                    view: "richselect", label: "工作单位", name: 'workPlace',  width: 200, value: '-1', labelWidth: 60,
+                                    options: constant.getUnitOptions(true)
+                                },
+                                {width: DEFAULT_PADDING},
+                                {cols: [
+                                    {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                                    {}
+                                ]} ,
+                                {width: DEFAULT_PADDING},
+                                {width: DEFAULT_PADDING},
+                                {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
+                                    $$('form').clear();
+                                }},
+                                {view: "button", label: "查找", type: "form", width: 70, paddingX: 10, click: search},
+                                {}
+                            ]
+                        }]
                     }
                 ]
             }

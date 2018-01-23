@@ -19,7 +19,7 @@ define([
 	//configuration
 	var app = core.create({
 		id:			"app-police_dog",
-		name:		"Demo",//"北京市公安局警犬技术工作管理与实战应用系统",
+		name:		"北京市公安局警犬技术工作管理与实战应用系统",
 		version:	"0.1",
 		debug:		true,
 		start:		"/app/dashboard"		

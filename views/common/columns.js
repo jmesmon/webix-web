@@ -89,6 +89,22 @@ define([
                             item.age = age;
                             item.birthday = item.birthday.split(' ')[0];
                         }catch(e){}
+                        var mainPro = item.mainPro;
+                        var dogPro = item.dogPros;
+                        if(mainPro){
+                            if(!dogPro){
+                                dogPro = mainPro;
+                            }else{
+                                var ar = mainPro.split(',');
+                                for(var m = 0; m<ar.length; m++){
+                                    if(dogPro.indexOf(ar[m]) == -1){
+                                        dogPro += "，" + ar[m];
+                                    }
+                                }
+                            }
+                        }
+
+                        item.mergePro = dogPro;
 
                         var html = '<table width="100%">' +
                             '<tr style="height: 120px">' +
@@ -105,7 +121,7 @@ define([
                             '</td>' +
                             '<td valign="top">' +
                             '<div><span class="tab_label">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>#age#岁（#birthday#）</div>' +
-                            '<div><span class="tab_label">专业技能：</span>#dogPros#</div>' +
+                            '<div><span class="tab_label">专业技能：</span>#mergePro#</div>' +
                             '<div><span class="tab_label">立功受奖：</span>#rewardInfo#</div>' +
                             '</td>' +
                             '</tr>' +

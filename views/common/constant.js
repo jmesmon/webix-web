@@ -326,7 +326,7 @@ define([
                                 '<span class="tab_label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#dogTypeStr#<br>' +
                                 '<span class="tab_label">工作单位：</span>#workPlace#<br>' +
                                 '<span class="tab_label">省&nbsp;&nbsp;区&nbsp;&nbsp;市：</span>北京<br>' +
-                                '<span class="tab_label">警犬专业：</span>#dogPros#'+
+                                '<span class="tab_label">警犬专业：</span>#mergePro#'+
                                 '<div><span class="tab_label"">立功受奖：</span>#rewardInfo#</div>',
                                 data: item
                             }

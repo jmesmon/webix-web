@@ -13,8 +13,8 @@ define([
 
         css: 'load_page_border',
         elements: [
-            {view: "label", label: "<img class='photo' src='assets/imgs/logo_gold_.png' height='48'/>", width: 60},
-            {template: '<span style="font-size: 22px; line-height:38px;">Webix Demo</span>', css: "header_title"},
+            {view: "label", label: "<img class='photo' src='assets/imgs/logo_gold.png' height='48'/>", width: 60},
+            {template: '<span style="font-size: 22px; line-height:38px;">W北京市公安局警犬技术工作管理与实战应用系统</span>', css: "header_title"},
             // {template: 'webix-master', css: "header_title"},
 
             {},

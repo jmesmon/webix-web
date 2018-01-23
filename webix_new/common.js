@@ -1,7 +1,7 @@
 function msgBox(msg){
     webix.message({type: 'alert', text: '<div style="padding: 0 16px">' + msg + '</div>' });
 }
-var DEFAULT_PADDING = 10;
+var DEFAULT_PADDING = 20;
 
 webix.i18n.parseFormat = "%Y-%m-%d";
 webix.i18n.setLocale();
