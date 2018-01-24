@@ -441,7 +441,12 @@ define([
                             "3": "审批完成",
                             "4": "申请驳回"}[value] || "";
                     }},
-                    {id: "dogInfo", header: "警犬名称", width: 100, sort: "string", template: '#dogInfo.dogName#'},
+                    {id: "dogInfo", header: "警犬名称", width: 100, sort: "string", template: function(item){
+                        try {
+                            return item.dogInfo.dogName;
+                        }catch(e){}
+                        return '';
+                    }},
                     {id: "applyDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "sickReason", header: "病因", width: 150, sort: "string"},
                     {id: "sickDate", header: "生病日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },

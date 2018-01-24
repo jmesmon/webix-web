@@ -97,6 +97,7 @@ define([
                                 }
 
                                 dInfo.id = dogInfo.id;
+                                removeEmptyProperty(dInfo);
                                 doIPost('dogBaseInfo/update', [dInfo], function (data) {
                                     if(data.success) {
                                         msgBox("修改成功");

@@ -95,7 +95,15 @@ define([
         var values = $$('reproduce').getValues();
         var count = values.litterSize || 0;
         var fatherName = values.father_name;
+        var ar = fatherName.split('-');
+        if(ar.length == 3){
+            fatherName = ar[2];
+        }
         var motherName = values.mother_name;
+        ar = motherName.split('-');
+        if(ar.length == 3){
+            motherName = ar[2];
+        }
         var father_type = values.father_type;
         for(var i = lastCount; i<count; i++) {
             contain.addView(
@@ -245,6 +253,7 @@ define([
                 motherId: values.motherDogId,
                 growthStage: 1,
                 workStage: 1,
+                workPlace: '刑侦总队',
                 nestNo: nestNo,  //窝编号：出生日期 + 数量 + 随机数
             };
             children.push(child);

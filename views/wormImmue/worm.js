@@ -206,7 +206,7 @@ define([
             width: 40
         },
         {id: "$index", header: "NO.", width: 45},
-        {id: "dogInfo.dogName", header: "犬名", width: 140, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
+        {id: "dogInfo.dogName", header: "犬名", width: 200, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
         {id: "wormDate", header: "驱虫日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
         {id: "wormDesc", header: "驱虫周期", width: 100},
         {id: "wormState", header: "状态", width: 55, template: function(obj, common, value){
@@ -247,7 +247,6 @@ define([
                 return '未进行';
             }
         }},
-        {id: "nestNo", header: "窝编号", width: 130, sort: "string"},
         {id: "dogInfo.sex", header: "性别", width: 50, template: function(obj){ return ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]); } },
         {id: "dogInfo.birthday", header: "出生日期", width: 85, sort: "string", template: function(item){
             return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );

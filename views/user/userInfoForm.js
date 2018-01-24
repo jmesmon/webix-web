@@ -5,7 +5,7 @@ define([
 
     return {
         getForm: function(useBtn){
-            var usr = ['GuanLiYuan', 'SuperMan'];
+            var usr = ['JiuZhiDui', 'SuperMan'];
             var isSuperman = false;
             var workUnitCss = 'readonlySe';
             if(usr.indexOf(USER_INFO.userRole) != -1){

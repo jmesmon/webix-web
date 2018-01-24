@@ -378,7 +378,7 @@ var checkCount = 0;
                                 var userList = [];
                                 webix.toArray(resp.result).each(function(item){
                                     if(item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
-                                        userList.push({id: item.id + '<_>' + item.policeName + '<>' + item.workUnit, value: item.policeName});
+                                        userList.push({id: item.id + '<_>' + item.policeName + '<_>' + item.workUnit, value: item.policeName});
                                     }
                                 });
                                 var win = getWin('警犬调配', {
@@ -404,15 +404,16 @@ var checkCount = 0;
                                                         return ;
                                                     }
                                                     var userInfo = policeUser.split('<_>');
-                                                    doIPost('dogBaseInfo/changeUser', {
+                                                    var par = {
                                                         dogId: item.id,
                                                         oldPoliceId: item.policeId,
                                                         oldPoliceName: item.policeName,
                                                         newPoliceId: userInfo[0],
                                                         newPoliceName: userInfo[1],
-                                                        newWorkPlace: userInfo[3]
-                                                    }, function(resp){
-                                                        console.log(resp);
+                                                        newWorkPlace: userInfo[2]
+                                                    };
+                                                    console.log(par);
+                                                    doIPost('dogBaseInfo/changeUser', par, function(resp){
                                                         if(resp.success){
                                                             datatable.reload();
                                                             win.close();
