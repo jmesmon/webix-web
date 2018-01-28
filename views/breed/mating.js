@@ -61,11 +61,29 @@ define([
                                     {
                                         cols: [
                                             {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 200,
-                                                on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'})
+                                                on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'}, function(item){
+                                                    $$('fatherDogId').item = item;
+                                                    var f = item;
+                                                    var m = $$('motherDogId').item;
+                                                    if(f && m){
+                                                        if(f.breed != m.breed){
+                                                            msgBox("提醒：公犬【"+f.breed+"】与母犬【"+m.breed+"】品种不一致");
+                                                        }
+                                                    }
+                                                })
                                             },
                                             {view: 'text', hidden: true, name: "fatherDogId", id: 'fatherDogId'},
                                             {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 200,
-                                                on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'})
+                                                on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'}, function(item){
+                                                    $$('motherDogId').item = item;
+                                                    var f = $$('fatherDogId').item;
+                                                    var m = item;
+                                                    if(f && m){
+                                                        if(f.breed != m.breed){
+                                                            msgBox("提醒：公犬【"+f.breed+"】与母犬【"+m.breed+"】品种不一致");
+                                                        }
+                                                    }
+                                                })
                                             },
                                             {view: 'text', hidden: true, name: "motherDogId", id: 'motherDogId'}
                                         ]

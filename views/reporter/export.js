@@ -35,9 +35,12 @@ define([
                                 endDate: endDate,
                                 workUnit: workUnit
                             }, function (data) {
-                                console.log(data);
                                 if(data.success){
-                                    window.open(data.result, '_blank');
+                                    var arr = data.result.split('/');
+                                    var fileName = arr[arr.length - 1];
+                                    msgBox('报表文件已生成，请点击文件名下载<br><br>->> <a href="'+data.result+'" target="_blank">'+fileName+'</a> <<-');
+                                }else{
+                                    msgBox('报表数据生成失败，请检查选择的条件');
                                 }
                             });
                         }},

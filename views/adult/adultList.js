@@ -271,6 +271,8 @@ define([
                                         }
                                     }
                                 },
+                                {width: DEFAULT_PADDING},
+                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 200, labelWidth: 70, placeholder: '支持部分搜索'},
                                 {}
                             ]
                         },{

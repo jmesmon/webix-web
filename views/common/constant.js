@@ -35,17 +35,34 @@ define([
          * 毛色
          */
         dogColor: [
-            '黑',
-            '黄',
-            '棕',
-            '黑背黄腹',
-            '浅黄',
-            '棕黄',
-            '黑白',
-            '棕白',
+            // '黑',
+            // '黄',
+            // '棕',
+            // '白色',
+            // '黑背黄腹',
+            // // '浅黄',
+            // // '棕黄',
+            // // '枯草黄',
+            // '黑白',
+            // '黑白斑',
+            // '棕白斑',
+            // '棕白',
+            // '豹纹',
+            // '狼青',
+            // '褐色',
+            // '其他'
+            '白色',
             '豹纹',
+            '褐色',
+            '黑',
+            '黑白',
+            '黑白斑',
+            '黑背黄腹',
+            '黄',
             '狼青',
-            '枯草黄',
+            '棕',
+            '棕白',
+            '棕白斑',
             '其他'
         ],
         getDogColorOptions: function (hasAll) {
@@ -359,7 +376,7 @@ define([
             }, {height: 530});
             win.show();
         },
-        setDogList: function (textId, valId, params) {
+        setDogList: function (textId, valId, params, callback) {
             return {
                 onItemClick: function () {
                     constant.showDogList(function (datatable) {
@@ -370,6 +387,9 @@ define([
                         $$(textId).setValue(item.dogName);
                         $$(textId).config.val = item.dogName;
                         $$(valId).setValue(item.id);
+                        try {
+                            callback && callback(item);
+                        } catch(e){}
                     }, params);
                 },
                 onChange: function (newVal, oldVal) {
@@ -406,6 +426,21 @@ define([
             ];
             var win = getWin('选择警犬', {
                 rows: [
+                    {
+                        cols: [
+                            {view: "text", label: "警犬名称",id: 'dogName', width: 400},
+                            {view: "button", label: "搜索", width: 65, click: function(){
+                                var params = {};
+                                if($$('dogName').getValue()){
+                                    params = {dogNameLike: $$('dogName').getValue()};
+                                }
+                                var tab = $$(datatableId);
+                                tab.config.customUrl.params = params;
+                                tab.reload();
+                            }},
+                            {}
+                        ]
+                    },
                     {
                         id: datatableId,
                         view: "datatable",

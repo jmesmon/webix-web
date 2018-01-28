@@ -321,7 +321,7 @@ define([
                     {view: "button", label: "添加", width: 55, click: add},
                     {view: "button", label: "修改", width: 55, click: update},
                     {view: "button", label: "删除", width: 55, click: del},
-                    {view: "button", label: "发布通知", width: 80, click: function () {
+                    {view: "button", label: "发布通知", width: 80, hidden: true, click: function () {
                         var datatable = $$(datatableId);
                         var data = datatable.getCheckedData();
                         if(data.length > 1 || data.length == 0){

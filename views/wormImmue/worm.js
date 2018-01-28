@@ -152,14 +152,15 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", name: "dogId", id: 'dog_id2', hidden: true},
-                            {view: "text", label: "警犬名称", id: 'dog_name2', labelWidth: 70, width: 180, readonly: true, placeholder: '点击选择',
-                                on: {
-                                    onItemClick: function () {
-                                        constant.setDog('dog_name2', 'dog_id2', {});
-                                    }
-                                }
-                            },
+                            {view: "text", labelWidth: 60, width: 180, name: "dogName", label: '警犬名称'},
+                            // {view: "text", name: "dogId", id: 'dog_id2', hidden: true},
+                            // {view: "text", label: "警犬名称", id: 'dog_name2', labelWidth: 70, width: 180, readonly: true, placeholder: '点击选择',
+                            //     on: {
+                            //         onItemClick: function () {
+                            //             constant.setDog('dog_name2', 'dog_id2', {});
+                            //         }
+                            //     }
+                            // },
                             {width: DEFAULT_PADDING},
                             {cols: [
                                 {view: "datepicker", label: "驱虫日期", name: "wormDateStart", id: 'start',labelWidth: 60, width: 180, format:"%Y-%m-%d", stringResult: true},

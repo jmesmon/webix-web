@@ -113,7 +113,7 @@ define([
                                                     {id: '优秀', value: "优秀"}
                                                 ]},
                                                 {view: "richselect", label: "工作单位", name: "workPlace", options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: (USER_INFO.workUnit != 'JiuZhiDui')},
-                                                {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea() }
+                                                {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea(), value: '2' }
 
                                             ]
                                         },{}

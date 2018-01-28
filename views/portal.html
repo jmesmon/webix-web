@@ -170,8 +170,8 @@
         <div id="work_contain"><div style="height: 240px;" id="qj_work"></div></div>
     </div>
     <!-- 北京市各区警犬数量分布 -->
-    <div style="height: 16px;"></div>
-    <table width="100%">
+    <div style="height: 16px;" id="map_padding"></div>
+    <table width="100%"  id="map_contain">
         <tr>
             <td id="col1" class="def_bk" style="width: 50%" valign="top">
                 <div style="font-weight: bold; margin: 16px 0 0 8px; ">警犬技术力量分布</div>
@@ -346,6 +346,11 @@
         $('#breed_age_area').hide();
         $('#gold_work_area').hide();
         $('#gold_work_sp').hide();
+    }
+
+    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui'){
+        $('#map_padding').hide();
+        $('#map_contain').hide();
     }
 
     function showNews(id){

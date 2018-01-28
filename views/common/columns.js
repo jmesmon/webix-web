@@ -82,10 +82,7 @@ define([
                             }
                         }
                         try{
-                            var age = new Date().getFullYear() - new Date(item.birthday).getFullYear() + 1;
-                            if(age == 0){
-                                age = 1;
-                            }
+                            var age = new Date().getFullYear() - new Date(item.birthday).getFullYear();
                             item.age = age;
                             item.birthday = item.birthday.split(' ')[0];
                         }catch(e){}
