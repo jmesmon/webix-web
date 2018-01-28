@@ -233,7 +233,7 @@ define([
                     {
                         rows: [{
                             cols: [
-                                {view: "text", label: "带犬民警", name: "policeName", width: 200, labelWidth: 60},
+                                {view: "text", label: "带犬民警", name: "policeNameLike", width: 180, labelWidth: 60, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
                                 {
                                     view: "richselect", label: "警犬品种", name: 'breed', width: 200, value: '-1', labelWidth: 60,
@@ -272,12 +272,14 @@ define([
                                     }
                                 },
                                 {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 200, labelWidth: 70, placeholder: '支持部分搜索'},
+                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 180, labelWidth: 70, placeholder: '支持搜索'},
+                                {width: DEFAULT_PADDING},
+                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 60},
                                 {}
                             ]
                         },{
                             cols: [
-                                {view: "text", label: "警犬名称", name: "dogNameLike", width: 200, labelWidth: 60},
+                                {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 60, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
                                 {
                                     view: "richselect", label: "工作单位", name: 'workPlace',  width: 200, value: '-1', labelWidth: 60,
@@ -289,7 +291,6 @@ define([
                                     {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
                                     {}
                                 ]} ,
-                                {width: DEFAULT_PADDING},
                                 {width: DEFAULT_PADDING},
                                 {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
                                     $$('form').clear();
@@ -408,6 +409,7 @@ var checkCount = 0;
                                                     var userInfo = policeUser.split('<_>');
                                                     var par = {
                                                         dogId: item.id,
+                                                        oldDogName: item.dogName,
                                                         oldPoliceId: item.policeId,
                                                         oldPoliceName: item.policeName,
                                                         newPoliceId: userInfo[0],

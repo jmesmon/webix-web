@@ -109,7 +109,7 @@ define([
             contain.addView(
                 {
                     cols: [
-                        {view: "text", label: "犬名:", id: 'dog_name_' + i, name: "dog_name", width: 200, value: fatherName.substr(0,1) + motherName.substr(0,1) + '_' + values.birthday.replace(/-/g, '') + '_' + (i + 1), labelWidth: 45},
+                        {view: "text", label: "犬名:", id: 'dog_name_' + i, name: "dog_name", width: 200, value: fatherName.substr(0,1) + motherName.substr(0,1) + '_' + values.birthday.replace(/-/g, '').substr(4, 4) + '_' + (i + 1), labelWidth: 45},
                         {width: 10},
                         {
                             view: "select",
