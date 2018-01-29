@@ -169,6 +169,52 @@ define([
                             });
                         }
                     },
+                    {view: "button", label: "直接淘汰", width: 65, click: function(){
+                        var datatable = $$(datatableId);
+                        var data = datatable.getCheckedData();
+                        var params = [];
+                        data.each(function (item) {
+                            params.push({id: item.id, workStage: 3, belonging: '直接淘汰', policeId:'',policeName: ''});
+                        });
+                        webix.confirm({
+                            text:"确定淘汰？淘汰后不可恢复", ok:"是", cancel:"否",
+                            callback:function(res){
+                                if(res){
+                                    doIPost('dogBaseInfo/update', params, function(data){
+                                        if(data.success){
+                                            datatable.reload();
+                                            msgBox('操作成功')
+                                        }else{
+                                            msgBox('操作失败<br>' + data.message)
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }},
+                    {view: "button", label: "直接死亡", width: 65, click: function () {
+                        var datatable = $$(datatableId);
+                        var data = datatable.getCheckedData();
+                        var params = [];
+                        data.each(function (item) {
+                            params.push({id: item.id, workStage: 4, belonging: '直接死亡', policeId:'',policeName: ''});
+                        });
+                        webix.confirm({
+                            text:"确定死亡？死亡后不可恢复", ok:"是", cancel:"否",
+                            callback:function(res){
+                                if(res){
+                                    doIPost('dogBaseInfo/update', params, function(data){
+                                        if(data.success){
+                                            datatable.reload();
+                                            msgBox('操作成功')
+                                        }else{
+                                            msgBox('操作失败<br>' + data.message)
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }},
                     {}
                 ]
             },

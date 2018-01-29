@@ -35,10 +35,10 @@ define([
                 return ;
             }
             data = data[0];
-            var startDate = new Date(data.startDate);
-            var nextTrainDate = data.startDate;
+            var startDate = new Date(data.endDate);
+            var nextTrainDate = data.endDate;
             var year = startDate.getFullYear();
-            var nextYear = year + 1;
+            var nextYear = year + 2;
             nextTrainDate = nextTrainDate.replace(year + '', nextYear + '');
 
             var arr = [];

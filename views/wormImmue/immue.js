@@ -204,7 +204,7 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", labelWidth: 60, width: 180, name: "dogName", label: '警犬名称'},
+                            {view: "text", labelWidth: 60, width: 180, name: "dogNameLike", label: '警犬名称', placeholder: '支持模糊查询'},
                             // {view: "text", name: "dogId", id: 'dog_id2', hidden: true},
                             // {view: "text", label: "警犬名称", id: 'dog_name2', labelWidth: 70, width: 180, readonly: true, placeholder: '点击选择',
                             //     on: {
@@ -315,9 +315,7 @@ define([
                         return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
                     }},
                     {id: "dogInfo.breed", header: "品种", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
-                    {id: "dogInfo.dogSource", header: "来源", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogSource', ''); } },
                     {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
-                    {id: "dogInfo.hairType", header: "毛型", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.hairType', '') || ''; } },
                     {id: "dogInfo.policeName", header: "繁育员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
                 ],
                 on: {

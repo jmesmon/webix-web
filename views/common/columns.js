@@ -83,6 +83,13 @@ define([
                         }
                         try{
                             var age = new Date().getFullYear() - new Date(item.birthday).getFullYear();
+                            if(age == 0){
+                                var day = new Date().getTime() - new Date(item.birthday).getTime();
+                                day = parseInt(day/1000/60/60/24);
+                                age = day + '天';
+                            }else{
+                                age += '岁';
+                            }
                             item.age = age;
                             item.birthday = item.birthday.split(' ')[0];
                         }catch(e){}
@@ -117,7 +124,7 @@ define([
                             '<div><span class="tab_label">工作单位：</span>#workPlace#</div>'+
                             '</td>' +
                             '<td valign="top">' +
-                            '<div><span class="tab_label">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>#age#岁（#birthday#）</div>' +
+                            '<div><span class="tab_label">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>#age#（#birthday#）</div>' +
                             '<div><span class="tab_label">专业技能：</span>#mergePro#</div>' +
                             '<div><span class="tab_label">立功受奖：</span>#rewardInfo#</div>' +
                             '</td>' +

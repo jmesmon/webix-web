@@ -45,7 +45,9 @@ define(function(){
             { id: "adult.adultList", value: "警犬列表", permission: 'dog.list', icon: 'list', $css: "dashboard", details:""},
             { id: "adult.addDog", value: "警犬信息录入", permission: 'dog.addDog', icon: "plus", details: "" },
             { id: "apply.tickoutList", value: "淘汰审批", permission: 'apply.tickout.list', icon: "list", details: "" },
-            { id: "apply.dieList", value: "死亡报告", permission: 'apply.die.list', icon: "list", details: "" },
+            { id: "apply.dieList", value: "死亡审批", permission: 'apply.die.list', icon: "list", details: "" },
+            { id: "apply.dieDogList", value: "死亡列表", permission: 'apply.die.list', icon: "list", details: "" },
+            { id: "apply.tickoutDogList", value: "淘汰列表", permission: 'apply.tickout.list', icon: "list", details: "" },
         ]},
 
         {id: "news", open: true, value:"宣传模块", data:[

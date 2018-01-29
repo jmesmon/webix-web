@@ -105,11 +105,20 @@ define([
             motherName = ar[2];
         }
         var father_type = values.father_type;
+        var mother_type = values.mother_type;
+        var otherBreed = '';
+
+        if(constant.breedType.indexOf(mother_type) == -1){
+            otherBreed = mother_type;
+            mother_type = "其他";
+        }
+
+        var name = fatherName.substr(0,1) + motherName.substr(motherName.length - 1,1);
         for(var i = lastCount; i<count; i++) {
             contain.addView(
                 {
                     cols: [
-                        {view: "text", label: "犬名:", id: 'dog_name_' + i, name: "dog_name", width: 200, value: fatherName.substr(0,1) + motherName.substr(0,1) + '_' + values.birthday.replace(/-/g, '').substr(4, 4) + '_' + (i + 1), labelWidth: 45},
+                        {view: "text", label: "犬名:", id: 'dog_name_' + i, name: "dog_name", width: 180, value: name + (i + 1), labelWidth: 45},
                         {width: 10},
                         {
                             view: "select",
@@ -124,11 +133,20 @@ define([
                         },
                         {width: 10},
                         {
-                            view: "select", label: "犬品种:", id: 'breed_' + i, name: "breed", width: 180, labelWidth: 65, value: father_type,
-                            options: constant.breedType
+                            view: "richselect", label: "犬品种:", id: 'breed_' + i, name: "breed", width: 180, labelWidth: 65, value: mother_type,
+                            options: constant.getBreedTypeOptions(),
+                            on: {
+                                onChange: function(newVal){
+                                    if(newVal == '其他'){
+                                        $$(this.config.id + "_other").show();
+                                    }else{
+                                        $$(this.config.id + "_other").hidden();
+                                    }
+                                }
+                            }
                         },
                         {
-                            view: "text", label: "", id: 'breed_other_' + i, name: "breed", width: 180, labelWidth: 65, value: father_type
+                            view: "text", label: "", id: 'breed_' + i + "_other", name: "breed", width: 100, labelWidth: 65, value: otherBreed, hidden: !otherBreed, placeholder: '犬种名称'
                         },
                         {width: 10},
                         {
@@ -139,6 +157,10 @@ define([
                         {
                             view: "select", label: "毛型:", id: 'hireType_' + i, name: "hireType", width: 130, labelWidth: 45, value: constant.getDefaultTypeColor(father_type).hairType,
                             options: constant.hairType
+                        },
+                        {width: 10},
+                        {
+                            view: "text", label: "芯片号:", id: 'chipNo_' + i, name: "chipNo", width: 170, labelWidth: 55
                         }, {}
                     ]
                 }
@@ -247,6 +269,7 @@ define([
                 breed: $$('breed_' + i).getValue(),
                 dogColour: $$('dogColour_' + i).getValue(),
                 hireType: $$('hireType_' + i).getValue(),
+                chipNo: $$('chipNo_' + i).getValue(),
 
                 dogPhoto: constant.getDefaultTypeColor($$('breed_' + i).getValue()).photo,
                 birthdayStr: values.birthday,
@@ -257,6 +280,7 @@ define([
                 growthStage: 1,
                 workStage: 1,
                 workPlace: '刑侦总队',
+                workArea: 2,
                 nestNo: nestNo,  //窝编号：出生日期 + 数量 + 随机数
             };
             children.push(child);

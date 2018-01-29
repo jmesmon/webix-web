@@ -106,30 +106,36 @@ define([
                                                     }
                                                 }
                                             },
-                                            {view: "datepicker", label: "B超日期", name: "bMuDate", id: 'bMuDate', format:"%Y-%m-%d", stringResult: true}
+                                            {view: "datepicker", label: "B超日期", name: "bMuDate", id: 'bMuDate', format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "预产期", name: "expectDate", id: 'expectDate', width: 200, format:"%Y-%m-%d", stringResult: true},
                                         ]
                                     },
 
-                                    {view: "datepicker", label: "预产期", name: "expectDate", id: 'expectDate', width: 200, format:"%Y-%m-%d", stringResult: true},
                                     {view: "richselect", label: "当前状态", name: 'mateState', value:"1", width: 180, options:[
                                         {id: '1', value: "完成交配"},
                                         {id: '2', value: "完成B超"},
-                                        {id: '3', value: "完成产仔"}
+                                        {id: '3', value: "完成产仔"},
+                                        {id: '4', value: "幼犬数据已生成"},
+                                        {id: '5', value: "空怀"},
                                     ]},
                                     {
                                         cols: [
-                                            {view: "text", label: "产仔数量", name: "breedCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "产仔数", name: "breedCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "活仔数", name: "liveCount", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "7日存活数", name: "liveCount7", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
-
+                                    {
+                                        borderless: true,
+                                        template: '<div style="color: #F9FF00">注意：遇到空怀时，请将当前状态设置为：空怀，同时将“产仔数”填写为-1</div>'
+                                    }
                                 ]
                             }
                         ]
                     }
                 },
-                {width: 400},
+                {width: 600},
                 {
                     cols:[
                         {},
@@ -214,29 +220,36 @@ define([
                                     {
                                         cols: [
                                             {view: "datepicker", label: "交配日期", name: "mateDate", format:"%Y-%m-%d", stringResult: true},
-                                            {view: "datepicker", label: "B超日期", name: "bMuDate", format:"%Y-%m-%d", stringResult: true}
+                                            {view: "datepicker", label: "B超日期", name: "bMuDate", format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "预产期", name: "expectDate", width: 200, format:"%Y-%m-%d", stringResult: true},
                                         ]
                                     },
 
-                                    {view: "datepicker", label: "预产期", name: "expectDate", width: 200, format:"%Y-%m-%d", stringResult: true},
                                     {view: "richselect", label: "当前状态", name: 'mateState', value:"-1", width: 180, options:[
                                         {id: '1', value: "完成交配"},
                                         {id: '2', value: "完成B超"},
-                                        {id: '3', value: "完成产仔"}
+                                        {id: '3', value: "完成产仔"},
+                                        {id: '4', value: "幼犬数据已生成"},
+                                        {id: '5', value: "空怀"},
                                     ]},
                                     {
                                         cols: [
-                                            {view: "text", label: "产仔数量", name: "breedCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "产仔数", name: "breedCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "活仔数", name: "liveCount", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "7日存活数", name: "liveCount7", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
+                                    {
+                                        borderless: true,
+                                        template: '<div style="color: #F9FF00">注意：遇到空怀时，请将当前状态设置为：空怀，同时将“产仔数”填写为-1</div>'
+                                    }
                                 ]
                             }
                         ]
                     }
                 },
-                {width: 400},
+                {width: 600},
                 {
                     cols:[
                         {},
@@ -253,8 +266,10 @@ define([
                             }
                             var mateData = {
                                 id: values.id,
-                                fatherDogChipNo: values.fatherDogChipNo,
-                                motherDogChipNo: values.motherDogChipNo,
+                                fatherDogId: values.fatherDogId,
+                                motherDogId: values.motherDogId,
+                                fatherDogName: values.fatherDogName,
+                                motherDogName: values.motherDogName,
                                 mateDateStr: values.mateDate,
                                 bMuDateStr: values.bMuDate,
                                 expectDateStr: values.expectDate,
