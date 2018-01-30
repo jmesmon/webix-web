@@ -51,7 +51,7 @@ define(function(){
         ]},
 
         {id: "news", open: true, value:"宣传模块", data:[
-            { id: "news.publish", value: "动态发布", permission:'news.publish', icon: "pencil", $css: "products", details:""},
+            { id: "news.publish2", value: "动态发布", permission:'news.publish', icon: "pencil", $css: "products", details:""},
             { id: "news.list", value: "动态管理", permission: 'news.list', icon: "list", $css: "products", details:""},
         ]},
         {id: "reporter", open: true, value:"报表中心", data:[

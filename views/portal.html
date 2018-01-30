@@ -571,15 +571,10 @@
     function renderOrgFj(){
         var userCount = '<tr style="height: 23px"><td>民警总数</td>';
         var docCount = '<tr style="height: 23px"><td>警犬总数</td>';
-        var perCount = '<tr style="height: 23px"><td>人犬比</td>';
+        var perCount = '<tr style="height: 23px"><td>警犬比例</td>';
         for(var i = 0; i<otherFj.length; i++) {
             var item = otherFj[i];
-
-            if(item.breederCount < item.dogCount){
-                item.per = '1:' + Math.ceil(item.dogCount/item.breederCount * 10)/10;
-            }else{
-                item.per = parseInt(item.breederCount / item.dogCount) + ':1';
-            }
+            item.per = parseInt(item.policeCount / item.dogCount) + ':1';
             userCount += '<td>' + item.breederCount + '</td>';
             docCount += '<td>' + item.dogCount + '</td>';
             perCount += '<td>' + item.per + '</td>';
@@ -1034,7 +1029,7 @@
                     formatter: function(params){
                         var d = params.data;
                         var val = d.value ? (d.value + ':1') : '-';
-                        return '<div style="font-weight: bold;">' + d.name + '</div>带犬民警：' + d.policeman + '<br>警犬数量：' + d.dog + '<br>人员比例：' + val;
+                        return '<div style="font-weight: bold;">' + d.name + '</div>带犬民警：' + d.policeman + '<br>警犬数量：' + d.dog + '<br>警犬比例：' + val;
                     },
                     position:function(p){
                         return [p[0] + 10, p[1] - 10];

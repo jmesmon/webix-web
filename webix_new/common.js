@@ -171,6 +171,27 @@ function getWin(title, ui, config){
         modal = false;
     }
 
+    var hideHeader = cfg.hideHeader;
+
+    var head = {
+        view: "toolbar",
+        cols: [{
+            view: "label",
+            label: title
+        },{
+            view: "icon",
+            icon: "close",
+            hidden: cfg.hideCloseBtn,
+            tooltip: "关闭",
+            click: function () {
+                $$(win_id).close();
+            }
+        }]
+    };
+    if(hideHeader){
+        head = {height: 0}
+    }
+
     var win = webix.ui({
         view: "window",
         id: win_id,
@@ -178,22 +199,9 @@ function getWin(title, ui, config){
         height: height,
         move: true,
         modal: modal,
-        position: "center",
+        position: cfg.position || "center",
         autofocus: true,
-        head: {
-            view: "toolbar",
-            cols: [{
-                view: "label",
-                label: title
-            },{
-                view: "icon",
-                icon: "close",
-                tooltip: "关闭",
-                click: function () {
-                    $$(win_id).close();
-                }
-            }]
-        },
+        head: head,
         body: {
             padding: 10,
             rows: [

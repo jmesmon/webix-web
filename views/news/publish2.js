@@ -1,24 +1,15 @@
 define([], function () {
-    var uid = webix.uid().toString();
 
     return {
-        $ui: {
-            id: uid
-        },
-        $oninit: function (scope) {
-            var param = window.pageParams;
-            if(!param){
-                window.open('#!/app/news.list', '_self');
-                return ;
-            }
-            var win = getWin('修改新闻', {
+        $ui: {},
+        $oninit: function () {
+            var win = getWin('添加新闻', {
                 rows: [
                     {
                         cols: [
                             {
                                 width: 410,
                                 rows: [
-                                    {view: "text", label: "id：", name: "id", id: 'nid', hidden: true},
                                     {view: "text", label: "标题：", name: "title", id: 'ntitle', width: 400, labelWidth: 55, labelAlign: 'right'}
                                 ]
                             },
@@ -35,25 +26,16 @@ define([], function () {
                         ]
                     },
                     {
-                        borderless: true,
-                        view:"iframe", id:"content-body", src:"news/publish.html",
-                        on: {
-                            onAfterLoad: function(){
-                                var nid = $$(uid).config.param.id;
-                                var win = doIPost('news/getById', {id: nid}, function (resp) {
-                                    if(resp.success){
-                                        var news = resp.result;
-                                        $$(uid).config.data = news;
-                                        try {
-                                            $$('content-body').getWindow().setContent(news.content);
-                                        }catch(e){
-                                            console.error(e);
-                                            win.close();
-                                        }
+                        cols: [
+                            {
+                                borderless: true,
+                                view:"iframe", id:"content-body", src:"news/publish.html",
+                                on: {
+                                    onAfterLoad: function(){
                                     }
-                                });
+                                }
                             }
-                        }
+                        ]
                     },
                     {
                         height: 24,
@@ -64,48 +46,37 @@ define([], function () {
                                 window.open('#!/app/news.list', '_self');
                             }},
                             {width: 20},
-                            {view: "button", label: "保存", type: "form", width: 90, click: function () {
+                            {view: "button", label: "发布", type: "form", width: 90, click: function () {
                                 var title = $$('ntitle').getValue();
                                 var date = $$('ndate').getValue();
                                 var content = $$('content-body').getWindow().getAllHtml();
-                                doIPost('news/update', {
-                                    id: $$('nid').getValue(),
+                                doIPost('news/add', {
                                     title: title,
                                     workUnit: $$('nworkUnit').getValue(),
                                     newsType: $$('ntype').getValue(),
                                     publishDateStr: date,
                                     content: content,
-                                    publisher: USER_INFO.policeName,
+                                    publisher: USER_INFO.policeName
                                     // newsType: '',
                                 }, function (data) {
                                     if(data.success){
-                                        msgBox("保存成功");
+                                        msgBox("发布成功");
+                                        win.close();
                                         window.open('#!/app/news.list', '_self');
                                     }else{
-                                        msgBox("保存失败")
+                                        msgBox("发布失败")
                                     }
                                 });
                             }},
-                            {}
+                            {},
                         ]
                     }
                 ]
-            }, {width: document.body.offsetWidth, height: document.body.offsetHeight-55, hideHeader: false, hideCloseBtn: true});
-            win.attachEvent("onDestruct", function(){
-                win.close();
-                window.open('#!/app/news.list', '_self');
-            });
+            }, {width: document.body.offsetWidth, height: document.body.offsetHeight - 55, hideHeader: false, hideCloseBtn: true});
             win.show();
             setTimeout(function(){
                 win.setPosition(0, 55);
             }, 0);
-            $$(uid).config.param = param.id;
-            // window.pageParams = null;
-            $$('nid').setValue(param.id);
-            $$('ntitle').setValue(param.title);
-            $$('ndate').setValue(param.publishDate);
-            $$('nworkUnit').setValue(param.workUnit);
-            $$('ntype').setValue(param.newsType);
         }
     };
 });

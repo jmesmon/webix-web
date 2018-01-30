@@ -528,6 +528,21 @@ define([
             var win = getWin('选择警犬', {
                 rows: [
                     {
+                        cols: [
+                            {view: "text", label: "警犬名称",id: 'dogName', width: 400},
+                            {view: "button", label: "搜索", width: 65, click: function(){
+                                var params = {};
+                                if($$('dogName').getValue()){
+                                    params = {dogNameLike: $$('dogName').getValue()};
+                                }
+                                var tab = $$(datatableId);
+                                tab.config.customUrl.params = params;
+                                tab.reload();
+                            }},
+                            {}
+                        ]
+                    },
+                    {
                         id: datatableId,
                         view: "datatable",
                         select: false,
@@ -599,7 +614,7 @@ define([
         },
         setUser: function(textObj, valObj, callback){
             var datatableId = webix.uid().toString();
-            var win = getWin('选择带犬民警', {
+            var win = getWin('选择带犬人员', {
                 rows: [{
                     id: datatableId,
                     view: "datatable",

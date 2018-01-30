@@ -57,7 +57,14 @@ define([
         var submit = function () {
             var form = $$('tickout_form');
             if(form.validate()){
-                doIPost('wormImmue/addWorm', form.getValues(), function (data) {
+                var params = form.getValues();
+                var policeName = params.policeName;
+                var policeId = policeName.split("<_>")[0];
+                policeName = policeName.split("<_>")[1];
+                params.policeName = policeName;
+                params.policeId = policeId;
+
+                doIPost('wormImmue/addWorm', params, function (data) {
                     console.log(data);
                     if (data.success) {
                         msgBox('操作成功，新增成功');
@@ -73,59 +80,75 @@ define([
 
         };
         var win = {};
-        win = getWin("添加驱虫记录", {
-            rows: [
-                {
-                    view:"scrollview",
-                    id:"scrollview",
-                    scroll:"y",
-                    height: 200,
-                    body:{
-                        rows:[
-                            {
-                                view:"form",
-                                id: 'tickout_form',
-                                elementsConfig: {
-                                    labelAlign: 'right',
-                                    labelWidth: 70
-                                },
-                                elements:[
-                                    {view: "text", name: "dogId", id: 'dog_id', hidden: true},
-                                    {view: "text", label: "警犬名称", name: "dogName", id: 'dog_name', width: 300, readonly: true, placeholder: '点击选择',
-                                        on: {
-                                            onItemClick: function () {
-                                                constant.setDog('dog_name', 'dog_id', {});
-                                            }
-                                        }
+        doIPost('user/getListByRole/3000/1', {userRole: 'FanZhiRenYuan'}, function(resp) {
+            var userList = [];
+            webix.toArray(resp.result).each(function (item) {
+                if (item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
+                    userList.push({
+                        id: item.id + '<_>' + item.policeName,
+                        value: item.policeName
+                    });
+                }
+            });
+            win = getWin("添加驱虫记录", {
+                rows: [
+                    {
+                        view:"scrollview",
+                        id:"scrollview",
+                        scroll:"y",
+                        height: 200,
+                        body:{
+                            rows:[
+                                {
+                                    view:"form",
+                                    id: 'tickout_form',
+                                    elementsConfig: {
+                                        labelAlign: 'right',
+                                        labelWidth: 70
                                     },
-                                    {view: "richselect", label: "完成状态", name: 'wormState', value:"2", width: 300, options:[
+                                    elements:[
+                                        {view: "text", name: "dogId", id: 'dog_id', hidden: true},
+                                        {view: "text", label: "警犬名称", name: "dogName", id: 'dog_name', width: 300, readonly: true, placeholder: '点击选择',
+                                            on: {
+                                                onItemClick: function () {
+                                                    constant.setDog('dog_name', 'dog_id', {});
+                                                }
+                                            }
+                                        },
+                                        {view: "richselect", label: "完成状态", name: 'wormState', value:"2", width: 300, options:[
                                             {id: '1', value: "未完成"},
                                             {id: '2', value: "已完成"},
                                         ]},
-                                    {view: "text", label: "驱虫周期", name: "wormDesc", value: '', width: 300, attributes:{ maxlength: 64 }},
-                                    {view: "datepicker", label: "驱虫日期", name: "wormDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
-                                    {view: "text", label: "操作人员", name: "policeName", width: 300, attributes:{ maxlength: 128 }}
-                                ],
-                                rules:{
+                                        {view: "text", label: "驱虫方式", name: "wormDesc", value: '', width: 300, attributes:{ maxlength: 64 }, placeholder: '体内/体外/内服/外用'},
+                                        {view: "datepicker", label: "驱虫日期", name: "wormDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
+                                        {
+                                            view: "richselect", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
+                                            options: userList
+                                        },
+                                        // {view: "text", label: "操作人员", name: "policeName", width: 300, attributes:{ maxlength: 128 }}
+                                    ],
+                                    rules:{
+                                    }
                                 }
-                            }
+                            ]
+                        }
+                    },
+                    {width: 600},
+                    {
+                        cols:[
+                            {},
+                            {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
+                                win.close();
+                            }},
+                            {width: DEFAULT_PADDING/2},
+                            {view: "button", label: "提交保存", width: 65, click: submit}
                         ]
                     }
-                },
-                {width: 600},
-                {
-                    cols:[
-                        {},
-                        {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
-                            win.close();
-                        }},
-                        {width: DEFAULT_PADDING/2},
-                        {view: "button", label: "提交保存", width: 65, click: submit}
-                    ]
-                }
-            ]
-        }, {height: 290});
-        win.show();
+                ]
+            }, {height: 290});
+            win.show();
+        });
+
     };
 
     var searchForm = {
@@ -209,7 +232,7 @@ define([
         {id: "$index", header: "NO.", width: 45},
         {id: "dogInfo.dogName", header: "犬名", width: 200, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
         {id: "wormDate", header: "驱虫日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        {id: "wormDesc", header: "驱虫周期", width: 100},
+        {id: "wormDesc", header: "驱虫方式/周期", width: 100},
         {id: "wormState", header: "状态", width: 55, template: function(obj, common, value){
             if(value == 2){
                 return '<span class="green_color">已完成</span>';
@@ -227,14 +250,14 @@ define([
         }},
         {id: "dogInfo.breed", header: "品种", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
         {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
-        {id: "dogInfo.policeName", header: "繁育员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
+        {id: "dogInfo.policeName", header: "带犬人员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
     ];
 
     var column2 = [
         {id: "$index", header: "NO.", width: 45},
         {id: "dogInfo.dogName", header: "犬名", width: 90, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
         {id: "wormDate", header: "驱虫日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        {id: "wormDesc", header: "驱虫周期", width: 100},
+        {id: "wormDesc", header: "驱虫方式/周期", width: 100},
         {id: "wormState", header: "状态", width: 55, template: function(obj, common, value){
             if(value == 2){
                 return '已完成';
@@ -254,7 +277,7 @@ define([
         {id: "dogInfo.dogSource", header: "来源", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogSource', ''); } },
         {id: "dogInfo.dogColour", header: "毛色", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
         {id: "dogInfo.hairType", header: "毛型", width: 50, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.hairType', '') || ''; } },
-        {id: "dogInfo.policeName", header: "繁育员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
+        {id: "dogInfo.policeName", header: "带犬人员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
     ];
 
     var exportFile = function(){
@@ -308,7 +331,7 @@ define([
                 height: 36,
                 cols: [
                     {view: "button", label: "添加", width: 70, click: addWorm},
-                    {view: "button", label: "完成驱虫", width: 70, click: doWorm, permission: 'worm.finishWorm'},
+                    {view: "button", label: "完成驱虫", width: 70, click: doWorm}, //, permission: 'worm.finishWorm'
                     {view: "button", label: "删除", width: 70, click: del},
                     {view: "button", label: "未来7天要驱虫的", width: 130, permission: 'worm.next7DWorm', click: function () {
                         $$('form').setValues({
