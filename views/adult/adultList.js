@@ -76,6 +76,8 @@ define([
         // params.growthStage = 2;
         datatable.config.customUrl.params = params;
         datatable.reload();
+        checkMap = {};
+        document.getElementById("checkCount").innerHTML = 0;
     };
 
     /**
@@ -206,6 +208,213 @@ define([
             ]
         }, {width: 800});
         win.show();
+    };
+
+    var getArray = function(){
+        var arr = [];
+        for(k in checkMap){
+            arr.push(checkMap[k]);
+        }
+        return arr;
+    };
+
+    var addWorm = function () {
+        var selectedData = getArray();
+        var submit = function () {
+            var form = $$('tickout_form');
+            if(form.validate()){
+                var params = form.getValues();
+                var policeName = params.policeName;
+                var policeId = policeName.split("<_>")[0];
+                policeName = policeName.split("<_>")[1];
+                params.policeName = policeName;
+                params.policeId = policeId;
+
+                var arr = [];
+                for(var i = 0; i<selectedData.length; i++){
+                    var dog = selectedData[i];
+                    var p = webix.copy(params);
+                    p.dogId = dog.id;
+                    p.dogName = dog.dogName;
+                    arr.push(p);
+                }
+
+                doIPost('wormImmue/batchAddWorm', arr, function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        msgBox('操作成功，新增成功');
+                        $$(datatableId).reload();
+                        win.close();
+                    } else {
+                        msgBox('操作失败<br>' + data.message)
+                    }
+                });
+            }else{
+                msgBox('请填写驱虫信息');
+            }
+
+        };
+        var win = {};
+        doIPost('user/getListByRole/3000/1', {userRole: 'FanZhiRenYuan'}, function(resp) {
+            var userList = [];
+            webix.toArray(resp.result).each(function (item) {
+                if (item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
+                    userList.push({
+                        id: item.id + '<_>' + item.policeName,
+                        value: item.policeName
+                    });
+                }
+            });
+            win = getWin("添加驱虫记录", {
+                rows: [
+                    {
+                        view:"scrollview",
+                        id:"scrollview",
+                        scroll:"y",
+                        height: 200,
+                        body:{
+                            rows:[
+                                {
+                                    view:"form",
+                                    id: 'tickout_form',
+                                    elementsConfig: {
+                                        labelAlign: 'right',
+                                        labelWidth: 70
+                                    },
+                                    elements:[
+                                        {view: "text", label: "警犬数量", name: "dogName", value: '已选择' + selectedData.length + '头警犬', width: 300, readonly: true},
+                                        {view: "richselect", label: "完成状态", name: 'wormState', value:"2", width: 300, options:[
+                                            {id: '1', value: "未完成"},
+                                            {id: '2', value: "已完成"},
+                                        ]},
+                                        {view: "text", label: "驱虫方式", name: "wormDesc", value: '', width: 300, attributes:{ maxlength: 64 }, placeholder: '体内/体外/内服/外用'},
+                                        {view: "datepicker", label: "驱虫日期", name: "wormDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
+                                        {
+                                            view: "richselect", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
+                                            options: userList
+                                        }
+                                    ],
+                                    rules:{
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {width: 600},
+                    {
+                        cols:[
+                            {},
+                            {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
+                                win.close();
+                            }},
+                            {width: DEFAULT_PADDING/2},
+                            {view: "button", label: "提交保存", width: 65, click: submit}
+                        ]
+                    }
+                ]
+            }, {height: 290});
+            win.show();
+        });
+
+    };
+
+    var addImmue = function () {
+        var selectedData = getArray();
+        var submit = function () {
+            var form = $$('tickout_form');
+            if(form.validate()){
+                var params = form.getValues();
+                var policeName = params.policeName;
+                var policeId = policeName.split("<_>")[0];
+                policeName = policeName.split("<_>")[1];
+                params.policeName = policeName;
+                params.policeId = policeId;
+
+                var arr = [];
+                for(var i = 0; i<selectedData.length; i++){
+                    var dog = selectedData[i];
+                    var p = webix.copy(params);
+                    p.dogId = dog.id;
+                    p.dogName = dog.dogName;
+                    arr.push(p);
+                }
+
+                doIPost('wormImmue/batchAddImmue', arr, function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        msgBox('操作成功，记录新增成功');
+                        $$(datatableId).reload();
+                        win.close();
+                    } else {
+                        msgBox('操作失败<br>' + data.message)
+                    }
+                });
+            }else{
+                msgBox('请填写免疫信息');
+            }
+        };
+        var win = {};
+        doIPost('user/getListByRole/3000/1', {userRole: 'FanZhiRenYuan'}, function(resp) {
+            var userList = [];
+            webix.toArray(resp.result).each(function (item) {
+                if (item.userRole != 'SuperMan' && item.userRole != 'JuZhang' && item.userRole != 'GuanLiYuan' && item.userRole != 'FJ_JuZhang') {
+                    userList.push({
+                        id: item.id + '<_>' + item.policeName,
+                        value: item.policeName
+                    });
+                }
+            });
+            win = getWin("添加免疫记录", {
+                rows: [
+                    {
+                        view:"scrollview",
+                        id:"scrollview",
+                        scroll:"y",
+                        height: 200,
+                        body:{
+                            rows:[
+                                {
+                                    view:"form",
+                                    id: 'tickout_form',
+                                    elementsConfig: {
+                                        labelAlign: 'right',
+                                        labelWidth: 70
+                                    },
+                                    elements:[
+                                        {view: "text", label: "警犬数量", name: "dogName", value: '已选择' + selectedData.length + '头警犬', width: 300, readonly: true},
+                                        {view: "richselect", label: "完成状态", name: 'immueState', value:"2", width: 300, options:[
+                                            {id: '1', value: "未完成"},
+                                            {id: '2', value: "已完成"}
+                                        ]},
+                                        {view: "text", label: "疫苗名称", name: "immueName", value: '', width: 300, attributes:{ maxlength: 64 }},
+                                        {view: "datepicker", label: "免疫日期", name: "immueDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
+                                        {
+                                            view: "richselect", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
+                                            options: userList
+                                        }
+                                    ],
+                                    rules:{
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {width: 600},
+                    {
+                        cols:[
+                            {},
+                            {view: "button", label: "取消", css: 'non-essential', width: 65, click: function () {
+                                win.close();
+                            }},
+                            {width: DEFAULT_PADDING/2},
+                            {view: "button", label: "提交保存", width: 65, click: submit}
+                        ]
+                    }
+                ]
+            }, {height: 290});
+            win.show();
+        });
+
     };
 
     var searchForm = {
@@ -440,7 +649,10 @@ var checkCount = 0;
                     // {view: "button", label: "导出登记卡", width: 90, click: function(){
                     //     window.open('webix/警犬登记卡.doc', '_blank');
                     // }},
+
                     {},
+                    {view: "button", label: "批量免疫", width: 80, click: addImmue, _permission: 'immue.batch.create'},
+                    {view: "button", label: "批量驱虫", width: 80, click: addWorm, _permission: 'worm.batch.create'},
                     {view: "button", label: "导出数据", width: 80, click: exportData},
                 ]
             },
@@ -464,7 +676,7 @@ var checkCount = 0;
                         var item = $$(datatableId).getItem(row);
                         if(state){
                             checkCount ++;
-                            checkMap[item.chipNo] = item;
+                            checkMap[item.id] = item;
                         }else{
                             checkCount --;
                             delete checkMap[item.chipNo];

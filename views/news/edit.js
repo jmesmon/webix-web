@@ -11,6 +11,7 @@ define([], function () {
                 window.open('#!/app/news.list', '_self');
                 return ;
             }
+            $$(uid).config.param = param;
             var win = getWin('修改新闻', {
                 rows: [
                     {
@@ -40,6 +41,7 @@ define([], function () {
                         on: {
                             onAfterLoad: function(){
                                 var nid = $$(uid).config.param.id;
+                                debugger;
                                 var win = doIPost('news/getById', {id: nid}, function (resp) {
                                     if(resp.success){
                                         var news = resp.result;
@@ -80,6 +82,7 @@ define([], function () {
                                 }, function (data) {
                                     if(data.success){
                                         msgBox("保存成功");
+                                        win.close();
                                         window.open('#!/app/news.list', '_self');
                                     }else{
                                         msgBox("保存失败")
@@ -99,8 +102,6 @@ define([], function () {
             setTimeout(function(){
                 win.setPosition(0, 55);
             }, 0);
-            $$(uid).config.param = param.id;
-            // window.pageParams = null;
             $$('nid').setValue(param.id);
             $$('ntitle').setValue(param.title);
             $$('ndate').setValue(param.publishDate);

@@ -294,6 +294,345 @@ define([
         }, {height: 550, width: 800});
         win.show();
     };
+    var batchAdd = function (id) {
+        var isAj = (id == 1 ? false:true);
+        var isXl = (id == 2 ? false:true);
+        var isXz = (id == 3 ? false:true);
+        var isQt = (id == 4 ? false:true);
+        var workType = '';
+        switch (id){
+            case '1':
+                workType = '安检';
+                break;
+            case '2':
+                workType = '巡逻';
+                break;
+            case '3':
+                workType = '刑侦';
+                break;
+            default:
+                workType = '其他';
+        }
+        console.log(workType);
+        var attUser = '';
+        var readonly = false;
+        if(USER_INFO.userRole == 'JingYuan'){
+            attUser = USER_INFO.policeName;
+            readonly = true;
+        }
+        var picMap = {};
+        var submit = function () {
+            var form = $$('add_form');
+            var values = form.getValues();
+            values.workState = '待审批';
+            var uploader = $$('uploader_pic');
+            var picList = [];
+            uploader.files.data.getRange().each(function(item){
+                picList.push({fileName: item.fileName   , url: item.serverName});
+            });
+
+            values.workPic = JSON.stringify(picList);
+            if(form.validate()){
+                if(!values.ajCar){
+                    values.ajCar=0;
+                }
+                if(!values.ajPer){
+                    values.ajPer=0;
+                }
+                if(!values.ajWp){
+                    values.ajWp=0;
+                }
+                values.startTimeStr = webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")(values.startTimeStr);
+                values.endTimeStr = webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")(values.endTimeStr);
+
+                var data = [];
+                var dogList = $$('policemanAndDog').data.getRange();
+                dogList.each(function(userAndDog){
+                    var item = webix.copy(values);
+                    item.attPerson = userAndDog.attPerson;
+                    item.dogId = userAndDog.dogId;
+                    data.push(item);
+                });
+                doIPost('work/add', data, function (data) {
+                    if (data.success) {
+                        $$(datatableId).reload();
+                        msgBox('操作成功，记录新增成功');
+                        win.close();
+                    } else {
+                        msgBox('操作失败<br>' + data.message)
+                    }
+                });
+            }else{
+                msgBox('请填写必要信息');
+            }
+
+        };
+        var win = {};
+        win = getWin("批量添加使用记录-" + workType, {
+            rows: [
+                {
+                    view:"scrollview",
+                    id:"scrollview",
+                    scroll:"y",
+                    height: 450,
+                    body:{
+                        rows:[
+                            {
+                                view:"form",
+                                id: 'add_form',
+                                elementsConfig: {
+                                    labelAlign: 'right',
+                                    labelWidth: 70
+                                },
+                                elements:[
+                                    {
+                                        rows: [
+                                            {template: '<div style="font-size: 14px;margin-top: -8px">出勤人员和出勤警犬列表</div>', height: 24},
+                                            {
+                                                view: "datatable",
+                                                select: true,
+                                                id: 'policemanAndDog',
+                                                height: 120,
+                                                columns: [
+                                                    {
+                                                        id: "$check",
+                                                        header: {content: "masterCheckbox"},
+                                                        checkValue: 'on',
+                                                        uncheckValue: 'off',
+                                                        template: "{common.checkbox()}",
+                                                        width: 40
+                                                    },
+                                                    {
+                                                        id: "id",
+                                                        header: "操作",
+                                                        template: '<div align="center"><a class="my_link remove" href="javascript:void(0)"><span class="webix_icon icon fa-remove"></span></a></div>',
+                                                        tooltip: '删除',
+                                                        width: 48
+                                                    },
+                                                    {id: "attPerson", header: "出勤人员", width: 100},
+                                                    {id: "dogName", header: "出勤警犬", width: 570},
+                                                ],
+                                                tooltip:true,
+                                                minHeight: 80,
+                                                datafetch: 20,//default
+                                                data: [],
+                                                onClick: {
+                                                    remove: function (ev, obj) {
+                                                        var datatable = $$('policemanAndDog');
+                                                        var item = datatable.getItem(obj.row);
+                                                        datatable.remove(item.id);
+                                                    }
+                                                }
+                                            },
+                                            {height: 10},
+                                            {
+                                                cols: [
+                                                    {view: "text", label: "出勤人员", name: "attPerson", id: 'attPerson', width: 240, placeholder: '点击选择', attributes:{ maxlength: 64 }, readonly: readonly, value: attUser,
+                                                        on: {
+                                                            onItemClick: function () {
+                                                                if(readonly) return ;
+                                                                constant.setUser('attPerson', null, function(){
+                                                                    $$('select_dog').config.val = '';
+                                                                    $$('select_dog').setValue('');
+
+                                                                    var params = {policeId: $$('attPerson').config.userInfo.id};
+                                                                    if(USER_INFO.userRole == 'JingYuan') {
+                                                                        params = {policeId: USER_INFO.id};
+                                                                    }
+                                                                    constant.setDog('select_dog', 'dogId', params);
+                                                                });
+                                                            }
+                                                        }
+                                                    },
+                                                    {view: 'text', value: '', name: "dogId", id: 'dogId', hidden: true},
+                                                    {view: "text", label: "出勤警犬", id: 'select_dog', placeholder: '点击选择', width: 240,
+                                                        on: {
+                                                            onItemClick: function () {
+                                                                var params = {policeId: USER_INFO.id};
+                                                                if(USER_INFO.userRole != 'JingYuan') {
+                                                                    params = {policeId: $$('attPerson').config.userInfo.id};
+                                                                }
+                                                                constant.setDog('select_dog', 'dogId', params);
+                                                            }
+                                                        }
+                                                    },
+                                                    {view: "button", label: "添加", width: 65, click: function(){
+                                                        $$('policemanAndDog').add({
+                                                            id: new Date().getTime(),
+                                                            dogName: $$('select_dog').getValue(),
+                                                            dogId: $$('dogId').getValue(),
+                                                            attPerson: $$('attPerson').getValue()
+                                                        });
+                                                        $$('select_dog').config.val = '';
+                                                        $$('select_dog').setValue('');
+                                                        $$('dogId').setValue('');
+                                                        $$('attPerson').config.val = '';
+                                                        $$('attPerson').setValue('');
+                                                    }},
+                                                    {}
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        rows: [
+                                            {view: "text", label: "工作类型", name: 'workType', value:workType, width: 240, hidden: true},
+                                            {view: "text", label: "编号", name: 'xlNum', value:'', width: 240},
+                                            {view: "text", label: "用犬单位", name: "workUnit", width: 240, attributes:{ maxlength: 64 }},
+                                            {view: "text", label: "带队领导", name: "attLeader", width: 240, attributes:{ maxlength: 64 }},
+                                        ]
+                                    },
+                                    {
+                                        cols: [
+                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {width: 50},
+                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                        ]
+                                    },
+                                    {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},
+                                    {view: "richselect", label: "案件类型", id: 'case_type', hidden: isXz, name: "caseNo", width: 240,
+                                        options:[
+                                            {id: '一般', value: "一般"},
+                                            {id: '重大', value: "重大"},
+                                            {id: '特大', value: "特大"}
+                                        ]
+                                    },{
+                                        view: "richselect", label: "检查结果", name: 'isWork', value: "正常", width: 240,
+                                        options: [
+                                            {id: '正常', value: "正常"},
+                                            {id: '异常', value: "异常"}
+                                        ]
+                                    },
+                                    {view: "text", label: "安检等级", hidden: isAj, value: '', placeholder: '一般/重大/特大', name: "ajLevel", width: 240},
+                                    {
+                                        hidden: isAj,
+                                        cols: [
+                                            {view: "text", label: "安检面积", name: "securityCheckArea", value: '0', width: 240, attributes:{ maxlength: 7 },
+                                                on: {
+                                                    onChange: function(newVal, old){
+                                                        if(!webix.rules.isNumber(newVal) && newVal != '' ){
+                                                            msgBox("输入有误：安检面积必须为数字");
+                                                            if(old) {
+                                                                this.setValue(old);
+                                                            }else{
+                                                                this.setValue('');
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {template: '平米', borderless: true}
+
+                                        ]
+                                    },
+                                    {
+                                        cols: [
+                                            {view: "text", label: "检查人次", name: "ajPer", value: '0', width: 240, attributes:{ maxlength: 7 },
+                                                on: {
+                                                    onChange: function(newVal, old){
+                                                        if(!webix.rules.isNumber(newVal) && newVal != '' ){
+                                                            msgBox("输入有误：检查人次必须为数字");
+                                                            if(old) {
+                                                                this.setValue(old);
+                                                            }else{
+                                                                this.setValue('');
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {template: '人次', borderless: true}
+
+                                        ]
+                                    },
+                                    {
+                                        cols: [
+                                            {view: "text", label: "检查物品", name: "ajWp", value: '0', width: 240, attributes:{ maxlength: 7 },
+                                                on: {
+                                                    onChange: function(newVal, old){
+                                                        if(!webix.rules.isNumber(newVal) && newVal != '' ){
+                                                            msgBox("输入有误：检查物品必须为数字");
+                                                            if(old) {
+                                                                this.setValue(old);
+                                                            }else{
+                                                                this.setValue('');
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {template: '件', borderless: true}
+                                        ]
+                                    },
+                                    {
+                                        hidden: isAj,
+                                        cols: [
+                                            {view: "text", label: "安检车辆", hidden: isAj, value: '0', name: "ajCar", width: 240, attributes:{ maxlength: 7 },
+                                                on: {
+                                                    onChange: function(newVal, old){
+                                                        if(!webix.rules.isNumber(newVal) && newVal != '' ){
+                                                            msgBox("输入有误：检查车辆必须为数字");
+                                                            if(old) {
+                                                                this.setValue(old);
+                                                            }else{
+                                                                this.setValue('');
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {template: '辆', borderless: true, hidden: isAj}
+                                        ]
+                                    },
+                                    {view: "text", label: "地点", hidden: isAj && isXl, name: "ajAddr", attributes:{ maxlength: 255 }},
+                                    {view: "text", label: "查获物品", name: "searchWp", attributes:{ maxlength: 200 }, value: '无'},
+                                    {view: "textarea", label: "补充说明", name: "workResult", attributes:{ maxlength: 200 }, height: 80, value: '无'},
+                                    {
+                                        rows: [
+                                            {
+                                                view:"uploader",
+                                                value:"上传附件",
+                                                id: 'uploader_pic',
+                                                name: 'workPic',
+                                                link:"mylist",
+                                                upload:"/policeDog/services/file/upload",
+                                                datatype:"json"
+                                            },
+                                            {
+                                                view:"list",
+                                                id:"mylist",
+                                                type:"uploader",
+                                                autoheight:true,
+                                                borderless:true
+                                            }
+                                        ]
+                                    },
+                                ],
+                                rules:{
+                                    "workUnit":webix.rules.isNotEmpty,
+                                    "startTimeStr":webix.rules.isNotEmpty,
+                                    "endTimeStr":webix.rules.isNotEmpty,
+                                    "isWork":webix.rules.isNotEmpty,
+                                }
+                            }
+                        ]
+                    }
+                },
+                {width: 800},
+                {
+                    cols:[
+                        {},
+                        {view: "button", label: "关闭", css: 'non-essential', width: 65, click: function () {
+                            win.close();
+                        }},
+                        {width: DEFAULT_PADDING/2},
+                        {view: "button", label: "保存", width: 65, click: submit}
+                    ]
+                }
+            ]
+        }, {height: 550, width: 800});
+        win.show();
+    };
 
     var approve = function(){
         var datatable = $$(datatableId);
@@ -740,9 +1079,9 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "出勤人员", name: "attPerson", width: 160, labelWidth: 60},
+                            {view: "text", label: "出勤人员", name: "attPerson", width: 140, labelWidth: 60},
                             {width: DEFAULT_PADDING},
-                            {view: "text", label: "警犬名", name: "dogNameLike", width: 160, labelWidth: 50},
+                            {view: "text", label: "警犬名", name: "dogNameLike", width: 140, labelWidth: 50,placeholder: '模糊搜索'},
                             {width: DEFAULT_PADDING},
                             {view: "text", label: "用犬单位", name: "workUnit", width: 180, labelWidth: 60},
                             {width: DEFAULT_PADDING},
@@ -760,7 +1099,7 @@ define([
                             {view: "datepicker", label: "使用日期", name: "startTimeStr",labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
                             {view: "datepicker", label: "-", name: "endTimeStr",labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
                             {width: DEFAULT_PADDING},
-                            {view: "button", label: "查找", type: "form", width: 100, paddingX: 10, click: search},
+                            {view: "button", label: "查找", type: "form", width: 80, paddingX: 10, click: search},
                             {}
                         ]
                     }
@@ -768,6 +1107,28 @@ define([
             }
         ]
     };
+    webix.ui({
+        view:"popup",
+        id:"my_pop2",
+        width: 100,
+        body:{
+            view:"list",
+            data:[ {id:"1", name:"安检", location: "New York"},
+                {id:"2", name:"巡逻", location:"Salt Lake City"},
+                {id:"3", name:"刑侦", location:"Alabama"},
+                {id:"4", name:"其他", location:"Alabama"}
+            ],
+            on:{
+                onItemClick: function(id){
+                    $$('my_pop2').hide();
+                    batchAdd(id);
+                }
+            },
+            datatype:"json",
+            template:"#name#",
+            autoheight:true
+        }
+    });
     webix.ui({
         view:"popup",
         id:"my_pop",
@@ -781,7 +1142,6 @@ define([
             ],
             on:{
                 onItemClick: function(id){
-                    console.log('1212_' + id);
                     $$('my_pop').hide();
                     add(id);
                 }
@@ -798,6 +1158,7 @@ define([
                 css: "toolbar",
                 cols: [
                     {view: "button", label: "添加", width: 50, popup:"my_pop"},
+                    {view: "button", label: "批量添加", width: 75, popup:"my_pop2"},
                     {view: "button", label: "修改", width: 50, click: editData},
                     {view: "button", label: "删除", permission: 'work.delete', width: 50, click: del},
                     {view: "button", label: "审批", permission: 'work.approve',width: 50, click: approve},
