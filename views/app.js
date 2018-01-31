@@ -162,7 +162,7 @@ define([
                                     }
                                 }
                                 },
-                                {template: '<div style="font-size: 14px;colod: #f9ff00">收到的通知</div>', height: 30, borderless: true},
+                                {template: '<div style="font-size: 14px;color: #f9ff00">收到的通知</div>', height: 30, borderless: true},
                                 {
                                     id: datatableId,
                                     view: "datatable",
