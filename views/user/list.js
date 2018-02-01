@@ -106,6 +106,12 @@ define([
                 elements: [
                     {
                         cols: [
+                            {view: "richselect", label: "工作单位", name: "workUnit", labelWidth: 60, width: 180,
+                                options: constant.getUnitOptions(),
+                                value: USER_INFO.workUnit,
+                                hidden: (["FanZhiRenYuan", "PeiXunRenYuan", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1)
+                            },
+                            {width: DEFAULT_PADDING},
                             {view: "text", label: "民警姓名", name: "policeNameLike",labelWidth: 60, width: 220},
                             // {width: DEFAULT_PADDING},
                             {width: DEFAULT_PADDING},

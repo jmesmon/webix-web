@@ -616,6 +616,26 @@ define([
             var datatableId = webix.uid().toString();
             var win = getWin('选择带犬人员', {
                 rows: [{
+                    cols: [
+                        {view: "richselect", label: "工作单位", id: 'workUnit_id', name: "workPlace", labelWidth: 60, width: 180,
+                            options: constant.getUnitOptions(),
+                            value: USER_INFO.workUnit,
+                            hidden: (["FanZhiRenYuan", "PeiXunRenYuan", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1)
+                        },
+                        {width: 20},
+                        {view: "text", label: "姓名",id: 'policeNameLike', width: 200, labelWidth: 35},
+                        {view: "button", label: "搜索", width: 65, click: function(){
+                            var params = { workUnit: $$('workUnit_id').getValue()};
+                            if($$('policeNameLike').getValue()){
+                                params .policeNameLike = $$('policeNameLike').getValue();
+                            }
+                            var tab = $$(datatableId);
+                            tab.config.customUrl.params = params;
+                            tab.reload();
+                        }},
+                        {}
+                    ]
+                },{
                     id: datatableId,
                     view: "datatable",
                     select: true,
