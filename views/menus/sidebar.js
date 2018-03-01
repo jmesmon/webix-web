@@ -20,7 +20,7 @@ define(function(){
 
         {id: "train", open: true, value:"培训管理", data:[
             { id: "train.publish", value: "培训发布管理", permission: 'train.publish', icon: "pencil", $css: "products", details:""},
-            { id: "train.createTrain", value: "报名培训", permission: 'train.create', icon: "file-text", $css: "products", details:""},
+            { id: "train.createTrain", value: "培训报名", permission: 'train.create', icon: "file-text", $css: "products", details:""},
             // { id: "train.scoreMgmt", value: "培训成绩管理", permission: 'train.score.mgmt', icon: "check-square-o", $css: "products", details:""},
             { id: "train.trainSocre", value: "警犬培训", permission: 'train.myList', icon: "list", $css: "products", details:""},
             // { id: "train.profession", value: "专业技能", permission: 'train.prof', icon: "list-alt", $css: "products", details:""},
@@ -44,7 +44,7 @@ define(function(){
         {id: "dogMgmt", value: "警犬管理", open: true, data:[
             { id: "adult.adultList", value: "警犬列表", permission: 'dog.list', icon: 'list', $css: "dashboard", details:""},
             { id: "adult.addDog", value: "警犬信息录入", permission: 'dog.addDog', icon: "plus", details: "" },
-            { id: "apply.tickoutList", value: "淘汰申请", permission: 'apply.tickout.list', icon: "list", details: "" },
+            { id: "apply.tickoutList", value: "淘汰审批", permission: 'apply.tickout.list', icon: "list", details: "" },
             { id: "apply.dieList", value: "死亡报告", permission: 'apply.die.list', icon: "list", details: "" },
         ]},
 
@@ -71,6 +71,11 @@ define(function(){
 	var data = [];
 	for(var i = 0; i<allData.length; i++){
 		var item = allData[i];
+		if(USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'JuZhang'){
+		    if(item.value == '繁育管理' || item.value == '&nbsp;&nbsp;&nbsp;'){
+		        continue;
+            }
+        }
 		if(item.anyone){
 		    data.push(item);
 		    continue;

@@ -127,6 +127,9 @@ define([
                             view: "select", label: "犬品种:", id: 'breed_' + i, name: "breed", width: 180, labelWidth: 65, value: father_type,
                             options: constant.breedType
                         },
+                        {
+                            view: "text", label: "", id: 'breed_other_' + i, name: "breed", width: 180, labelWidth: 65, value: father_type
+                        },
                         {width: 10},
                         {
                             view: "select", label: "毛色:", id: 'dogColour_' + i, name: "dogColour", width: 130, labelWidth: 45, value: constant.getDefaultTypeColor(father_type).dogColor,
@@ -184,7 +187,7 @@ define([
         }
         if(!values.birthday){
             state = false;
-            msg.push('请填写生育时间');
+            msg.push('请填写生产日期');
         }
         if(!values.breeder){
             state = false;
@@ -343,13 +346,12 @@ define([
                         cols: [
                             {
                                 rows: [
-                                    {view: "text", label: "父犬芯片号", name: "fatherDogId", width: 300, on:{onChange: function(){
+                                    {view: "text", label: "父犬芯片号", name: "fatherDogId", width: 300, hidden: true, on:{onChange: function(){
                                         onChange(this.getValue(), true);
                                     }}},
                                     {view: "text", label: "父犬犬名", name: "father_name", id:'father_name', width: 300, readonly: true, placeholder: '自动填充'},
                                     {
-                                        view: "select", label: "父犬品种", name: "father_type", id:'father_type', width: 300, value: '其他',
-                                        options: constant.breedType, readonly: true
+                                        view: "text", label: "父犬品种", name: "father_type", id:'father_type', width: 300, value: '其他', readonly: true
                                     },
                                     {view: "datepicker", label: "交配日期", name: "mateDate", width: 300, value: new Date(), format:"%Y-%m-%d", stringResult: true},
                                     {view: "text", label: "产仔数", name: "litterSize", width: 300}
@@ -358,15 +360,14 @@ define([
                             {width: DEFAULT_PADDING},
                             {
                                 rows: [
-                                    {view: "text", label: "母犬芯片号", name: "motherDogId", width: 300, on:{onChange: function(){
+                                    {view: "text", label: "母犬芯片号", name: "motherDogId", width: 300, hidden: true, on:{onChange: function(){
                                         onChange(this.getValue(), false);
                                     }}},
                                     {view: "text", label: "母犬犬名", name: "mother_name", id:'mother_name', width: 300, readonly: true, placeholder: '自动填充'},
                                     {
-                                        view: "select", label: "母犬品种", name: "mother_type", id:'mother_type', width: 300, value: '其他',
-                                        options: constant.breedType, readonly: true
+                                        view: "text", label: "母犬品种", name: "mother_type", id:'mother_type', width: 300, value: '其他', readonly: true
                                     },
-                                    {view: "datepicker", label: "生育时间", name: "birthday", width: 300, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "datepicker", label: "生产日期", name: "birthday", width: 300, format:"%Y-%m-%d", stringResult: true},
                                     {view: "text", label: "繁育员", name: "breeder", width: 300}
                                 ]
                             },

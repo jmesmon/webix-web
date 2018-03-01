@@ -1011,11 +1011,11 @@
                 if(info.orgName == USER_INFO.workUnit){
                     selected = true;
                 }
-                var val = parseInt(info.breederCount/info.dog);
-                if(info.breederCount < info.dog){
-                    val = Math.ceil(info.breederCount/info.dog * 100) / 100;
-                }
-                map_data.push({name: n, /*selected: !selected,*/ value: val, policeman: info.breederCount, dog: info.dog});
+                var val = parseInt(info.policeman/info.dog);
+//                if(info.policeman < info.dog){
+//                    val = Math.ceil(info.policeman/info.dog * 100) / 100;
+//                }
+                map_data.push({name: n, /*selected: !selected,*/ value: val, policeman: info.breederCount, total: info.policeman, dog: info.dog});
             }
             var myChart = echarts.init(document.getElementById('main'), 'vintage');
             myChart.setOption(option = {
@@ -1034,9 +1034,6 @@
                     formatter: function(params){
                         var d = params.data;
                         var val = d.value ? (d.value + ':1') : '-';
-                        if( d.dog > d.policeman ){
-                            val = '1:' + Math.ceil(d.dog/d.policeman * 10)/10;
-                        }
                         return '<div style="font-weight: bold;">' + d.name + '</div>带犬民警：' + d.policeman + '<br>警犬数量：' + d.dog + '<br>人员比例：' + val;
                     },
                     position:function(p){

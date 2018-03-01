@@ -236,11 +236,11 @@ define([
                                 {view: "text", label: "带犬民警", name: "policeNameLike", width: 180, labelWidth: 60, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
                                 {
-                                    view: "richselect", label: "警犬品种", name: 'breed', width: 200, value: '-1', labelWidth: 60,
+                                    view: "text", label: "警犬品种", name: 'breed', width: 140, value: '', labelWidth: 60,
                                     options: constant.getBreedTypeOptions(true)
                                 },
                                 {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬年龄", width: 170, labelWidth: 60, labelAlign: 'right',
+                                {view: "text", label: "警犬年龄", width: 110, labelWidth: 70, labelAlign: 'right',
                                     on: {
                                         onChange: function (newVal) {
                                             var currentYear = new Date().getFullYear();
@@ -255,7 +255,7 @@ define([
                                         }
                                     }
                                 },
-                                {view: "text", label: "-", width: 120, labelWidth: 10,
+                                {view: "text", label: "-", width: 50, labelWidth: 10,
                                     on: {
                                         onChange: function (newVal) {
                                             var currentYear = new Date().getFullYear();
@@ -272,9 +272,11 @@ define([
                                     }
                                 },
                                 {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 180, labelWidth: 70, placeholder: '支持搜索'},
-                                {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 60},
+                                {cols: [
+                                    {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                                    {}
+                                ]} ,
                                 {}
                             ]
                         },{
@@ -282,15 +284,13 @@ define([
                                 {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 60, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
                                 {
-                                    view: "richselect", label: "工作单位", name: 'workPlace',  width: 200, value: '-1', labelWidth: 60,
+                                    view: "richselect", label: "工作单位", name: 'workPlace',  width: 140, value: '-1', labelWidth: 60,
                                     options: constant.getUnitOptions(true)
                                 },
                                 {width: DEFAULT_PADDING},
-                                {cols: [
-                                    {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
-                                    {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
-                                    {}
-                                ]} ,
+                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 180, labelWidth: 70, placeholder: '支持搜索'},
+                                {width: DEFAULT_PADDING},
+                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 60},
                                 {width: DEFAULT_PADDING},
                                 {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
                                     $$('form').clear();
@@ -341,7 +341,7 @@ var checkCount = 0;
                             editDog.openEdit(data[0], datatable);
                         }
                     },
-                    {view: "button", label: "淘汰申请", width: 80, click: tickOut, permission: 'apply.tickout.create'},
+                    {view: "button", label: "淘汰审批", width: 80, click: tickOut, permission: 'apply.tickout.create'},
                     {view: "button", label: "死亡报告", width: 80, click: died, permission: 'apply.die.create'},
                     {view: "button", label: "删除", width: 60, permission: 'dog.delete',
                         click: function () {

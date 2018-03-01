@@ -171,7 +171,7 @@ define([
         }
         if(!values.birthday){
             state = false;
-            msg.push('请填写生育时间');
+            msg.push('请填写生产日期');
         }
         if(!values.breeder){
             state = false;
@@ -352,7 +352,7 @@ define([
                                         view: "select", label: "母犬品种", name: "mother_type", id:'mother_type', width: 300, value: '其他',
                                         options: constant.breedType, readonly: true
                                     },
-                                    {view: "datepicker", label: "生育时间", name: "birthday", width: 300, format:"%Y-%m-%d", stringResult: true},
+                                    {view: "datepicker", label: "生产日期", name: "birthday", width: 300, format:"%Y-%m-%d", stringResult: true},
                                     {view: "text", label: "繁育员", name: "breeder", width: 300}
                                 ]
                             },

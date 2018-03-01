@@ -142,7 +142,7 @@ define([
                 paddingX: 10,
                 height: 36,
                 cols: [
-                    {view: "button", label: "淘汰申请", width: 65, click: tickOut},
+                    {view: "button", label: "淘汰审批", width: 65, click: tickOut},
                     {view: "button", label: "死亡报告", width: 65, click: died},
                     {view: "button", label: "删除", width: 60, permission: 'dog.delete',
                         click: function () {
