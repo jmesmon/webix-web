@@ -279,7 +279,7 @@ define([
                 cols: [
                     {view: "button", label: "添加", width: 70, click: addImmue},
                     {view: "button", label: "完成免疫", width: 70, click: doImmue}, //, permission: 'immue.finishImmue'
-                    {view: "button", label: "删除", width: 70, click: del},
+                    {view: "button", label: "删除", width: 70, permission: 'immue.del', click: del},
                     {view: "button", label: "未来7天要免疫的", width: 130, permission: 'immue.next7DImmue', click: function () {
                         $$('breed_from').setValues({
                             immueDateEnd: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate() + 7),

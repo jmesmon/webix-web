@@ -332,7 +332,7 @@ define([
                 cols: [
                     {view: "button", label: "添加", width: 70, click: addWorm},
                     {view: "button", label: "完成驱虫", width: 70, click: doWorm}, //, permission: 'worm.finishWorm'
-                    {view: "button", label: "删除", width: 70, click: del},
+                    {view: "button", label: "删除", width: 70, permission: 'worm.del', click: del},
                     {view: "button", label: "未来7天要驱虫的", width: 130, permission: 'worm.next7DWorm', click: function () {
                         $$('form').setValues({
                             wormDateEnd: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate() + 7),

@@ -459,10 +459,15 @@ define([
         $oninit: function(scope){
             if(window.pageParams){
                 var params = window.pageParams;
+                if(params.liveCount == null){
+                    window.open('#!/app/breed.mating', '_self');
+                    msgBox('活仔数没有填写，请修改交配信息');
+                    return ;
+                }
                 var values = {
                     fatherDogId: params.fatherDogId,
                     mateDate: params.mateDate,
-                    litterSize: params.breedCount,
+                    litterSize: params.liveCount,
                     motherDogId: params.motherDogId,
                     birthday: params.expectDate,
                     breeder: USER_INFO.policeName

@@ -273,6 +273,7 @@ define([
                                 mateDateStr: values.mateDate,
                                 bMuDateStr: values.bMuDate,
                                 expectDateStr: values.expectDate,
+                                liveCount: values.liveCount,
                                 breedCount: values.breedCount,
                                 liveCount7: values.liveCount7,
                                 liveCount21: values.liveCount21,
