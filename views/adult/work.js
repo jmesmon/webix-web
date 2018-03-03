@@ -734,6 +734,7 @@ define([
         var submit = function () {
             var form = $$('update_form');
             var values = form.getValues();
+            debugger
             var picList = [];
             $$('mylist').data.getRange().each(function(item){
                 picList.push({fileName: item.fileName   , url: item.serverName});
@@ -749,8 +750,8 @@ define([
             delete values.dogNameLike;
             delete values.roleList;
             delete values.todoList;
-            values.startTimeStr = values.startTime;
-            values.endTimeStr = values.endTime;
+            values.startTimeStr = webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")(values.startTimeStr);
+            values.endTimeStr = webix.Date.dateToStr("%Y-%m-%d %H:%i:%s")(values.endTimeStr);
             delete values.startTime;
             delete values.endTime;
 
@@ -849,8 +850,8 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s", stringResult: true},
-                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s", stringResult: true},
+                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
                                         ]
                                     },
                                     {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},
