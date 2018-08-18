@@ -10,7 +10,7 @@ define([], function () {
                             {view:"text", label:"当前用户：", labelWidth: 90, labelAlign: 'right', width: 300, value: USER_INFO.policeName, readonly: true},
                             {view:"text", id: 'oldPwd', label:"旧密码：", labelWidth: 90, labelAlign: 'right', width: 300, value: '', type: 'password'},
                             {view:"text", id: 'newPwd', label:"新密码：", labelWidth: 90, labelAlign: 'right', width: 300, value: '', type: 'password'},
-                            {view:"text", id: 'newPwd2', label:"重复新密码：", labelWidth: 90, labelAlign: 'right', width: 300, value: '', type: 'password'},
+                            {view:"text", id: 'newPwd2', label:"重复新密码：", labelWidth: 100, labelAlign: 'right', width: 300, value: '', type: 'password'},
 
                             {
                                 cols: [

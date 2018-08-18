@@ -35,7 +35,7 @@
             "#90e562",
         ],
         "backgroundColor": "rgba(254,248,239,0)",
-        "textStyle": {},
+        "textStyle": {fontSize: 14},
         "title": {
             "textStyle": {
                 "color": "#ffffff"

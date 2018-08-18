@@ -175,7 +175,7 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", labelWidth: 60, width: 180, name: "dogNameLike", label: '警犬名称', placeholder: '支持模糊查询'},
+                            {view: "text", labelWidth: 70, width: 180, name: "dogNameLike", label: '警犬名称', placeholder: '支持模糊查询'},
                             // {view: "text", name: "dogId", id: 'dog_id2', hidden: true},
                             // {view: "text", label: "警犬名称", id: 'dog_name2', labelWidth: 70, width: 180, readonly: true, placeholder: '点击选择',
                             //     on: {
@@ -186,12 +186,12 @@ define([
                             // },
                             {width: DEFAULT_PADDING},
                             {cols: [
-                                {view: "datepicker", label: "驱虫日期", name: "wormDateStart", id: 'start',labelWidth: 60, width: 180, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "驱虫日期", name: "wormDateStart", id: 'start',labelWidth: 70, width: 180, format:"%Y-%m-%d", stringResult: true},
                                 {view: "datepicker", label: "-", name: "wormDateEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
                                 {}
                             ]} ,
                             {width: DEFAULT_PADDING},
-                            {view: "richselect", label: "完成状态", name: 'wormState', value:"-1", width: 150, labelWidth: 60, options:[
+                            {view: "richselect", label: "完成状态", name: 'wormState', value:"-1", width: 150, labelWidth: 70, options:[
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "未完成"},
                                 {id: '2', value: "已完成"}

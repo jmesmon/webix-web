@@ -40,7 +40,7 @@ define([
                     id: 'tickout_form',
                     elementsConfig: {
                         labelAlign: 'right',
-                        labelWidth: 70
+                        labelWidth: 80
                     },
                     elements:[
                         {view: "richselect", label: "培训科目", name: 'trainName', width: 300,
@@ -149,7 +149,7 @@ define([
                     id: 'tickout_form',
                     elementsConfig: {
                         labelAlign: 'right',
-                        labelWidth: 70
+                        labelWidth: 80
                     },
                     elements:[
                         {view: "richselect", label: "培训科目", name: 'trainName', width: 300,  value: item.trainName,
@@ -261,12 +261,12 @@ define([
                 view: "form",
                 id: 'search_from',
                 elementsConfig: {
-                    labelWidth: 90
+                    labelWidth: 75
                 },
                 elements: [
                     {
                         cols: [
-                            {view: "richselect", label: "培训科目", name: 'trainName', value:"", width: 180, labelWidth: 60,
+                            {view: "richselect", label: "培训科目", name: 'trainName', value:"", width: 180,
                                 options:[
                                     {id: '追踪', value: "追踪"},
                                     {id: '鉴别', value: "鉴别"},
@@ -280,10 +280,10 @@ define([
                                 ]
                             },
                             {width: DEFAULT_PADDING},
-                            {view: "text", label: "培训单位", name: "trainUnit", width: 180, labelWidth: 60},
+                            {view: "text", label: "培训单位", name: "trainUnit", width: 180},
                             {width: DEFAULT_PADDING},
-                            {view: "datepicker", label: "开始日期", name: "startDateStr",labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
-                            {view: "datepicker", label: "-", name: "endDateStr",labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "开始日期", name: "startDateStr", width: 195, format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "-", name: "endDateStr",labelWidth: 10, width: 135, format:"%Y-%m-%d", stringResult: true},
                             {width: DEFAULT_PADDING},
                             {view: "button", label: "查找", type: "form", width: 100, paddingX: 10, click: function () {
                                 var datatable = $$(datatableId);
@@ -351,10 +351,10 @@ define([
                     {id: "$index", header: "NO.", width: 45},
                     {id: "trainName", header: "培训科目", width: 100},
                     {id: "trainLevel", header: "培训标准", width: 100},
-                    {id: "startDate", header: "开始日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "endDate", header: "结束日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "startDate", header: "开始日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "endDate", header: "结束日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "trainDesc", header: "培训内容", width: 200},
-                    {id: "trainUnit", header: "培训单位", width: 100},
+                    {id: "trainUnit", header: "培训单位", width: 120},
                     {id: "trainUser", header: "教员", width: 100},
                     {id: "trainAddr", header: "培训地点", fillspace: true}
                 ],

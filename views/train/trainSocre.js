@@ -74,7 +74,7 @@ define([
                 borderless: true,
                 template: '一共选择了'+data.length+'只警犬，请设置培训成绩'
             }, {
-                view: "richselect", label: "培训成绩", id: 'trainResult', width: 200, value: '合格', labelWidth: 60,
+                view: "richselect", label: "培训成绩", id: 'trainResult', width: 200, value: '合格', labelWidth: 90,
                 options: [
                     {id: '合格', value: "合格"},
                     {id: '优秀', value: "优秀"},
@@ -207,7 +207,7 @@ define([
                 view: "form",
                 id: 'form',
                 elementsConfig: {
-                    labelWidth: 60
+                    labelWidth: 70
                 },
                 elements: [
                     {

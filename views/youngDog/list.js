@@ -84,12 +84,12 @@ define([
                 view: "form",
                 id: 'form',
                 elementsConfig: {
-                    labelWidth: 60
+                    labelWidth: 70
                 },
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 60},
+                            {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 70},
                             {width: DEFAULT_PADDING},
                             // {view: "text", label: "父犬芯片号", name: "fatherId", width: 180, labelWidth: 70},
                             // {width: DEFAULT_PADDING},
@@ -142,7 +142,7 @@ define([
                 paddingX: 10,
                 height: 36,
                 cols: [
-                    {view: "button", label: "淘汰审批", width: 65, click: tickOut},
+                    {view: "button", label: "淘汰申请", width: 65, click: tickOut},
                     {view: "button", label: "死亡报告", width: 65, click: died},
                     {view: "button", label: "删除", width: 60, permission: 'dog.delete',
                         click: function () {

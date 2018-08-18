@@ -86,7 +86,7 @@ define([
             if(resp.success && resp.result.length > 0) {
                 var arr = resp.result;
 
-                var html = '<div style="font-size: 14px;color:#fff;line-height: 25px;">';
+                var html = '<div style="font-size: 16px;color:#fff;line-height: 25px;">';
                 html += '<div>您有如下待办事项需要处理，请及时处理：</div>';
                 var label = {
                     worm: '<span style="color:#fff">驱虫提醒：</span>有<span style="color:#F9FF00">#val#</span>头警犬需要进行驱虫处理;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!/app/wormImmue.worm" style="color:#F9FF00" class="gotoProcess" >立刻处理</a>',
@@ -162,7 +162,7 @@ define([
                                     }
                                 }
                                 },
-                                {template: '<div style="font-size: 14px;color: #f9ff00">收到的通知</div>', height: 30, borderless: true},
+                                {template: '<div style="font-size: 16px;color: #f9ff00;margin-top: -4px">收到的通知</div>', height: 30, borderless: true},
                                 {
                                     id: datatableId,
                                     view: "datatable",
@@ -172,7 +172,7 @@ define([
                                     columns: [
                                         {id: "$index", header: "NO.", width: 45},
                                         {
-                                            id: 'isRead', header: '状态', width: 50, template: function (item) {
+                                            id: 'isRead', header: '状态', width: 60, template: function (item) {
                                             return {
                                                 "1": "<span style='color: #F9FF00'>未读</span>",
                                                 "2": "已读"
@@ -183,7 +183,7 @@ define([
                                         {
                                             id: 'creationDate',
                                             header: '日期',
-                                            width: 90,
+                                            width: 110,
                                             format: webix.Date.dateToStr("%Y-%m-%d")
                                         },
                                         {

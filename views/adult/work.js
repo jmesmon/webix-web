@@ -32,7 +32,7 @@ define([
                 workType = '刑侦';
                 break;
             default:
-                workType = '其他';
+                workType = '备勤';
         }
         console.log(workType);
         var attUser = '';
@@ -95,7 +95,7 @@ define([
                                 id: 'add_form',
                                 elementsConfig: {
                                     labelAlign: 'right',
-                                    labelWidth: 70
+                                    labelWidth: 100
                                 },
                                 elements:[
                                     {
@@ -311,7 +311,7 @@ define([
                 workType = '刑侦';
                 break;
             default:
-                workType = '其他';
+                workType = '备勤';
         }
         console.log(workType);
         var attUser = '';
@@ -722,7 +722,7 @@ define([
         var isAj = (item.workType == '安检' ? false:true);
         var isXl = (item.workType == '巡逻' ? false:true);
         var isXz = (item.workType == '刑侦' ? false:true);
-        var isQt = (item.workType == '其他' ? false:true);
+        var isQt = (item.workType == '备勤' ? false:true);
         var workType = item.workType;
         var attUser = '';
         var readonly = false;
@@ -800,7 +800,7 @@ define([
                                 id: 'update_form',
                                 elementsConfig: {
                                     labelAlign: 'right',
-                                    labelWidth: 70
+                                    labelWidth: 100
                                 },
                                 elements:[
                                     {
@@ -1075,30 +1075,30 @@ define([
                 view: "form",
                 id: 'form',
                 elementsConfig: {
-                    labelWidth: 90
+                    labelWidth: 70
                 },
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "出勤人员", name: "attPerson", width: 140, labelWidth: 60},
+                            {view: "text", label: "出勤人员", name: "attPerson", width: 140,},
                             {width: DEFAULT_PADDING},
-                            {view: "text", label: "警犬名", name: "dogNameLike", width: 140, labelWidth: 50,placeholder: '模糊搜索'},
+                            {view: "text", label: "警犬名", name: "dogNameLike", labelWidth: 60, width: 140,placeholder: '模糊搜索'},
                             {width: DEFAULT_PADDING},
-                            {view: "text", label: "用犬单位", name: "workUnit", width: 180, labelWidth: 60},
+                            {view: "text", label: "用犬单位", name: "workUnit", width: 180},
                             {width: DEFAULT_PADDING},
                             {
-                                view: "richselect", label: "工作类型", name: 'workType', value: "-1", width: 140,  labelWidth: 60,
+                                view: "richselect", label: "工作类型", name: 'workType', value: "-1", width: 150,
                                 options: [
                                     {id: '-1', value: "全部"},
                                     {id: '安检', value: "安检"},
                                     {id: '巡逻', value: "巡逻"},
                                     {id: '刑侦', value: "刑侦"},
-                                    {id: '其他', value: "其他"}
+                                    {id: '备勤', value: "备勤"}
                                 ],
                             },
                             {width: DEFAULT_PADDING},
-                            {view: "datepicker", label: "使用日期", name: "startTimeStr",labelWidth: 60, width: 170, format:"%Y-%m-%d", stringResult: true},
-                            {view: "datepicker", label: "-", name: "endTimeStr",labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "使用日期", name: "startTimeStr", width: 190, format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "-", name: "endTimeStr",labelWidth: 10, width: 130, format:"%Y-%m-%d", stringResult: true},
                             {width: DEFAULT_PADDING},
                             {view: "button", label: "查找", type: "form", width: 80, paddingX: 10, click: search},
                             {}
@@ -1117,7 +1117,7 @@ define([
             data:[ {id:"1", name:"安检", location: "New York"},
                 {id:"2", name:"巡逻", location:"Salt Lake City"},
                 {id:"3", name:"刑侦", location:"Alabama"},
-                {id:"4", name:"其他", location:"Alabama"}
+                {id:"4", name:"备勤", location:"Alabama"}
             ],
             on:{
                 onItemClick: function(id){
@@ -1139,7 +1139,7 @@ define([
             data:[ {id:"1", name:"安检", location: "New York"},
                 {id:"2", name:"巡逻", location:"Salt Lake City"},
                 {id:"3", name:"刑侦", location:"Alabama"},
-                {id:"4", name:"其他", location:"Alabama"}
+                {id:"4", name:"备勤", location:"Alabama"}
             ],
             on:{
                 onItemClick: function(id){
@@ -1163,7 +1163,7 @@ define([
                     {view: "button", label: "修改", width: 50, permission: 'work.edit',click: editData},
                     {view: "button", label: "删除", permission: 'work.delete', width: 50, click: del},
                     {view: "button", label: "审批", permission: 'work.approve',width: 50, click: approve},
-                    {view: "button", label: "导出防爆安检登记表", width: 130, click: exportData},
+                    {view: "button", label: "导出防爆安检登记表", width: 145, click: exportData},
                     {}
                 ]
             },

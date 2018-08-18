@@ -20,7 +20,7 @@ define([], function () {
                                 borderless: true,
                                 elementsConfig: {
                                     labelAlign: 'right',
-                                    labelWidth: 100,
+                                    labelWidth: 120,
                                 },
                                 elements: [
                                     {view: "text", hidden: true, name: 'id'},

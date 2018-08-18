@@ -98,8 +98,8 @@ define([
                         },
                         {id: "$index", header: "NO.", width: 45},
                         {id: "trainName", header: "培训名称", width: 120},
-                        {id: "startDate", header: "开始日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                        {id: "endDate", header: "结束日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                        {id: "startDate", header: "开始日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
+                        {id: "endDate", header: "结束日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
                         {id: "trainDesc", header: "培训内容", width: 200},
                         {id: "trainUnit", header: "培训单位", width: 200},
                         {id: "trainAddr", header: "培训地点", minWidth: 400, fillspace: true}
@@ -190,7 +190,7 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "text", label: "警犬名", name: "dogNameLike", width: 180, labelWidth: 50},
+                            {view: "text", label: "警犬名", name: "dogNameLike", width: 180, labelWidth: 60},
                             {width: DEFAULT_PADDING},
                             {
                                 view: "richselect", label: "犬种", name: 'breed', width: 150, value: '-1', labelWidth: 40,
@@ -203,8 +203,8 @@ define([
                             },
                             {width: DEFAULT_PADDING},
                             {cols: [
-                                {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 60, width: 180, format:"%Y-%m-%d", stringResult: true},
-                                {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "出生日期", name: "birthdayStart", id: 'start',labelWidth: 70, width: 190, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 130, format:"%Y-%m-%d", stringResult: true},
                                 {}
                             ]} ,
                             {width: DEFAULT_PADDING},
@@ -221,7 +221,7 @@ define([
     };
 
     var cols = columns.getColumns(
-        [{id: "dogName", header: "犬名", width: 120}, "下次培训时间", {id: 'isSign', header: '是否报名', width: 80}, "训导员" , "性别", "出生日期", {id: "breed", header: "品种", width: 110, sort: "string"}],
+        [{id: "dogName", header: "犬名", width: 120}, "下次培训时间", {id: 'isSign', header: '是否报名', width: 100}, "训导员" , "性别", "出生日期", {id: "breed", header: "品种", width: 110, sort: "string"}],
         []
     );
 var checkMap = {};

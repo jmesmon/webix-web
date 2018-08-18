@@ -24,14 +24,14 @@ define([
                                 id: 'baseInfoForm',
                                 elementsConfig: {
                                     labelAlign: 'right',
-                                    labelWidth: 70
+                                    labelWidth: 80
                                 },
                                 elements: [
                                     {
                                         cols: [{
                                             width: 300,
                                             rows: [
-                                                {view: "text", label: "警犬名称：" + name_start, name: "dogName", labelWidth: 126, on: {
+                                                {view: "text", label: "警犬名称：" + name_start, name: "dogName", labelWidth: 135, on: {
                                                     onChange: function(newVal, oldVal){
                                                         var input = this;
                                                         if(newVal == ''){

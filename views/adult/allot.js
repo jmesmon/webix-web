@@ -50,7 +50,7 @@ define([
                                 view:"checkbox",
                                 id:"child_1",
                                 label:"只看幼犬",
-                                labelWidth: 60,
+                                labelWidth: 70,
                                 value:0,
                                 on: {
                                     onChange: function (newVal, oldVal) {

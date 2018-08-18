@@ -75,7 +75,7 @@ define([
                         ]
                     }
                 },
-                {width: 400},
+                {width: 460},
                 {
                     cols:[
                         {},
@@ -178,14 +178,14 @@ define([
                 borderless: true,
                 template: '一共选择了'+data.length+'条申请，其中' + errorArr.length + '条是已经审批过了，不在重复审批，请审批'
             }, {
-                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '合格', labelWidth: 60,
+                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '合格', labelWidth: 80,
                 options: [
                     {id: '2', value: "通过，等待配发"},
                     {id: '3', value: "驳回"}
                 ]
             },
-            {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 60, width: 280},
-                {width: 440},
+            {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 80, width: 280},
+                {width: 600},
                 {
                     cols:[
                         {},
@@ -211,7 +211,7 @@ define([
                         }}
                     ]
                 }]
-        }, {width: 450, height: 180});
+        }, {width: 600, height: 180});
         win.show();
     };
 
@@ -238,7 +238,7 @@ define([
                         cols: [
                             // {view: "text", label: "申请单位", name: "workUnit",labelWidth: 60, width: 220},
                             // {width: DEFAULT_PADDING},
-                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 200, labelWidth: 60, options:[
+                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 200, labelWidth: 70, options:[
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "待审批"}, //1：带审批，2：审批通过，带配发，3：申请驳回，4：配发完成
                                 {id: '2', value: "审批通过，待配发"},

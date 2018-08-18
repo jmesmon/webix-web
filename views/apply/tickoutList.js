@@ -203,10 +203,10 @@ define([
                 borderless: true,
                 template: '一共选择了'+data.length+'条申请，其中'+arr.length+'条可以符合当前审批条件，请审批'
             }, {
-                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '2', labelWidth: 60,
+                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '2', labelWidth: 70,
                 options: options
             },
-                {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 60, width: 280},
+                {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 70, width: 280},
                 {width: 400},
                 {
                     cols:[
@@ -279,9 +279,9 @@ define([
                 elements: [
                     {
                         cols: [
-                            // {view: "text", label: "申请单位", name: "workUnit",labelWidth: 60, width: 220},
+                            // {view: "text", label: "申请单位", name: "workUnit",labelWidth: 70, width: 220},
                             // {width: DEFAULT_PADDING},
-                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 200, labelWidth: 60, options:[
+                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 200, labelWidth: 70, options:[
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "待分局审批"}, //1：带审批，2：审批通过，带配发，3：申请驳回，4：配发完成
                                 {id: '2', value: "待九支队审批"},

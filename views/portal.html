@@ -18,6 +18,7 @@
         }
         .def_bk {
             background-color: rgba(0, 0, 0, 0.07);
+            overflow: hidden;
         }
         .title{
             font-weight: bold; margin: 8px 0 0 8px
@@ -160,7 +161,7 @@
                             <td style="width: 50px; background-color: #002F75;cursor: pointer" onclick="workChange(1)" id="work_type_1">安检</td>
                             <td style="width: 50px;cursor: pointer" onclick="workChange(2)" id="work_type_2">巡逻</td>
                             <td style="width: 50px;cursor: pointer" onclick="workChange(3)" id="work_type_3">刑侦</td>
-                            <td style="width: 50px;cursor: pointer" onclick="workChange(4)" id="work_type_4">其他</td>
+                            <td style="width: 50px;cursor: pointer" onclick="workChange(4)" id="work_type_4">备勤</td>
                         </tr>
                     </table>
                 </td>
@@ -247,10 +248,10 @@
                                                 <td align="right" style="padding-right: 8px" class="table-c">
                                                     <table border="0" cellspacing="0" cellpadding="0" height="20">
                                                         <tr>
-                                                            <td style="width: 50px;font-size:12px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">安检</td>
-                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">巡逻</td>
-                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦</td>
-                                                            <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">其他</td>
+                                                            <td style="width: 50px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">安检</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">巡逻</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">备勤</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -282,11 +283,11 @@
                             <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
                                 <table border="0" cellspacing="0" cellpadding="0" height="20">
                                     <tr>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer; background-color: #002F75;" onclick="workChangeUser(3)" id="change_user_3">类别</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(2)" id="change_user_2">职务</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(1)" id="change_user_1">职称</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(4)" id="change_user_4">学历</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeUser(5)" id="change_user_5">性别</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer; background-color: #002F75;" onclick="workChangeUser(3)" id="change_user_3">类别</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(2)" id="change_user_2">职务</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(1)" id="change_user_1">职称</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(4)" id="change_user_4">学历</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(5)" id="change_user_5">性别</td>
                                     </tr>
                                 </table>
                             </td>
@@ -306,12 +307,12 @@
                             <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
                                 <table border="0" cellspacing="0" cellpadding="0" height="20">
                                     <tr>
-                                        <td style="width: 50px;font-size:12px; background-color: #002F75;cursor: pointer" onclick="workChangeBreed(1)" id="breed_1">品种</td>
-                                        <!--<td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(2)" id="breed_2">毛色</td>-->
-                                        <!--<td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(3)" id="breed_3">毛型</td>-->
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(4)" id="breed_4">专业</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(6)" id="breed_6">年龄</td>
-                                        <td style="width: 50px;font-size:12px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">淘汰</td>
+                                        <td style="width: 50px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeBreed(1)" id="breed_1">品种</td>
+                                        <!--<td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(2)" id="breed_2">毛色</td>-->
+                                        <!--<td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(3)" id="breed_3">毛型</td>-->
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(4)" id="breed_4">专业</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(6)" id="breed_6">年龄</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">淘汰</td>
                                     </tr>
                                 </table>
                             </td>
@@ -447,7 +448,7 @@
         '安检': [],
         '巡逻': [],
         '刑侦': [],
-        '其他': []
+        '备勤': []
     };
     function getWorkData(){
         var params = {};
@@ -612,7 +613,7 @@
                     renderMonthWork('刑侦');
                     break;
                 default:
-                    renderMonthWork('其他');
+                    renderMonthWork('备勤');
                     break;
 
             }
@@ -625,7 +626,7 @@
         '安检': [],
         '巡逻': [],
         '刑侦': [],
-        '其他': []
+        '备勤': []
     };
     function getWorkDataByOrgName(orgName){
         var params = {workUnit: orgName};
@@ -633,7 +634,7 @@
             '安检': [],
             '巡逻': [],
             '刑侦': [],
-            '其他': []
+            '备勤': []
         };
         parent.doPost('dogBaseInfo/getWorkData', params, function (resp) {
             if (resp.success) {
@@ -795,7 +796,7 @@
                     renderOrgMonthWork('刑侦');
                     break;
                 default:
-                    renderOrgMonthWork('其他');
+                    renderOrgMonthWork('备勤');
                     break;
 
             }
@@ -882,7 +883,7 @@
                 bottom: 40
             },
             legend: {
-                data:['安检','侦查','巡逻', '其他']
+                data:['安检','侦查','巡逻', '备勤']
             },
             xAxis: [
                 {
@@ -938,7 +939,7 @@
                         parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
                 },
                 {
-                    name:'其他',
+                    name:'备勤',
                     type:'bar',
                     data: [ parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000),
                         parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), parseInt(Math.random() * 1000), 0, 0, 0]
@@ -1143,6 +1144,9 @@
         var fontSize = '16';
         if(domId) fontSize = "12";
         domId = domId || 'qj_col1';
+        var totalPoliceman = 44039;
+        var totalDog = data.totalDog || 0;
+        var bl = Math.round(totalPoliceman / totalDog);
         echarts.init(document.getElementById(domId), 'vintage').setOption({
             color: ["#00e35b", "#ffec1d"],
             tooltip: {
@@ -1160,7 +1164,7 @@
             },
             series: [
                 {
-                    name: '人犬比',
+                    name: '人犬比：' + bl + ":1",
                     type: 'pie',
                     radius: ['45%', '80%'],
                     avoidLabelOverlap: false,
@@ -1184,8 +1188,8 @@
                     },
                     data: [
 //                        {value: data.totalEmp || 0, name: '总人数'},
-                        {value: 44039, name: '总人数'},
-                        {value: data.totalDog || 0, name: '总警犬数'},
+                        {value: totalPoliceman, name: '总人数'},
+                        {value: totalDog, name: '总警犬数'},
                     ]
                 }
             ]
@@ -1932,7 +1936,7 @@
         '安检': [],
         '巡逻': [],
         '刑侦': [],
-        '其他': []
+        '备勤': []
     };
 
     function renderAreaData(workUnit) {

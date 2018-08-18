@@ -106,13 +106,13 @@ define([
                 elements: [
                     {
                         cols: [
-                            {view: "richselect", label: "工作单位", name: "workUnit", labelWidth: 60, width: 180,
+                            {view: "richselect", label: "工作单位", name: "workUnit", labelWidth: 70, width: 180,
                                 options: constant.getUnitOptions(),
                                 value: USER_INFO.workUnit,
                                 hidden: (["FanZhiRenYuan", "PeiXunRenYuan", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1)
                             },
                             {width: DEFAULT_PADDING},
-                            {view: "text", label: "民警姓名", name: "policeNameLike",labelWidth: 60, width: 220},
+                            {view: "text", label: "民警姓名", name: "policeNameLike",labelWidth: 70, width: 220},
                             // {width: DEFAULT_PADDING},
                             {width: DEFAULT_PADDING},
                             // {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
@@ -175,7 +175,7 @@ define([
                 borderless: true,
                 template: '一共选择了'+data.length+'位民警，请设置对应的角色'
             }, {
-                view: "richselect", label: "角色名称", id: 'roleName', width: 200, value: '合格', labelWidth: 60,
+                view: "richselect", label: "角色名称", id: 'roleName', width: 200, value: '合格', labelWidth: 70,
                 options: options
             },
                 {width: 400},
@@ -245,7 +245,7 @@ define([
                     },
                     {id: "policeId", header: "警号", width: 80, sort: "string"},
                     {id: "policeName", header: "姓名", width: 80, sort: "string"},
-                    {id: "userRole", header: "系统角色", width: 80, sort: "string", template: function (item) {
+                    {id: "userRole", header: "系统角色", width: 100, sort: "string", template: function (item) {
                         return {
                             "JingYuan": "带犬民警",
                             "JuZhang": "市局局长",
@@ -259,24 +259,24 @@ define([
                     }},
                     {id: "sex", header: "性别", width: 50, sort: "string"},
                     {id: "national", header: "民族", width: 50, sort: "string"},
-                    {id: "idNun", header: "身份证号", width: 145, sort: "string"},
-                    {id: "birthday", header: "出生日期", width: 80, sort: "string"},
+                    {id: "idNun", header: "身份证号", width: 170, sort: "string"},
+                    {id: "birthday", header: "出生日期", width: 95, sort: "string"},
                     {id: "onFace", header: "政治面貌", width: 80, sort: "string"},
-                    {id: "education", header: "学历", width: 80, sort: "string"},
+                    {id: "education", header: "学历", width: 90, sort: "string"},
                     {id: "degree", header: "学位", width: 80, sort: "string"},
                     {id: "graduFrom", header: "毕业院校", width: 80, sort: "string"},
                     {id: "major", header: "专业", width: 120, sort: "string"},
                     {id: "contactInfo", header: "联系方式", width: 100, sort: "string"},
                     {id: "workUnit", header: "工作单位", width: 120, sort: "string"},
-                    {id: "workType", header: "身份类别", width: 80, sort: "string"},
-                    {id: "dept", header: "部门", width: 80, sort: "string"},
-                    {id: "jobTitle", header: "职称", width: 80, sort: "string"},
-                    {id: "job", header: "职务", width: 80, sort: "string"},
+                    {id: "workType", header: "身份类别", width: 90, sort: "string"},
+                    {id: "dept", header: "部门", width: 90, sort: "string"},
+                    {id: "jobTitle", header: "职称", width: 90, sort: "string"},
+                    {id: "job", header: "职务", width: 90, sort: "string"},
                     {id: "certQuali", header: "证书资格", width: 80, sort: "string"},
                     {id: "certNum", header: "证书编号", width: 80, sort: "string"},
-                    {id: "rewardInfo", header: "立功授奖信息", width: 80, sort: "string"},
+                    {id: "rewardInfo", header: "立功授奖信息", width: 100, sort: "string"},
                     // {id: "approveRole", header: "是否审批人", width: 80, sort: "string", template: function(item){ if(item.approveRole) return '是'; else return '' }},
-                    {id: "creationDate", header: "创建日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "creationDate", header: "创建日期", width: 95, format: webix.Date.dateToStr("%Y-%m-%d")},
                 ],
                 on: {
                     onBeforeLoad: function () {

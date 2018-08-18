@@ -160,7 +160,7 @@ define([
                         },
                         {width: 10},
                         {
-                            view: "text", label: "芯片号:", id: 'chipNo_' + i, name: "chipNo", width: 170, labelWidth: 55
+                            view: "text", label: "芯片号:", id: 'chipNo_' + i, name: "chipNo", width: 170, labelWidth: 60
                         }, {}
                     ]
                 }

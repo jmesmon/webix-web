@@ -48,11 +48,11 @@ define([
                             labelAlign: 'right'
                         },
                         elements:[
-                            {view: "richselect", label: "申请单位", name: "applyUnit", id:'mother_type', labelWidth: 60,width: 200, options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: USER_INFO.workUnit},
-                            {view: "datepicker", label: "淘汰日期", name: "tickoutDate", width: 200, labelWidth: 60, format:"%Y-%m-%d", stringResult: true},
-                            {view: "text", label: "淘汰原因", name: "tickoutReason", width: 300, labelWidth: 60, attributes:{ maxlength: 128 }},
-                            {view: "text", label: "淘汰归属", name: "belongTo", width: 300, labelWidth: 60, attributes:{ maxlength: 50 }},
-                            {view: "textarea", label: "备注", name: "tickoutDesc", width: 300, labelWidth: 60, height:70, attributes:{ maxlength: 254 }}
+                            {view: "richselect", label: "申请单位", name: "applyUnit", id:'mother_type', labelWidth: 70,width: 200, options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: USER_INFO.workUnit},
+                            {view: "datepicker", label: "淘汰日期", name: "tickoutDate", width: 200, labelWidth: 70, format:"%Y-%m-%d", stringResult: true},
+                            {view: "text", label: "淘汰原因", name: "tickoutReason", width: 300, labelWidth: 70, attributes:{ maxlength: 128 }},
+                            {view: "text", label: "淘汰归属", name: "belongTo", width: 300, labelWidth: 70, attributes:{ maxlength: 50 }},
+                            {view: "textarea", label: "备注", name: "tickoutDesc", width: 300, labelWidth: 70, height:70, attributes:{ maxlength: 254 }}
                         ],
                         rules:{
                             "applyUnit":webix.rules.isNotEmpty,
@@ -138,13 +138,13 @@ define([
                                         labelAlign: 'right'
                                     },
                                     elements:[
-                                        {view: "richselect", label: "申请单位", name: "applyUnit", id:'mother_type', labelWidth: 60,width: 200, options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: USER_INFO.workUnit},
-                                        {view: "text", label: "病因", name: "sickReason", width: 300, labelWidth: 60, attributes:{ maxlength: 64 }},
-                                        {view: "datepicker", label: "发病日期", name: "sickDate", width: 240, /*timepicker: true,*/ editable: true, labelWidth: 60, format:"%Y-%m-%d", stringResult: true},
-                                        {view: "text", label: "救治情况", name: "cureDetail", width: 300, labelWidth: 60, attributes:{ maxlength: 128 }},
-                                        {view: "datepicker", label: "死亡时间", name: "dieDate", width: 240, /*timepicker: true,*/ editable: true, labelWidth: 60, format:"%Y-%m-%d", stringResult: true},
-                                        {view: "text", label: "死亡原因", name: "dieReason", width: 300, labelWidth: 60, attributes:{ maxlength: 128 }},
-                                        {view: "textarea", label: "结论", name: "conclus", width: 300, labelWidth: 60, height:70, attributes:{ maxlength: 255 }},
+                                        {view: "richselect", label: "申请单位", name: "applyUnit", id:'mother_type', labelWidth: 70,width: 200, options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: USER_INFO.workUnit},
+                                        {view: "text", label: "病因", name: "sickReason", width: 300, labelWidth: 70, attributes:{ maxlength: 64 }},
+                                        {view: "datepicker", label: "发病日期", name: "sickDate", width: 240, /*timepicker: true,*/ editable: true, labelWidth: 70, format:"%Y-%m-%d", stringResult: true},
+                                        {view: "text", label: "救治情况", name: "cureDetail", width: 300, labelWidth: 70, attributes:{ maxlength: 128 }},
+                                        {view: "datepicker", label: "死亡时间", name: "dieDate", width: 240, /*timepicker: true,*/ editable: true, labelWidth: 70, format:"%Y-%m-%d", stringResult: true},
+                                        {view: "text", label: "死亡原因", name: "dieReason", width: 300, labelWidth: 70, attributes:{ maxlength: 128 }},
+                                        {view: "textarea", label: "结论", name: "conclus", width: 300, labelWidth: 70, height:70, attributes:{ maxlength: 255 }},
                                         {
                                             rows: [
                                                 {

@@ -18,7 +18,7 @@ define([
                 id: 'dog_base_info_form_update',
                 elementsConfig: {
                     labelAlign: 'right',
-                    labelWidth: 70
+                    labelWidth: 90
                 },
                 elements:[{
                     rows:[{
@@ -57,9 +57,43 @@ define([
                             ]
                         },{width: DEFAULT_PADDING * 2},{
                             rows: [
-                                {view: "text", label: "父犬ID号", name: "fatherId", disabled: true},
-                                {view: "text", label: "母犬ID号", name: "motherId", disabled: true},
-                                {view: "richselect", label: "工作单位", name: "workPlace", disabled: true, options: constant.getUnitOptions()},
+                                // {view: "text", label: "父犬ID号", name: "fatherId", disabled: true},
+                                // {view: "text", label: "母犬ID号", name: "motherId", disabled: true},
+                                // {view: "richselect", label: "工作单位", name: "workPlace", disabled: true, options: constant.getUnitOptions()},
+                                {
+                                    cols: [
+                                        {
+                                            rows: [
+                                                {template: '<div style="margin-left: 22px;font-size: 12px;margin-top:-10px;">图片尺寸：140×120<br>图片格式：jpg、png、bmp、gif</div>', borderless: true},
+                                                {
+                                                    cols: [
+                                                        {},
+                                                        {view: "text", hidden: true, id: 'dog_photo', name: "dogPhoto"},
+                                                        {
+                                                            view:"uploader",
+                                                            id: "uploader_1",
+                                                            value:"更换图片",
+                                                            link:"mylist",
+                                                            width: 80,
+                                                            multiple: false,
+                                                            upload:"/policeDog/services/file/upload",
+                                                            on: {
+                                                                onFileUpload: function (file) {
+                                                                    var url = file.serverName;
+                                                                    document.getElementById("dogImg").src = url;
+                                                                    $$('uploader_1').pic = url;
+                                                                    $$('dog_photo').setValue(url);
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                // {view: "button", width: 90, label: "更换图片", css: 'non-essential'}
+                                            ]
+                                        },
+                                        {width: 140, borderless: true, template: '<img id="dogImg" style="margin-top: -10px;width: 120px; height: 80px;" src="">'}
+                                    ]
+                                },
                                 {view: "richselect", label: "成长阶段", name:"growthStage", options: constant.getGrowthStage()},
                                 {view: "richselect", label: "工作状态", name:"workStage", options: constant.getWorkStage()},
                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
@@ -118,13 +152,14 @@ define([
                     width: 800,
                     cols: [ui]
                 }]
-            }, {height: 450, width: 800});
+            }, {height: 450, width: 680});
             win.show();
             var values = $$('dog_base_info_form_update').getValues();
             for(var k in values){
                 values[k] = dogInfo[k];
             }
             $$('dog_base_info_form_update').setValues(values);
+            document.getElementById("dogImg").src = values.dogPhoto;
         }
     };
     return self;
