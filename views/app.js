@@ -189,6 +189,9 @@ define([
                                         {
                                             header: "操作",
                                             template: function (item) {
+                                                if(item.processLink){
+                                                    return item.processLink;
+                                                }
                                                 if (item.isRead == 2) return '';
                                                 return '<a href="javascript:void(0)" class="markRead">标记已读</a>';
                                             },
@@ -209,7 +212,9 @@ define([
                                                 $$(datatableId).reload();
                                             })
                                         },
-                                        gotoProcess: function () {
+                                        gotoProcess: function (a, b, c) {
+                                            var item = $$(datatableId).getItem(b.row);
+                                            doIPost('notice/update', {id: item.id, isRead: 2});
                                             win.close()
                                         }
                                     },

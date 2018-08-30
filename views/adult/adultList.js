@@ -457,9 +457,9 @@ define([
                                             var startDate = (currentYear - newVal) + "-01-01";
                                             var endDate = (currentYear - newVal) + "-12-12";
                                             // var endDate = currentYear + monthDay;
-                                            $$('start').setValue(startDate);
+                                            $$('end').setValue(startDate);
                                             if(newVal == ''){
-                                                $$('start').setValue("");
+                                                $$('end').setValue("");
                                             }
                                         }
                                     }
@@ -473,9 +473,9 @@ define([
                                             var endDate = (currentYear - newVal) + "-12-12";
                                             // var endDate = currentYear + monthDay;
                                             // $$('start').setValue(startDate);
-                                            $$('end').setValue(startDate);
+                                            $$('start').setValue(startDate);
                                             if(newVal == ''){
-                                                $$('end').setValue("");
+                                                $$('start').setValue("");
                                             }
                                         }
                                     }

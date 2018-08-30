@@ -221,7 +221,7 @@ define([
     };
 
     var cols = columns.getColumns(
-        [{id: "dogName", header: "犬名", width: 120}, "下次培训时间", {id: 'isSign', header: '是否报名', width: 100}, "训导员" , "性别", "出生日期", {id: "breed", header: "品种", width: 110, sort: "string"}],
+        [{id: "dogName", header: "犬名", width: 200}, "下次培训时间", {id: 'isSign', header: '是否报名', width: 100}, "训导员" , "性别", "出生日期", {id: "breed", header: "品种", width: 110, sort: "string"}],
         []
     );
 var checkMap = {};

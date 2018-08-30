@@ -7,7 +7,7 @@ define([
         '芯片号': {id: "chipNo", header: "芯片号", width: 110},
         '芯片注入日期': {id: "chipNoInject", header: "芯片注入日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d")},
         '性别': {id: "sex", header: "性别", width: 60, template: function(obj){ return '<div align="center">' + (obj.sex == 1 ? '公' : '母') + '</div>'; } },
-        '出生日期': {id: "birthday", header: "出生日期", width: 90, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
+        '出生日期': {id: "birthday", header: "出生日期", width: 100, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
         '父亲芯片号': {id: "fatherId", header: "父亲芯片号", width: 90},
         '母亲芯片号': {id: "motherId", header: "母亲芯片号", width: 90},
         '品种': {id: "breed", header: "品种", width: 100, sort: "string"},

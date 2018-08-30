@@ -96,14 +96,11 @@ define([
         var count = values.litterSize || 0;
         var fatherName = values.father_name;
         var ar = fatherName.split('-');
-        if(ar.length == 3){
+        if(ar.length >= 3){
             fatherName = ar[2];
         }
         var motherName = values.mother_name;
-        ar = motherName.split('-');
-        if(ar.length == 3){
-            motherName = ar[2];
-        }
+
         var father_type = values.father_type;
         var mother_type = values.mother_type;
         var otherBreed = '';
@@ -112,8 +109,8 @@ define([
             otherBreed = mother_type;
             mother_type = "其他";
         }
-
-        var name = fatherName.substr(0,1) + motherName.substr(motherName.length - 1,1);
+        var name = motherName.substr(motherName.length - 1,1) + fatherName.substr(0,1);
+debugger
         for(var i = lastCount; i<count; i++) {
             contain.addView(
                 {

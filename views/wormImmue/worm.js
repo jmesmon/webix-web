@@ -231,9 +231,9 @@ define([
         },
         {id: "$index", header: "NO.", width: 45},
         {id: "dogInfo.dogName", header: "犬名", width: 200, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
-        {id: "wormDate", header: "驱虫日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        {id: "wormDesc", header: "驱虫方式/周期", width: 100},
-        {id: "wormState", header: "状态", width: 55, template: function(obj, common, value){
+        {id: "wormDate", header: "驱虫日期", width: 108, format: webix.Date.dateToStr("%Y-%m-%d")},
+        {id: "wormDesc", header: "驱虫方式/周期", width: 140},
+        {id: "wormState", header: "状态", width: 65, template: function(obj, common, value){
             if(value == 2){
                 return '<span class="green_color">已完成</span>';
             }else if(value == 3){
@@ -244,11 +244,11 @@ define([
                 return '未进行';
             }
         }},
-        {id: "dogInfo.sex", header: "性别", width: 50, template: function(obj){ return '<div align="center">' + ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]) + '</div>'; } },
+        {id: "dogInfo.sex", header: "性别", width: 60, template: function(obj){ return '<div align="center">' + ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]) + '</div>'; } },
         {id: "dogInfo.birthday", header: "出生日期", width: 100, sort: "string", template: function(item){
             return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
         }},
-        {id: "dogInfo.breed", header: "品种", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
+        {id: "dogInfo.breed", header: "品种", width: 120, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
         {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
         {id: "dogInfo.policeName", header: "带犬人员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
     ];
