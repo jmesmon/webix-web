@@ -321,6 +321,19 @@ define([
                     areaName = it.value;
                 }
             }
+
+            item.masterLabel = '带犬民警', item.masterVal = item.policeName;
+
+            if(item.workStage == 3){
+                item.dName = item.dogName + '(淘汰)';
+                item.masterLabel = '淘汰归属';
+                item.masterVal = item.belonging;
+            }else if(item.workStage == 4){
+                item.dName = item.dogName + '(死亡)';
+            }else{
+                item.dName = item.dogName ;
+            }
+
             var win = getWin('警犬详细信息', {
                 css: 'dogDetail',
                 cols: [
@@ -329,12 +342,12 @@ define([
                             {
                                 borderless: true,
                                 template:
-                                '<span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dogName#<br>' +
+                                '<span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dName#<br>' +
                                 '<span class="tab_label">芯&nbsp;&nbsp;片&nbsp;&nbsp;号：</span>#chipNo#<br>' +
                                 '<span class="tab_label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#sexStr#<br>' +
                                 '<span class="tab_label">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：</span>#birthday#<br>' +
                                 '<span class="tab_label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;种：</span>#breed#<br>' +
-                                '<span class="tab_label">带犬民警：</span>#tutor#<br>' +
+                                '<span class="tab_label">#masterLabel#：</span>#masterVal#<br>' +
                                 '<span class="tab_label">来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源：</span>#dogSource#<br>' +
                                 '<span class="tab_label">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>#dogColour#<br>' +
                                 // '<span class="tab_label">外貌特征：</span><br>' +
@@ -411,15 +424,15 @@ define([
                     width: 40
                 },
                 {id: "$index", header: "NO.", width: 45},
-                {id: "dogName", header: "犬名", width: 90},
-                {id: "chipNo", header: "芯片号", width: 110},
+                {id: "dogName", header: "犬名", width: 150},
+                // {id: "chipNo", header: "芯片号", width: 110},
                 // {id: "chipNoInject", header: "芯片注入日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d")},
-                {id: "sex", header: "性别", width: 50, template: function(obj){ return '<div align="center">' + (obj.sex == 1 ? '公' : '母') + '</div>'; } },
-                {id: "birthday", header: "出生日期", width: 85, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
-                {id: "breed", header: "品种", width: 90, sort: "string"},
-                {id: "dogSource", header: "来源", width: 60, sort: "string"},
-                {id: "dogColour", header: "毛色", width: 75, sort: "string"},
-                {id: "hairType", header: "毛型", width: 70, sort: "string"},
+                {id: "sex", header: "性别", width: 55, template: function(obj){ return '<div align="center">' + (obj.sex == 1 ? '公' : '母') + '</div>'; } },
+                {id: "birthday", header: "出生日期", width: 100, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
+                {id: "breed", header: "品种", width: 110, sort: "string"},
+                {id: "dogSource", header: "来源", width: 80, sort: "string"},
+                {id: "dogColour", header: "毛色", width: 95, sort: "string"},
+                // {id: "hairType", header: "毛型", width: 70, sort: "string"},
                 {id: "breeder", header: "繁育员", width: 100, sort: "string"}
             ];
             var win = getWin('选择警犬', {
@@ -476,9 +489,10 @@ define([
                         template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>&nbsp;&nbsp;&nbsp;&nbsp;总共#count#条</div>"
                     },
                     {
+                        height: 30,
                         cols: [
                             {
-                                template: '请选择一条警犬，如果选择了多个，只以第一个为准', borderless: true
+                                template: '请选择一头警犬，如果选择了多个，只以第一个为准', borderless: true
                             },
                             {
                                 view: "button", label: "关闭", css: 'non-essential', width: 65, click: function () {
@@ -494,7 +508,7 @@ define([
                         ]
                     }
                 ]
-            }, {height: 500, width: 800});
+            }, {height: 510, width: 800});
             win.show();
         },
         setDog: function (textObj, valObj, params, callback) {

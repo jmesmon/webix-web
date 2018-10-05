@@ -12,19 +12,22 @@ define([
                 isSuperman = true;
                 workUnitCss = '';
             }
-
+            var isExist = false;
             var btn = {
                     cols: [
                         {},
                         {view:"button", label:"保存修改", width: 80, click: function () {
                             var form = $$('user_form');
                             var values = form.getValues();
-                            console.log(values);
-                            doIPost('user/updateMyInfo', values, function(res){
-                                if(res.success){
+                            if(!values.policeId) {
+                                msgBox('请输入警号/登录名称');
+                                return ;
+                            }
+                            doIPost('user/updateMyInfo', values, function (res) {
+                                if (res.success) {
                                     msgBox('修改成功，需要重新登录后才可看到');
                                     getBase();
-                                }else{
+                                } else {
                                     msgBox('修改失败：<br>' + res.message)
                                 }
                             })
@@ -35,6 +38,7 @@ define([
             if(!useBtn){
                 btn = {};
             }
+
             return {
                 cols: [
                     {
@@ -62,20 +66,21 @@ define([
                             },
                             {
                                 cols: [
-                                    {view: "text", label: "警号/登录名称：", width: 400, name: 'policeId', readonly: !isSuperman, on: {
+                                    {view: "text", label: "警号/登录名称：", width: 400, name: 'policeId', readonly: ['JiuZhiDui', 'SuperMan', 'GuanLiYuan'].indexOf(USER_INFO.userRole) == -1, on: {
                                             onChange: function (newVal, oldVal) {
-                                                if(oldVal) {
-                                                    var obj = this;
-                                                    doPost('user/isExist', {
-                                                        policeId: newVal,
-                                                        policeNameLike: useBtn
-                                                    }, function (data) {
-                                                        if (!data.success) {
-                                                            msgBox("警号/登录名称已经存在，请重新修改！");
-                                                            obj.setValue(oldVal);
-                                                        }
-                                                    });
-                                                }
+                                                var obj = this;
+                                                doPost('user/isExist', {
+                                                    policeId: newVal,
+                                                    policeNameLike: useBtn
+                                                }, function (data) {
+                                                    if (!data.success) {
+                                                        isExist = true;
+                                                        msgBox("警号/登录名称已经存在，请重新修改！");
+                                                        obj.setValue('');
+                                                    }else{
+                                                        isExist = true;
+                                                    }
+                                                });
                                             }
                                         }
                                     },

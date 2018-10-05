@@ -142,9 +142,9 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
                                             {width: 50},
-                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
                                         ]
                                     },
                                     {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},
@@ -407,9 +407,9 @@ define([
                                                         header: "操作",
                                                         template: '<div align="center"><a class="my_link remove" href="javascript:void(0)"><span class="webix_icon icon fa-remove"></span></a></div>',
                                                         tooltip: '删除',
-                                                        width: 48
+                                                        width: 80
                                                     },
-                                                    {id: "attPerson", header: "出勤人员", width: 100},
+                                                    {id: "attPerson", header: "出勤人员", width: 120},
                                                     {id: "dogName", header: "出勤警犬", width: 570},
                                                 ],
                                                 tooltip:true,
@@ -484,9 +484,9 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
                                             {width: 50},
-                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
                                         ]
                                     },
                                     {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},
@@ -658,7 +658,7 @@ define([
                 borderless: true,
                 template: '一共选择了' + data.length + '条数据，其中'+arr.length+'条需要审批（'+errorCount+'条已经审批），请审批'
             }, {
-                view: "richselect", label: "是否通过", id: 'workState', width: 200, value: '通过', labelWidth: 60,
+                view: "richselect", label: "是否通过", id: 'workState', width: 200, value: '通过', labelWidth: 70,
                 options: [
                     {id: '通过', value: "通过"},
                     {id: '驳回', value: "驳回"}
@@ -668,7 +668,7 @@ define([
                 label: "审批意见",
                 name: "approve",
                 id: 'approve',
-                labelWidth: 60,
+                labelWidth: 70,
                 attributes: {maxlength: 64}
             },
                 {width: 400},
@@ -850,8 +850,8 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
-                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 240, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "开始时间", timepicker: true, name: "startTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
+                                            {view: "datepicker", label: "结束时间", timepicker: true, name: "endTimeStr", width: 280, format:"%Y-%m-%d %H:%i:%s"},
                                         ]
                                     },
                                     {view: "text", label: "案件编号", id: 'case_num', hidden: isXz, name: "caseProperty", width: 240, attributes:{ maxlength: 7 }},

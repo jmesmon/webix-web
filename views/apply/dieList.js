@@ -433,7 +433,7 @@ define([
                         width: 40
                     },
                     {id: "$index", header: "NO.", width: 45},
-                    {id: "applyUnit", header: "申请单位", width: 80, sort: "string"},
+                    {id: "applyUnit", header: "申请单位", width: 94, sort: "string"},
                     {id: "applyState", header: "审批状态", width: 100, template: function(obj, common, value){
                         return {
                             "1": "待分局审批",
@@ -447,14 +447,14 @@ define([
                         }catch(e){}
                         return '';
                     }},
-                    {id: "applyDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "applyDate", header: "申请日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "sickReason", header: "病因", width: 150, sort: "string"},
-                    {id: "sickDate", header: "生病日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "sickDate", header: "生病日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "cureDetail", header: "救治情况", width: 150, sort: "string"},
-                    {id: "dieDate", header: "死亡日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "dieDate", header: "死亡日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
                     {id: "dieReason", header: "死亡原因", width: 100, sort: "string"},
                     {id: "conclus", header: "结论", width: 150, sort: "string"},
-                    {id: "photos", header: "附件", width: 50, template: function(item){
+                    {id: "photos", header: "附件", width: 94, template: function(item){
                         if(!item.photos || item.photos == '[]'){
                             return '无';
                         }else{
@@ -462,10 +462,10 @@ define([
                         }
                     }},
 
-                    {id: "unitApproveDate", header: "分局日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "unitApproveDetail", header: "分局审批意见", width: 150},
-                    {id: "approveDate", header: "九支队审批日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "approveDetail", header: "九支队审批意见", width: 150},
+                    {id: "unitApproveDate", header: "分局日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "unitApproveDetail", header: "分局审批意见", width: 160},
+                    {id: "approveDate", header: "九支队审批日期", width: 110, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "approveDetail", header: "九支队审批意见", width: 160},
                 ],
                 on: {
                     onBeforeLoad: function () {

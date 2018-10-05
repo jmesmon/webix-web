@@ -97,7 +97,7 @@ define([
         var fatherName = values.father_name;
         var ar = fatherName.split('-');
         if(ar.length >= 3){
-            fatherName = ar[2];
+            fatherName = ar[ar.length - 1];
         }
         var motherName = values.mother_name;
 
@@ -414,7 +414,7 @@ debugger
                                 borderless: true,
                                 height: 110,
                                 id: 'detail',
-                                template: '<div align="center" style="font-size: 16px; font-weight: bold;">数据已保存</div><div align="center"><br>#detail#</div>',
+                                template: '<div align="center" style="font-size: 16px; font-weight: bold;">数据已保存</div><div align="center" style="font-size:12px"><br>#detail#</div>',
                                 data: {
                                     detail: ''
                                 }

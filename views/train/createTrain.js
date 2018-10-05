@@ -14,6 +14,7 @@ define([
         var params = $$('form').getValues();
         removeEmptyProperty(params, true);
         params.growthStage = 2;
+        params.workStage = 2;
         datatable.config.customUrl.params = params;
         datatable.reload();
     };
@@ -250,6 +251,8 @@ var checkCount = 0;
                     },
                     onAfterLoad: function () {
                         this.hideOverlay();
+                        checkCount = 0;
+                        checkMap = [];
                     },
                     onCheck: function(row, column, state){
                         var item = $$(datatableId).getItem(row);

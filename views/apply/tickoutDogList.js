@@ -18,7 +18,15 @@ define([
                     {id: "$index", header: "NO.", width: 45},
                     {"id":"dogName","header":"犬名","width":90},
                     {"id":"chipNo","header":"芯片号","width":110},
-                    {"id":"policeName","header":"带犬民警","width":80},
+                    {"id":"policeName","header":"带犬民警","width":80, template: function (data) {
+                            if(data.workStage == 3){
+                                return '(淘汰)';
+                            }else if(data.workStage == 4){
+                                return '(死亡)';
+                            }else{
+                                return data.policeName;
+                            }
+                        }},
                     {"id":"workPlace","header":"工作单位","width":80},
                     {"id":"sex","header":"性别","width":50, template: function(obj){ return (obj.sex == 1 ? '公' : '母') ; }},
                     {"id":"birthday","header":"出生日期","width":85,"sort":"string",format: webix.Date.dateToStr("%Y-%m-%d")},

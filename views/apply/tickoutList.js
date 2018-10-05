@@ -352,15 +352,15 @@ define([
                             "4": "申请驳回"}[value] || "";
                     }},
                     {id: "dogInfo", header: "警犬名称", width: 100, sort: "string", template: '#dogInfo.dogName#'},
-                    {id: "creationDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
-                    {id: "applyDate", header: "淘汰日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "creationDate", header: "申请日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "applyDate", header: "淘汰日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
 
                     {id: "tickoutReason", header: "淘汰原因", width: 200},
                     {id: "belongTo", header: "淘汰归属", width: 100},
 
-                    {id: "unitApproveDate", header: "分局日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "unitApproveDate", header: "分局审批日期", width: 120, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "unitApproveDetail", header: "分局审批意见", width: 150},
-                    {id: "approveDate", header: "九支队审批日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "approveDate", header: "九支队审批日期", width: 140, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "approveDetail", header: "九支队审批意见", width: 150},
                 ],
                 on: {

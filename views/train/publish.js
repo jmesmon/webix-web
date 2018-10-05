@@ -43,7 +43,7 @@ define([
                         labelWidth: 80
                     },
                     elements:[
-                        {view: "richselect", label: "培训科目", name: 'trainName', width: 300,
+                        {view: "richselect", label: "培训科目", name: 'trainName', width: 340,
                             options:[
                                 {id: '追踪', value: "追踪"},
                                 {id: '鉴别', value: "鉴别"},
@@ -56,7 +56,7 @@ define([
                                 {id: '其他', value: "其他"}
                             ]
                         },
-                        {view: "richselect", label: "培训标准", name: 'trainLevel', width: 300,
+                        {view: "richselect", label: "培训标准", name: 'trainLevel', width: 340,
                             options:[
                                 {id: '无等级', value: "无等级"},
                                 {id: '一级', value: "一级"},
@@ -65,12 +65,12 @@ define([
                             ]
                         },
                         {cols: [
-                            {view: "datepicker", label: "起止日期", name: "startDateStr", id: 'start', width: 180, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
-                            {view: "datepicker", label: "-", name: "endDateStr", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
+                            {view: "datepicker", label: "起止日期", name: "startDateStr", id: 'start', width: 200, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
+                            {view: "datepicker", label: "-", name: "endDateStr", id: 'end', labelWidth: 10, width: 140, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
                             {}
                         ]} ,
                         // {view: "text", label: "培训单位", name: "trainUnit", width: 300, attributes:{ maxlength: 128 }},
-                        {view: "richselect", label: "培训单位", name: 'trainUnit', width: 300,  value: '',
+                        {view: "richselect", label: "培训单位", name: 'trainUnit', width: 340,  value: '',
                             options:[
                                 {id: '北京市公安局警犬基地', value: "北京市公安局警犬基地"},
                                 {id: '公安部沈阳警犬技术学校', value: "公安部沈阳警犬技术学校"},
@@ -79,9 +79,9 @@ define([
                                 {id: '公安部昆明警犬基地', value: "公安部昆明警犬基地"}
                             ]
                         },
-                        {view: "text", label: "培训地点", id: 'trainAddr', name: "trainAddr", value: '', width: 300, attributes:{ maxlength: 200 }},
-                        {view: "text", label: "教员", name: 'trainUser', width: 300, attributes:{ maxlength: 64 }},
-                        {view: "textarea", label: "主要内容", name: "trainDesc", width: 300, attributes:{ maxlength: 200 }}
+                        {view: "text", label: "培训地点", id: 'trainAddr', name: "trainAddr", value: '', width: 340, attributes:{ maxlength: 200 }},
+                        {view: "text", label: "教员", name: 'trainUser', width: 340, attributes:{ maxlength: 64 }},
+                        {view: "textarea", label: "主要内容", name: "trainDesc", width: 340, attributes:{ maxlength: 200 }}
                     ],
                     rules:{
                         "trainName":webix.rules.isNotEmpty,
@@ -126,6 +126,7 @@ define([
                 "trainName": values.trainName,
                 "startDateStr": values.startDateStr,
                 "endDateStr": values.endDateStr,
+                "trainLevel": values.trainLevel,
                 "trainUnit": values.trainUnit,
                 "trainAddr": values.trainAddr,
                 "trainUser": values.trainUser,
@@ -152,7 +153,7 @@ define([
                         labelWidth: 80
                     },
                     elements:[
-                        {view: "richselect", label: "培训科目", name: 'trainName', width: 300,  value: item.trainName,
+                        {view: "richselect", label: "培训科目", name: 'trainName', width: 340,  value: item.trainName,
                             options:[
                                 {id: '追踪', value: "追踪"},
                                 {id: '鉴别', value: "鉴别"},
@@ -165,7 +166,7 @@ define([
                                 {id: '其他', value: "其他"}
                             ]
                         },
-                        {view: "richselect", label: "培训标准", name: 'trainLevel', width: 300,
+                        {view: "richselect", label: "培训标准", name: 'trainLevel', width: 340,value: item.trainLevel,
                             options:[
                                 {id: '无等级', value: "无等级"},
                                 {id: '一级', value: "一级"},
@@ -174,11 +175,11 @@ define([
                             ]
                         },
                         {cols: [
-                            {view: "datepicker", label: "起止日期", name: "startDateStr", value: item.startDate, id: 'start', width: 180, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
-                            {view: "datepicker", label: "-", name: "endDateStr", value: item.endDate, id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
+                            {view: "datepicker", label: "起止日期", name: "startDateStr", value: item.startDate, id: 'start', width: 200, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
+                            {view: "datepicker", label: "-", name: "endDateStr", value: item.endDate, id: 'end', labelWidth: 10, width: 140, format:"%Y-%m-%d", stringResult: true, on: { onChange: dateCheck }},
                             {}
                         ]} ,
-                        {view: "richselect", label: "培训单位", name: 'trainUnit', width: 300,  value: item.trainUnit,
+                        {view: "richselect", label: "培训单位", name: 'trainUnit', width: 340,  value: item.trainUnit,
                             options:[
                                 {id: '北京市公安局警犬基地', value: "北京市公安局警犬基地"},
                                 {id: '公安部沈阳警犬技术学校', value: "公安部沈阳警犬技术学校"},
@@ -187,9 +188,9 @@ define([
                                 {id: '公安部昆明警犬基地', value: "公安部昆明警犬基地"},
                             ]
                         },
-                        {view: "text", label: "培训地点", id: 'trainAddr', name: "trainAddr", value: item.trainAddr, width: 300, attributes:{ maxlength: 200 }},
-                        {view: "text", label: "教员", name: 'trainUser',  value: item.trainUser, width: 300, attributes:{ maxlength: 64 }},
-                        {view: "textarea", label: "主要内容", name: "trainDesc", value: item.trainDesc, width: 300, attributes:{ maxlength: 200 }}
+                        {view: "text", label: "培训地点", id: 'trainAddr', name: "trainAddr", value: item.trainAddr, width: 340, attributes:{ maxlength: 200 }},
+                        {view: "text", label: "教员", name: 'trainUser',  value: item.trainUser, width: 340, attributes:{ maxlength: 64 }},
+                        {view: "textarea", label: "主要内容", name: "trainDesc", value: item.trainDesc, width: 340, attributes:{ maxlength: 200 }}
                     ],
                     rules:{
                         "trainName":webix.rules.isNotEmpty,
@@ -351,8 +352,8 @@ define([
                     {id: "$index", header: "NO.", width: 45},
                     {id: "trainName", header: "培训科目", width: 100},
                     {id: "trainLevel", header: "培训标准", width: 100},
-                    {id: "startDate", header: "开始日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "endDate", header: "结束日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "startDate", header: "开始日期", width: 130, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "endDate", header: "结束日期", width: 130, format: webix.Date.dateToStr("%Y-%m-%d")},
                     {id: "trainDesc", header: "培训内容", width: 200},
                     {id: "trainUnit", header: "培训单位", width: 120},
                     {id: "trainUser", header: "教员", width: 100},

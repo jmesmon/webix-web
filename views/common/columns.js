@@ -39,10 +39,10 @@ define([
 
 
         '类型': {id: "dogSource", header: "类型", width: 60, template: function(item){ var dic = {"1": "培训", "2": "复训", "3": "考核"}; return dic[item.trainStage] || '';}},
-        '开始日期': {id: "trainStartDate", header: "开始日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        '结束日期': {id: "trainEndDate", header: "结束日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        '复训日期': {id: "trainDate", header: "复训日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-        '考核日期': {id: "trainDate", header: "考核日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
+        '开始日期': {id: "trainStartDate", header: "开始日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
+        '结束日期': {id: "trainEndDate", header: "结束日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
+        '复训日期': {id: "trainDate", header: "复训日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
+        '考核日期': {id: "trainDate", header: "考核日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
         '培训科目': {id: "trainName", header: "培训科目", width: 100},
         '班级名称': {id: "trainClassName", header: "班级名称", width: 100},
         '培训单位': {id: "trainUnit", header: "培训单位", width: 140},
@@ -50,11 +50,11 @@ define([
         // '教员': {id: "trainUser", header: "教员", width: 130},
         '基础评分': {id: "trainUser", header: "基础评分", width: 80, template: '<a class="score_detail">点击查看</a>'},
         '总分': {id: "totalScore", header: "总分", width: 80},
-        '培训成绩': {id: "trainResult", header: "培训成绩", width: 80},
+        '培训成绩': {id: "trainResult", header: "成绩", width: 60},
         '下次培训时间': {id: "nextTrainDate", header: "下次培训时间", width: 120, format: webix.Date.dateToStr("%Y-%m-%d")},
-        '带犬民警': {id: "policeName", header: "带犬民警", width: 80},
+        '带犬民警': {id: "policeName", header: "带犬民警", width: 90},
         '教员': {id: "trainUser", header: "教员", width: 80},
-        '工作单位': {id: "workUnit", header: "工作单位", width: 80},
+        '工作单位': {id: "workUnit", header: "工作单位", width: 90},
 
     };
     var methods = {
@@ -110,6 +110,18 @@ define([
 
                         item.mergePro = dogPro;
 
+                        item.masterLabel = '带犬民警', item.masterVal = item.policeName;
+
+                        if(item.workStage == 3){
+                            item.dName = item.dogName + '(淘汰)';
+                            item.masterLabel = '淘汰归属';
+                            item.masterVal = item.belonging;
+                        }else if(item.workStage == 4){
+                            item.dName = item.dogName + '(死亡)';
+                        }else{
+                            item.dName = item.dogName ;
+                        }
+
                         var html = '<table width="100%">' +
                             '<tr style="height: 120px">' +
                             '<td style="width: 120px"><img src="#dogPhoto#" height="120" width="140"></td>' +
@@ -118,9 +130,9 @@ define([
                             '<table width="100%">' +
                             '<tr>' +
                             '<td style="width:350px">' +
-                            '<div><span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dogName#</div>' +
+                            '<div><span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dName#</div>' +
                             '<div><span class="tab_label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;种：</span>#breed#</div>' +
-                            '<div><span class="tab_label">带犬民警：</span>#policeName#</div>' +
+                            '<div><span class="tab_label">#masterLabel#：</span>#masterVal#</div>' +
                             '<div><span class="tab_label">工作单位：</span>#workPlace#</div>'+
                             '</td>' +
                             '<td valign="top">' +

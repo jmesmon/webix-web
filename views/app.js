@@ -150,13 +150,13 @@ define([
                         $$('todoTip').config.value = count;
                     }
                     $$('todoTip').refresh();
-                    if(isShow && count>0) {
+                    if(isShow || count>0) {
                         var datatableId = webix.uid().toString();
                         var win = getWin('待办事项', {
                             rows: [
                                 {
                                     height: 190,
-                                    template: html, borderless: true, onClick: {
+                                    template: (isShow ? html : '无待办事项'), borderless: true, onClick: {
                                     gotoProcess: function () {
                                         win.close()
                                     }
@@ -189,14 +189,14 @@ define([
                                         {
                                             header: "操作",
                                             template: function (item) {
-                                                if(item.processLink){
+                                                if(item.processLink && item.processLink != '0'){
                                                     return item.processLink;
                                                 }
                                                 if (item.isRead == 2) return '';
                                                 return '<a href="javascript:void(0)" class="markRead">标记已读</a>';
                                             },
                                             tooltip: '标记已读',
-                                            width: 65
+                                            width: 78
                                         },
                                     ],
                                     customUrl: {
@@ -228,7 +228,7 @@ define([
                                     template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
                                 }
                             ]
-                        }, {width: 800, height: 600});
+                        }, {width: 1000, height: 600});
                         win.show();
                     }
                     // }else{

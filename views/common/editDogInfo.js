@@ -152,7 +152,7 @@ define([
                     width: 800,
                     cols: [ui]
                 }]
-            }, {height: 450, width: 680});
+            }, {height: 450, width: 750});
             win.show();
             var values = $$('dog_base_info_form_update').getValues();
             for(var k in values){

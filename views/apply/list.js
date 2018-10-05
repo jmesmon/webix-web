@@ -65,7 +65,7 @@ define([
                                 elements:[
                                     {view: "text", hidden: true, name: "applyState", width: 300, value: 1},
                                     {view: "text", label: "数量", name: "applyAmount", width: 300, attributes:{ maxlength: 3 }},
-                                    {view: "textarea", label: "备注", name: "applyDesc", width: 300, attributes:{ maxlength: 128 }, height: 100, value: '用途：\r\n期望犬种：\n期望颜色：\n期望配发日期：\n其他：'},
+                                    {view: "textarea", label: "备注", name: "applyDesc", width: 350, attributes:{ maxlength: 128 }, height: 120, value: '用途：\r\n期望犬种：\n期望颜色：\n期望配发日期：\n其他：'},
                                 ],
                                 rules:{
                                     "applyDesc":webix.rules.isNotEmpty,
@@ -178,13 +178,13 @@ define([
                 borderless: true,
                 template: '一共选择了'+data.length+'条申请，其中' + errorArr.length + '条是已经审批过了，不在重复审批，请审批'
             }, {
-                view: "richselect", label: "审批结果", id: 'applyState', width: 200, value: '合格', labelWidth: 80,
+                view: "richselect", label: "审批结果", id: 'applyState', width: 260, value: '合格', labelWidth: 80,
                 options: [
                     {id: '2', value: "通过，等待配发"},
                     {id: '3', value: "驳回"}
                 ]
             },
-            {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 80, width: 280},
+            {view: "text", label: "审批意见", name: "approveDetail", id: 'approveDetail', labelWidth: 80, width: 400},
                 {width: 600},
                 {
                     cols:[
@@ -238,7 +238,7 @@ define([
                         cols: [
                             // {view: "text", label: "申请单位", name: "workUnit",labelWidth: 60, width: 220},
                             // {width: DEFAULT_PADDING},
-                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 200, labelWidth: 70, options:[
+                            {view: "richselect", label: "申请状态", name: 'applyState', value:"-1", width: 260, labelWidth: 70, options:[
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "待审批"}, //1：带审批，2：审批通过，带配发，3：申请驳回，4：配发完成
                                 {id: '2', value: "审批通过，待配发"},
@@ -278,7 +278,7 @@ define([
                     {view: "button", label: "新建申请", width: 70, click: add},
                     {view: "button", label: "批量审批", width: 70, click: approve, permission: 'apply.dog.approve'},
                     {view: "button", label: "删除", width: 70, click: del},
-                    {view: "button", label: "分配警犬", width: 70, click: function(){
+                    {view: "button", label: "分配警犬", width: 70, permission: 'apply.dog.approve', click: function(){
                         var datatable = $$(datatableId);
                         var data = datatable.getCheckedData();
                         sessionStorage.removeItem("_allot_");
@@ -312,21 +312,21 @@ define([
                             }
                         },
                         tooltip: '编辑',
-                        width: 60
+                        width: 55
                     },
                     // {id: "workUnit", header: "申请单位", width: 80, sort: "string"},
-                    {id: "creationDate", header: "申请日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d") },
-                    {id: "workUnit", header: "申请单位", width: 80, sort: "string"},
-                    {id: "applyAmount", header: "数量", width: 50, sort: "string"},
-                    {id: "applyState", header: "审批状态", width: 130, template: function(obj, common, value){
+                    {id: "creationDate", header: "申请日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
+                    {id: "workUnit", header: "申请单位", width: 90, sort: "string"},
+                    {id: "applyAmount", header: "数量", width: 60, sort: "string"},
+                    {id: "applyState", header: "审批状态", width: 140, template: function(obj, common, value){
                         return {
                             "1": "待审批",
                             "2": "审批通过，待配发",
                             "3": "申请驳回",
                             "4": "配发完成"}[value] || "";
                     }},
-                    {id: "lastUpdateDate", header: "审批日期", width: 85, format: webix.Date.dateToStr("%Y-%m-%d")},
-                    {id: "approveDetail", header: "审批日志", width: 150},
+                    {id: "lastUpdateDate", header: "审批日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "approveDetail", header: "审批日志", width: 110},
                     {id: "applyDesc", header: "备注", sort: "string", fillspace: 1},
                 ],
                 on: {

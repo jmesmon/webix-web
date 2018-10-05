@@ -186,15 +186,16 @@ define([
                             // },
                             {width: DEFAULT_PADDING},
                             {cols: [
-                                {view: "datepicker", label: "驱虫日期", name: "wormDateStart", id: 'start',labelWidth: 70, width: 180, format:"%Y-%m-%d", stringResult: true},
-                                {view: "datepicker", label: "-", name: "wormDateEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "驱虫日期", name: "wormDateStart", id: 'start',labelWidth: 70, width: 190, format:"%Y-%m-%d", stringResult: true},
+                                {view: "datepicker", label: "-", name: "wormDateEnd", id: 'end', labelWidth: 10, width: 130, format:"%Y-%m-%d", stringResult: true},
                                 {}
                             ]} ,
                             {width: DEFAULT_PADDING},
-                            {view: "richselect", label: "完成状态", name: 'wormState', value:"-1", width: 150, labelWidth: 70, options:[
+                            {view: "richselect", label: "完成状态", name: 'wormState', value:"-1", width: 160, labelWidth: 70, options:[
                                 {id: '-1', value: "全部"},
                                 {id: '1', value: "未完成"},
-                                {id: '2', value: "已完成"}
+                                {id: '2', value: "已完成"},
+                                {id: '3', value: "进行中"},
                             ]},
                             {width: DEFAULT_PADDING},
                             {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){

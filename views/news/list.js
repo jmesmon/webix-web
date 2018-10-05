@@ -100,7 +100,7 @@ define([
                         header: "操作",
                         template: '<a href="javascript:void(0)" class="edit">编辑</a>',
                         tooltip: '编辑',
-                        width: 50
+                        width: 55
                     },
                     {id: "newsType", header: "分类", width: 100},
                     {id: "title", header: "新闻标题", template: '<a href="javascript:void(0);" class="showDetail">#title#</a>', fillspace: 1},

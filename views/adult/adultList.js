@@ -550,7 +550,7 @@ var checkCount = 0;
                             editDog.openEdit(data[0], datatable);
                         }
                     },
-                    {view: "button", label: "淘汰审批", width: 80, click: tickOut, permission: 'apply.tickout.create'},
+                    {view: "button", label: "淘汰申请", width: 80, click: tickOut, permission: 'apply.tickout.create'},
                     {view: "button", label: "死亡报告", width: 80, click: died, permission: 'apply.die.create'},
                     {view: "button", label: "删除", width: 60, permission: 'dog.delete',
                         click: function () {
@@ -599,7 +599,7 @@ var checkCount = 0;
                                         {
                                            cols: [
                                                {
-                                                   view: "richselect", label: "请选择接收民警", id: 'policeUser', labelWidth: 95, width: 240,
+                                                   view: "richselect", label: "请选择接收民警", id: 'policeUser', labelWidth: 115, width: 320,
                                                    options: userList
                                                },
                                                {}
@@ -694,7 +694,7 @@ var checkCount = 0;
                     // autoload: true,
                     url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getAll/{pageSize}/{curPage}'),
                     httpMethod: 'post',
-                    params: {},//growthStage: 2
+                    params: {state: 1},//growthStage: 2
                     datatype: 'customJson'
                 },
                 pager: "pagerA"

@@ -14,13 +14,13 @@ define([], function () {
                                 ]
                             },
                             {
-                                view: "richselect", label: "分类：", width: 150, id: 'ntype', name: 'orgArea', labelAlign: 'right',labelWidth: 55, value: '动态新闻',
+                                view: "richselect", label: "分类：", width: 170, id: 'ntype', name: 'orgArea', labelAlign: 'right',labelWidth: 55, value: '动态新闻',
                                 options: [
                                     {id: '动态新闻', value: '动态新闻'},
                                     {id: '通知公告', value: '通知公告'},
                                 ]
                             },
-                            {view: "datepicker", label: "发布日期：", name: "date", id: 'ndate', labelWidth: 70, width: 180, value: new Date(), labelAlign: 'right', format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "发布日期：", name: "date", id: 'ndate', labelWidth: 90, width: 220, value: new Date(), labelAlign: 'right', format:"%Y-%m-%d", stringResult: true},
                             {view: 'text', label: '工作单位：', id: 'nworkUnit', value: USER_INFO.workUnit, readonly: true, labelAlign: 'right',labelAlign: 'right'},
                             {},
                         ]

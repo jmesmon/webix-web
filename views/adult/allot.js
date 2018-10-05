@@ -18,6 +18,7 @@ define([
         if(params.workStage == 0){
             delete params.workStage;
         }
+        params.state = 1;
         var datatable = $$(tableid);
         removeEmptyProperty(params, true);
         datatable.config.customUrl.params = params;
@@ -66,7 +67,7 @@ define([
                                 view:"checkbox",
                                 id:"unAllot",
                                 label:"待分配",
-                                labelWidth: 50,
+                                labelWidth: 60,
                                 value:0,
                                 on: {
                                     onChange: function (newVal, oldVal) {
@@ -92,7 +93,7 @@ define([
                             customUrl: {
                                 url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getAll/{pageSize}/{curPage}'),
                                 httpMethod: 'post',
-                                params: {workPlace: '刑侦总队'},
+                                params: {workPlace: '刑侦总队', state: 1},
                                 datatype: 'customJson'
                             },
                             pager: "pagerC"
@@ -117,25 +118,24 @@ define([
                             }
 
                             var data = $$(datatableId1).getCheckedData();
-                            console.log(data);
+
                             var idArr = [];
                             for(var i = 0; i<data.length; i++){
                                 var item = webix.copy(data[i]);
                                 idArr.push(item.id);
                                 item.workPlace = rec;
                                 selectedData.push(item);
-                                item.$index = 'new ' + item.$index;
+                                item.$index = item.$index;
                                 item.tutor='待分配';
                                 $$(datatableId2).add(item);
                             }
                             $$(datatableId1).remove(idArr);
-                            console.log(idArr);
 
                             // table.setPage( parseInt((count + size - 1) / size) );
                         }},
                         {view: "button", label: "还原", width: 50, click: function () {
                             $$(datatableId1).reload();
-                            // $$(datatableId2).reload();
+                            $$(datatableId2).clearAll();
                             selectedData = [];
                         }},
                         {}
@@ -194,6 +194,7 @@ define([
                                                         msgBox('申请单状态变更失败');
                                                     }
                                                 })
+                                                window.open('#!/app/apply.list', '_self');
                                             }
                                         }else{
                                             msgBox('操作失败');
@@ -203,7 +204,7 @@ define([
                             },{}]
                         },
                         {
-                            height: 60,
+                            height: 80,
                             template: '<div style="margin-top: -10px">说明：<br>1、警犬调配：调配范围是在分局之间调动，不可以调配到带犬人员。<br>2、调配到分局后，分局可以通过“警犬管理”->“警犬列表”中的“更换训导员”按钮，更换带犬人员</div>', borderless: true
                         }
                     ]

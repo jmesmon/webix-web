@@ -60,7 +60,7 @@ define([
                                 elements:[
                                     {
                                         cols: [
-                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 200,
+                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 260,
                                                 on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'}, function(item){
                                                     $$('fatherDogId').item = item;
                                                     var f = item;
@@ -73,7 +73,7 @@ define([
                                                 })
                                             },
                                             {view: 'text', hidden: true, name: "fatherDogId", id: 'fatherDogId'},
-                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 200,
+                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 260,
                                                 on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'}, function(item){
                                                     $$('motherDogId').item = item;
                                                     var f = $$('fatherDogId').item;
@@ -90,7 +90,7 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "交配日期", name: "mateDate", id: 'mateDate',format:"%Y-%m-%d", stringResult: true,
+                                            {view: "datepicker", label: "交配日期", name: "mateDate", id: 'mateDate', width: 200, format:"%Y-%m-%d", stringResult: true,
                                                 on: {
                                                     onChange: function(newVal){
                                                         try{
@@ -106,24 +106,38 @@ define([
                                                     }
                                                 }
                                             },
-                                            {view: "datepicker", label: "B超日期", name: "bMuDate", id: 'bMuDate', format:"%Y-%m-%d", stringResult: true},
-                                            {view: "datepicker", label: "预产期", name: "expectDate", id: 'expectDate', width: 200, format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "B超日期", name: "bMuDate", id: 'bMuDate', width: 200, format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "预产期", name: "expectDate", id: 'expectDate', labelWidth: 55, width: 170, format:"%Y-%m-%d", stringResult: true},
                                         ]
                                     },
 
-                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"1", width: 180, options:[
-                                        {id: '1', value: "完成交配"},
-                                        {id: '2', value: "完成B超"},
-                                        {id: '3', value: "完成产仔"},
-                                        {id: '4', value: "幼犬数据已生成"},
-                                        {id: '5', value: "空怀"},
-                                    ]},
+                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"1", width: 240,
+                                        options:[
+                                            {id: '1', value: "完成交配"},
+                                            {id: '2', value: "完成B超"},
+                                            {id: '3', value: "完成产仔"},
+                                            {id: '4', value: "幼犬数据已生成"},
+                                            {id: '5', value: "空怀"},
+                                        ],
+                                        on: {
+                                            onChange: function (newVal) {
+                                                if(newVal == '5'){
+                                                    var values = $$('form').getValues();
+                                                    values.breedCount = -1;
+                                                    values.liveCount = -1;
+                                                    values.liveCount7 = -1;
+                                                    values.liveCount21 = -1;
+                                                    $$('form').setValues(values);
+                                                }
+                                            }
+                                        }
+                                    },
                                     {
                                         cols: [
                                             {view: "text", label: "产仔数", name: "breedCount", attributes:{ maxlength: 4 }},
-                                            {view: "text", label: "活仔数", name: "liveCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "活仔数", labelWidth: 55, width: 120, name: "liveCount", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "7日存活数", name: "liveCount7", attributes:{ maxlength: 4 }},
-                                            {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
+                                            {view: "text", label: "21日存活数", labelWidth: 85, name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
                                     {
@@ -135,7 +149,7 @@ define([
                         ]
                     }
                 },
-                {width: 600},
+                {width: 800},
                 {
                     cols:[
                         {},
@@ -207,11 +221,11 @@ define([
                                     {view: "text", name: "id", hidden:true},
                                     {
                                         cols: [
-                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 200,
+                                            {view: "text", label: "公犬名", name: 'fatherDogName', id: 'father_dog_name', placeholder: '点击选择', width: 260,
                                                 on: constant.setDogList('father_dog_name', 'fatherDogId', {sex: 1, workPlace: '刑侦总队'})
                                             },
                                             {view: 'text', hidden: true, name: "fatherDogId", id: 'fatherDogId'},
-                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 200,
+                                            {view: "text", label: "母犬名", name: 'motherDogName', id: 'motherDogLabel', placeholder: '点击选择', width: 260,
                                                 on: constant.setDogList('motherDogLabel', 'motherDogId', {sex: 2, workPlace: '刑侦总队'})
                                             },
                                             {view: 'text', hidden: true, name: "motherDogId", id: 'motherDogId'}
@@ -219,13 +233,13 @@ define([
                                     },
                                     {
                                         cols: [
-                                            {view: "datepicker", label: "交配日期", name: "mateDate", format:"%Y-%m-%d", stringResult: true},
-                                            {view: "datepicker", label: "B超日期", name: "bMuDate", format:"%Y-%m-%d", stringResult: true},
-                                            {view: "datepicker", label: "预产期", name: "expectDate", width: 200, format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "交配日期", name: "mateDate", width: 200, format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "B超日期", name: "bMuDate", width: 200, format:"%Y-%m-%d", stringResult: true},
+                                            {view: "datepicker", label: "预产期", name: "expectDate", width: 180, labelWidth: 60, format:"%Y-%m-%d", stringResult: true},
                                         ]
                                     },
 
-                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"-1", width: 180, options:[
+                                    {view: "richselect", label: "当前状态", name: 'mateState', value:"-1", width: 240, options:[
                                         {id: '1', value: "完成交配"},
                                         {id: '2', value: "完成B超"},
                                         {id: '3', value: "完成产仔"},
@@ -235,9 +249,9 @@ define([
                                     {
                                         cols: [
                                             {view: "text", label: "产仔数", name: "breedCount", attributes:{ maxlength: 4 }},
-                                            {view: "text", label: "活仔数", name: "liveCount", attributes:{ maxlength: 4 }},
+                                            {view: "text", label: "活仔数", labelWidth: 55, width: 120, name: "liveCount", attributes:{ maxlength: 4 }},
                                             {view: "text", label: "7日存活数", name: "liveCount7", attributes:{ maxlength: 4 }},
-                                            {view: "text", label: "21日存活数", name: "liveCount21", attributes:{ maxlength: 4 }}
+                                            {view: "text", label: "21日存活数", labelWidth: 85, name: "liveCount21", attributes:{ maxlength: 4 }}
                                         ]
                                     },
                                     {
@@ -399,7 +413,7 @@ define([
                         header: "操作",
                         template: '<div align="center"><a class="my_link edit" href="javascript:void(0)"><span class="webix_icon icon fa-pencil-square-o"></span></a></div>',
                         tooltip: '编辑',
-                        width: 48
+                        width: 55
                     },
                     {id: "mateState", header: "状态", width: 100, template: function(obj, common, value){
                         return {"1": '完成交配', '2': '完成B超', '3': '已产仔', '4': '幼犬数据已生成'}[value] || '';

@@ -29,7 +29,7 @@ define([
                                 elements: [
                                     {
                                         cols: [{
-                                            width: 300,
+                                            width: 320,
                                             rows: [
                                                 {view: "text", label: "警犬名称：" + name_start, name: "dogName", labelWidth: 135, on: {
                                                     onChange: function(newVal, oldVal){
@@ -60,13 +60,13 @@ define([
                                         }, {
                                             width: DEFAULT_PADDING * 2
                                         }, {
-                                            width: 300,
+                                            width: 320,
                                             rows: [
                                                 {view: "richselect", label: "成长阶段", name: 'growthStage', value:"2", options: constant.getGrowthStage(), hidden: true},
                                                 {
                                                     id: 'breed_field',
                                                     cols: [
-                                                        {view: "richselect", label: "品种", name: 'breed', value:"-1", width: 200, options: constant.getBreedTypeOptions(),
+                                                        {view: "richselect", label: "品种", name: 'breed', value:"-1", width: 220, options: constant.getBreedTypeOptions(),
                                                             on: {
                                                                 onChange: function(newVal){
                                                                     if(newVal == '其他'){
@@ -103,7 +103,7 @@ define([
                                         }, {
                                             width: DEFAULT_PADDING * 2
                                         }, {
-                                            width: 300,
+                                            width: 320,
                                             rows: [
                                                 {view: "richselect", label: "工作状态", name: 'workStage', value:"2", options: constant.getWorkStage()},
                                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
@@ -150,7 +150,7 @@ define([
                                         header: "操作",
                                         template: '<div align="center"><a class="my_link remove" href="javascript:void(0)"><span class="webix_icon icon fa-remove"></span></a></div>',
                                         tooltip: '删除',
-                                        width: 48
+                                        width: 55
                                     },
                                     {id: "type", header: "类别", width: 100},
                                     {id: "date", header: "完成日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
@@ -183,7 +183,7 @@ define([
                                                 {id: '疫苗接种', value: "免疫"}
                                             ]},
                                             {view: "datepicker", label: "完成日期", name: "date", width: 200, format:"%Y-%m-%d", stringResult: true},
-                                            {view: "text", label: "驱虫/免疫", name: "name"},
+                                            {view: "text", label: "驱虫/免疫", name: "name", labelWidth: 80, placeholder: '疫苗名称或驱虫周期'},
                                             {view: "button", label: "新增一条", width: 70, click: function () {
                                                 var fom = $$('immueForm');
                                                 var values = fom.getValues();
@@ -229,11 +229,11 @@ define([
                                         header: "操作",
                                         template: '<div align="center"><a class="my_link remove" href="javascript:void(0)"><span class="webix_icon icon fa-remove"></span></a></div>',
                                         tooltip: '删除',
-                                        width: 48
+                                        width: 55
                                     },
                                     {id: "trainStartDateStr", header: "开始日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
                                     {id: "trainEndDateStr", header: "结束日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
-                                    {id: "trainName", header: "培训内容", width: 100},
+                                    {id: "trainName", header: "培训内容", width: 130},
                                     {id: "trainUnit", header: "培训单位", width: 100},
                                     {id: "trainUser", header: "教员", width: 100},
                                     {id: "trainResult", header: "成绩", width: 100},
@@ -264,10 +264,10 @@ define([
                                             rows: [
                                                 {
                                                     cols: [
-                                                        {view: "datepicker", label: "开始日期", name: "trainStartDateStr", width: 180, format:"%Y-%m-%d", stringResult: true},
-                                                        {view: "datepicker", label: "结束日期", name: "trainEndDateStr", width: 180, format:"%Y-%m-%d", stringResult: true},
+                                                        {view: "datepicker", label: "开始日期", name: "trainStartDateStr", width: 190, format:"%Y-%m-%d", stringResult: true},
+                                                        {view: "datepicker", label: "结束日期", name: "trainEndDateStr", width: 190, format:"%Y-%m-%d", stringResult: true},
                                                         // {view: "text", label: "培训内容", name: "trainName", width: 200},
-                                                        {view: "richselect", label: "培训内容", name: 'trainName', value:"", width: 200, labelWidth: 60,
+                                                        {view: "richselect", label: "培训内容", name: 'trainName', value:"", width: 200, labelWidth: 70,
                                                             options:[
                                                                 {id: '追踪', value: "追踪"},
                                                                 {id: '鉴别', value: "鉴别"},
@@ -280,7 +280,6 @@ define([
                                                                 {id: '其他', value: "其他"}
                                                             ]
                                                         },
-                                                        {view: "text", label: "培训单位", name: "trainUnit", width: 200},
                                                         {view: "text", label: "教员", name: "trainUser", labelWidth: 50,width: 150},
                                                         {view: "richselect", label: "成绩", value:"合格", name: 'trainResult', width: 150, labelWidth: 40, options:[
                                                             {id: '合格', value: "合格"},
@@ -292,6 +291,7 @@ define([
                                                 },
                                                 {
                                                     cols: [
+                                                        {view: "text", label: "培训单位", name: "trainUnit", width: 200},
                                                         {view: "text", label: "培训地点", name: "trainAddr"},
                                                         {},
                                                         {view: "button", label: "新增一条", width: 70, click: function () {

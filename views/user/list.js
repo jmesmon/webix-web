@@ -29,6 +29,31 @@ define([
         });
     };
 
+    var resetPwd = function(){
+        var datatable = $$(datatableId);
+        var data = datatable.getCheckedData();
+        if(data.length == 0){
+            msgBox("请至少选择一条数据");
+            return ;
+        }
+        webix.confirm({
+            text:"确定恢复默密码:123456？", ok:"是", cancel:"否",
+            callback:function(res){
+                if(res){
+                    var w = loading();
+                    doPost('user/resetPwd', data, function(data){
+                        w.close();
+                        if(data.success){
+                            msgBox('操作成功');
+                        }else{
+                            msgBox('操作失败<br>' + data.message);
+                        }
+                    });
+                }
+            }
+        });
+    };
+
     var addOrUpdate = function (item) {
         item = item || {};
         var win = {};
@@ -59,6 +84,10 @@ define([
                                         url = 'user/update';
                                     }
                                     var data = form.getValues();
+                                    if(!data.policeId){
+                                        msgBox('请输入警号/登录名称');
+                                        return ;
+                                    }
                                     removeEmptyProperty(data);
                                     doIPost(url, data, function (data) {
                                         if (data.success) {
@@ -218,6 +247,7 @@ define([
                 cols: [
                     {view: "button", label: "添加", width: 70, click: function(){addOrUpdate()}},
                     {view: "button", label: "删除", width: 70, click: del},
+                    {view: "button", label: "重置密码", width: 70, click: resetPwd},
                     {view: "button", label: "分配权限", width: 80, click: changeRole},
                     {},
                 ]
@@ -241,7 +271,7 @@ define([
                         header: "操作",
                         template: '<a class="my_link edit" href="javascript:void(0)"><span class="webix_icon icon fa-pencil-square-o"></span></a>',
                         tooltip: '编辑',
-                        width: 50
+                        width: 55
                     },
                     {id: "policeId", header: "警号", width: 80, sort: "string"},
                     {id: "policeName", header: "姓名", width: 80, sort: "string"},
@@ -259,7 +289,7 @@ define([
                     }},
                     {id: "sex", header: "性别", width: 50, sort: "string"},
                     {id: "national", header: "民族", width: 50, sort: "string"},
-                    {id: "idNun", header: "身份证号", width: 170, sort: "string"},
+                    {id: "idNun", header: "身份证号", width: 170, template: '#idNun#'},
                     {id: "birthday", header: "出生日期", width: 95, sort: "string"},
                     {id: "onFace", header: "政治面貌", width: 80, sort: "string"},
                     {id: "education", header: "学历", width: 90, sort: "string"},
@@ -272,8 +302,8 @@ define([
                     {id: "dept", header: "部门", width: 90, sort: "string"},
                     {id: "jobTitle", header: "职称", width: 90, sort: "string"},
                     {id: "job", header: "职务", width: 90, sort: "string"},
-                    {id: "certQuali", header: "证书资格", width: 80, sort: "string"},
-                    {id: "certNum", header: "证书编号", width: 80, sort: "string"},
+                    {id: "certQuali", header: "证书资格", width: 94, sort: "string"},
+                    {id: "certNum", header: "证书编号", width: 94, sort: "string"},
                     {id: "rewardInfo", header: "立功授奖信息", width: 100, sort: "string"},
                     // {id: "approveRole", header: "是否审批人", width: 80, sort: "string", template: function(item){ if(item.approveRole) return '是'; else return '' }},
                     {id: "creationDate", header: "创建日期", width: 95, format: webix.Date.dateToStr("%Y-%m-%d")},
