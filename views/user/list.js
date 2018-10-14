@@ -109,6 +109,7 @@ define([
         }, {height: 550, width: 950});
         win.show();
         if(item && item.id){
+            $$('user_form').policeId = item.policeId;
             $$('user_form').setValues(item);
         }
     };

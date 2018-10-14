@@ -16,6 +16,7 @@ define([
             }
         },
         $oninit: function () {
+            $$('user_form').policeId = USER_INFO.policeId;
             $$('user_form').setValues(USER_INFO);
         }
     };

@@ -68,6 +68,9 @@ define([
                                 cols: [
                                     {view: "text", label: "警号/登录名称：", width: 400, name: 'policeId', readonly: ['JiuZhiDui', 'SuperMan', 'GuanLiYuan'].indexOf(USER_INFO.userRole) == -1, on: {
                                             onChange: function (newVal, oldVal) {
+                                                if(newVal == $$('user_form').policeId || newVal == ''){
+                                                    return '';
+                                                }
                                                 var obj = this;
                                                 doPost('user/isExist', {
                                                     policeId: newVal,
