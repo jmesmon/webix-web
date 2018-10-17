@@ -639,13 +639,23 @@
         if(type == '安检'){
             var da = org_workData.安检;
             legendData = ['次', '人', '物', '车辆', '面积'];
-            var per_data = [],wp_data = [],car_data = [],area_data = [],time_data = [];
+            var per_data = [0,0,0,0,0,0,0,0,0,0,0,0],wp_data = [0,0,0,0,0,0,0,0,0,0,0,0],car_data = [0,0,0,0,0,0,0,0,0,0,0,0],area_data = [0,0,0,0,0,0,0,0,0,0,0,0],time_data = [0,0,0,0,0,0,0,0,0,0,0,0];
             for(var i = 0; i<da.length; i++){
-                per_data.push(da[i].perTotal);
-                wp_data.push(da[i].wpTotal);
-                car_data.push(da[i].catTotal);
-                area_data.push(da[i].areaTotal);
-                time_data.push(da[i].num);
+                var month = da[i].month;
+                month = month.split('-')[1];
+                month = parseInt(month);
+
+                per_data[month - 1] = da[i].perTotal;
+                wp_data[month - 1] = da[i].wpTotal;
+                car_data[month - 1] = da[i].catTotal;
+                area_data[month - 1] = da[i].areaTotal;
+                time_data[month - 1] = da[i].num;
+
+                // per_data.push(da[i].perTotal);
+                // wp_data.push(da[i].wpTotal);
+                // car_data.push(da[i].catTotal);
+                // area_data.push(da[i].areaTotal);
+                // time_data.push(da[i].num);
             }
             series = [
                 {
@@ -678,10 +688,17 @@
         }else {
             var da = org_workData[type];
             legendData = ['次', '人', '物'];
-            var per_data = [],wp_data = [],time_data = [];
+            var per_data = [0,0,0,0,0,0,0,0,0,0,0,0],wp_data = [0,0,0,0,0,0,0,0,0,0,0,0],time_data = [0,0,0,0,0,0,0,0,0,0,0,0];
             for(var i = 0; i<da.length; i++){
-                per_data.push(da[i].perTotal);
-                wp_data.push(da[i].wpTotal);
+                var month = da[i].month;
+                month = month.split('-')[1];
+                month = parseInt(month);
+
+                per_data[month - 1] = da[i].perTotal;
+                wp_data[month - 1] = da[i].wpTotal;
+                time_data[month - 1] = da[i].num;
+                // per_data.push(da[i].perTotal);
+                // wp_data.push(da[i].wpTotal);
             }
             series = [
                 {
@@ -1476,13 +1493,22 @@
         if(type == '安检'){
             var da = workData.安检;
             legendData = ['次', '人', '物', '车辆', '面积'];
-            var per_data = [],wp_data = [],car_data = [],area_data = [],time_data = [];
+            var per_data = [0,0,0,0,0,0,0,0,0,0,0,0],wp_data = [0,0,0,0,0,0,0,0,0,0,0,0],car_data = [0,0,0,0,0,0,0,0,0,0,0,0],area_data = [0,0,0,0,0,0,0,0,0,0,0,0],time_data = [0,0,0,0,0,0,0,0,0,0,0,0];
             for(var i = 0; i<da.length; i++){
-                per_data.push(da[i].perTotal);
-                wp_data.push(da[i].wpTotal);
-                car_data.push(da[i].catTotal);
-                area_data.push(da[i].areaTotal);
-                time_data.push(da[i].num);
+                var month = da[i].month;
+                month = month.split('-')[1];
+                month = parseInt(month);
+
+                per_data[month - 1] = da[i].perTotal;
+                wp_data[month - 1] = da[i].wpTotal;
+                car_data[month - 1] = da[i].catTotal;
+                area_data[month - 1] = da[i].areaTotal;
+                time_data[month - 1] = da[i].num;
+                // per_data.push(da[i].perTotal);
+                // wp_data.push(da[i].wpTotal);
+                // car_data.push(da[i].catTotal);
+                // area_data.push(da[i].areaTotal);
+                // time_data.push(da[i].num);
             }
             series = [
                 {
@@ -1515,11 +1541,18 @@
         }else {
             var da = workData[type];
             legendData = ['次', '人', '物'];
-            var per_data = [],wp_data = [],time_data = [];
+            var per_data = [0,0,0,0,0,0,0,0,0,0,0,0],wp_data = [0,0,0,0,0,0,0,0,0,0,0,0],time_data = [0,0,0,0,0,0,0,0,0,0,0,0];
             for(var i = 0; i<da.length; i++){
-                per_data.push(da[i].perTotal);
-                wp_data.push(da[i].wpTotal);
-                time_data.push(da[i].num);
+                var month = da[i].month;
+                month = month.split('-')[1];
+                month = parseInt(month);
+
+                per_data[month - 1] = da[i].perTotal;
+                wp_data[month - 1] = da[i].wpTotal;
+                time_data[month - 1] = da[i].num;
+                // per_data.push(da[i].perTotal);
+                // wp_data.push(da[i].wpTotal);
+                // time_data.push(da[i].num);
             }
             series = [
                 {
