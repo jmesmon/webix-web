@@ -26,7 +26,7 @@ define([
                 height: 46, id: "person_template", css: "header_person", borderless: true, width: 192,
                 data: {id: 3, name: USER_INFO.policeName},
                 template: function (obj) {
-                    var width = obj.name.length * 25;
+                    var width = obj.name.length * 25 + 30;
                     if(width < 150){
                         width = 150;
                     }

@@ -31,6 +31,7 @@ define(function(){
         {id: "apply", open: true, value:"配发管理", data:[
             { id: "apply.list", value: "申请配发", permission: 'apply.dog', icon: "table", $css: "products", details:""},
             { id: "adult.allot", value: "警犬调配", permission: 'apply.allot', icon: "table", $css: "products", details:""},
+            { id: "allotList.index", value: "配发记录", permission: 'apply.allot', icon: "table", $css: "products", details:""},
         ]},
 
         {id: "main", value: "繁育管理", open: true, data:[
@@ -55,6 +56,7 @@ define(function(){
         {id: "news", open: true, value:"宣传模块", data:[
             { id: "news.publish2", value: "动态发布", permission:'news.publish', icon: "pencil", $css: "products", details:""},
             { id: "news.list", value: "动态管理", permission: 'news.list', icon: "list", $css: "products", details:""},
+            { id: "news.showList", value: "新闻动态",  icon: "list", $css: "products", details:""},
         ]},
         {id: "reporter", open: true, value:"报表中心", data:[
             { id: "reporter.export", value: "报表导出", permission: 'org.config', icon: "list", $css: "products", details:""},

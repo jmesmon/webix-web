@@ -120,7 +120,6 @@ define([
             "特警总队",
             "天安门分局",
             "西站分局",
-            "开发局分局",
             "清河分局",
             "东城分局",
             "西城分局",
@@ -352,6 +351,7 @@ define([
                                 '<span class="tab_label">#masterLabel#：</span>#masterVal#<br>' +
                                 '<span class="tab_label">来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源：</span>#dogSource#<br>' +
                                 '<span class="tab_label">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>#dogColour#<br>' +
+                                '<span class="tab_label">父犬名称：</span>#fatherName#<br>' +
                                 // '<span class="tab_label">外貌特征：</span><br>' +
                                 '<span class="tab_label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#dogTypeStr#<br>' +
                                 '<span class="tab_label">工作单位：</span>#workPlace#<br>' +
@@ -375,6 +375,7 @@ define([
                             {height: 210, borderless: true,
                                 template:
                                 '<div><span class="tab_label"">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>#hairType#</div>' +
+                                '<div><span class="tab_label"">母犬名称：</span>#motherName#</div>' +
                                 '<div style="height: 58px"></div>' +
                                 '<div style="height: 30px"></div>' +
                                 '<div><span class="tab_label"">片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>'+areaName+'</div>',

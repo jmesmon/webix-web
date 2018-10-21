@@ -22,6 +22,8 @@ define([
                     {"id":"workPlace","header":"工作单位","width":80},
                     {"id":"sex","header":"性别","width":50, template: function(obj){ return (obj.sex == 1 ? '公' : '母') ; }},
                     {"id":"birthday","header":"出生日期","width":85,"sort":"string",format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {"id":"fatherName","header":"父犬名称","width":90,"sort":"string"},
+                    {"id":"motherName","header":"母犬名称","width":90,"sort":"string"},
                     {"id":"breed","header":"品种","width":90,"sort":"string"},
                     {"id":"dogSource","header":"所属片区","width":60,"sort":"string"},
                     {"id":"dogColour","header":"毛色","width":75,"sort":"string"},

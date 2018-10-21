@@ -1,5 +1,5 @@
 define([], function () {
-
+var width = 400;
     return {
         $ui: {
             view: 'scrollview',
@@ -11,7 +11,7 @@ define([], function () {
                     },
                     {
                         cols: [
-                            {width: 340},
+                            {width: 240},
                             {
                                 borderless: true,
                                 view: "form",
@@ -24,15 +24,15 @@ define([], function () {
                                 },
                                 elements: [
                                     {view: "text", hidden: true, name: 'id'},
-                                    {view: "text", label: "单位名称：", width: 400, name: 'orgName', readonly: true},
-                                    {view: "text", label: "单位负责人：", width: 400, name: 'orgLeader'},
-                                    {view: "text", label: "单位地址：", width: 400, name: 'orgAddr'},
-                                    {view: "text", label: "联系方式：", width: 400, name: 'orgConcat'},
-                                    {view: "text", label: "员工数量：", width: 400, name: 'empQty'},
-                                    // {view: "text", label: "警犬数量：", width: 400, name: 'dogQty'},
+                                    {view: "text", label: "单位名称：", width: width, name: 'orgName', readonly: true},
+                                    {view: "text", label: "单位负责人：", width: width, name: 'orgLeader'},
+                                    {view: "text", label: "单位地址：", width: width, name: 'orgAddr'},
+                                    {view: "text", label: "联系方式：", width: width, name: 'orgConcat'},
+                                    {view: "text", label: "员工数量：", width: width, name: 'empQty'},
+                                    // {view: "text", label: "警犬数量：", width: width, name: 'dogQty'},
                                     {view: "text", hidden: true, name: 'orgPic', id: 'form_orgPic'},
                                     {
-                                        view: "richselect", label: "单位所在区：", width: 400, name: 'orgArea',
+                                        view: "richselect", label: "单位所在区：", width: width, name: 'orgArea',
                                         options: [
                                             {id: '东城区', value: '东城区'},
                                             {id: '西城区', value: '西城区'},
@@ -52,18 +52,7 @@ define([], function () {
                                             {id: '延庆区', value: '延庆区'}
                                         ]
                                     },
-                                    {view: "textarea", label: "简要介绍：", width: 400, name: 'orgDesc', height:80, attributes:{ maxlength: 200 }},
-                                    {
-                                        height: 200,
-                                        cols: [
-                                            {
-                                                borderless: true,
-                                                id: 'orgPic',
-                                                template: '<img src="#orgPic#" width="400" height="198"/>',
-                                                data: {orgPic: ''}
-                                            },
-                                        ]
-                                    },
+                                    {view: "textarea", label: "简要介绍：", width: width + 200, name: 'orgDesc', height: 100, attributes:{ maxlength: 200 }},
                                     {
                                         cols: [
                                             {width: 100},
@@ -79,31 +68,50 @@ define([], function () {
                                                 upload: "/policeDog/services/file/upload",
                                                 on: {
                                                     onFileUpload: function(item, resp){
-                                                        console.log([item, resp]);
-                                                        console.log(item.serverName);
                                                         $$('orgPic').data.orgPic = item.serverName;
                                                         $$('orgPic').refresh();
                                                         $$('form_orgPic').setValue(item.serverName);
+                                                        var form = $$('org_form');
+                                                        var values = form.getValues();
+                                                        doIPost('config/update', values, function (res) {
+                                                            if (res.success) {
+                                                                msgBox('修改成功');
+                                                                getBase();
+                                                            } else {
+                                                                msgBox('修改失败：<br>' + res.message)
+                                                            }
+                                                        })
                                                     }
                                                 }
                                             },
                                             {width: 50},
                                             {
                                                 view: "button", label: "保存修改", width: 80, click: function () {
-                                                var form = $$('org_form');
-                                                var values = form.getValues();
-                                                console.log(values);
-                                                doIPost('config/update', values, function (res) {
-                                                    if (res.success) {
-                                                        msgBox('修改成功');
-                                                        getBase();
-                                                    } else {
-                                                        msgBox('修改失败：<br>' + res.message)
-                                                    }
-                                                })
-                                            }
+                                                    var form = $$('org_form');
+                                                    var values = form.getValues();
+                                                    console.log(values);
+                                                    doIPost('config/update', values, function (res) {
+                                                        if (res.success) {
+                                                            msgBox('修改成功');
+                                                            getBase();
+                                                        } else {
+                                                            msgBox('修改失败：<br>' + res.message)
+                                                        }
+                                                    })
+                                                }
                                             },
                                             {},
+                                        ]
+                                    },
+                                    {
+                                        height: 200,
+                                        cols: [
+                                            {
+                                                borderless: true,
+                                                id: 'orgPic',
+                                                template: '<img src="#orgPic#" width="400" height="198"/>',
+                                                data: {orgPic: ''}
+                                            },
                                         ]
                                     },
                                     {}

@@ -2902,9 +2902,9 @@ label.webix_required:after {
   cursor: pointer;
   /*border: 1px solid #9da8ad;*/
   border-left-width: 0px;
-  color: #1a1a1a;
+  color: #fff;
   font-size: 16px;
-  background: #f2f2f2;
+  background: rgb(5, 36, 60);
   -webkit-border-top-left-radius: 0;
   -webkit-border-bottom-left-radius: 0px;
   -webkit-border-top-right-radius: 0;
@@ -2928,7 +2928,7 @@ label.webix_required:after {
   border-bottom-width: 0px;
   font-size: 16px;
   color: #fff;
-  background: #14517A;
+  background: rgb(0, 168, 227);
 }
 .webixtype_bottom .webix_item_tab.webix_selected {
   border-bottom-width: 1px ;

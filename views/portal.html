@@ -43,7 +43,7 @@
 <body>
 <div class="contain">
     <!--分局工作情况-->
-    <table width="100%" height="680">
+    <table width="100%" height="770">
         <tr>
             <td class="def_bk" style="width:45%" valign="top">
                 <div style="font-weight: bold; margin: 16px 0 0 8px; ">各分局工作情况</div>
@@ -66,11 +66,14 @@
             </td>
             <td style="width: 16px"></td>
             <td valign="top">
-                <div class="def_bk" style="height:340px;">
+                <div class="def_bk" style="height:375px;">
                     <div style="height:18px;"></div>
-                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">动态新闻</div>
+                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">
+                        <span>动态新闻</span>
+                        <span style="display: inline-block; float: right;margin-right: 5px; cursor: pointer;" onclick="showNewsList('1')">更多</span>
+                    </div>
                     <div style="height:10px;"></div>
-                    <div style="overflow: hidden;height: 290px">
+                    <div style="overflow: hidden;height: 310px">
                         <!--<marquee direction=up behavior=scroll loop=3 scrollamount=1 scrolldelay=10 align=top-->
                                  <!--height=236 width=95% hspace=20 vspace=10 onmouseover=this.stop()-->
                                  <!--onmouseout=this.start()>-->
@@ -82,11 +85,14 @@
                     </div>
                 </div>
                 <div style="height: 16px"></div>
-                <div class="def_bk" style="height:320px">
+                <div class="def_bk" style="height:375px">
                     <div style="height: 16px;"></div>
-                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">通知公告</div>
+                    <div style="font-weight: bold; margin: 0px 0 0 8px; ">
+                        <span>通知公告</span>
+                        <span style="display: inline-block; float: right;margin-right: 5px; cursor: pointer;" onclick="showNewsList('2')">更多</span>
+                    </div>
                     <div style="height:10px;"></div>
-                    <div style="overflow: hidden;height: 265px">
+                    <div style="overflow: hidden;height: 305px">
                         <!--<marquee direction=up behavior=scroll loop=3 scrollamount=1 scrolldelay=10 align=top-->
                                  <!--height=236 width=95% hspace=20 vspace=10 onmouseover=this.stop()-->
                                  <!--onmouseout=this.start()>-->
@@ -122,6 +128,7 @@
                 </div>
             </td>
         </tr>
+        <tr style="height: 7px"></tr>
         <tr style="height: 320px">
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
@@ -184,7 +191,7 @@
                             <td width="60px" onclick="onSpecialDataClick('特警总队')" style="cursor: pointer;color: #00F1FF">特警总队</td>
                             <td width="60px" onclick="onSpecialDataClick('天安门分局')" style="cursor: pointer;color: #00F1FF">天安门<br>分局</td>
                             <td width="60px" onclick="onSpecialDataClick('西站分局')" style="cursor: pointer;color: #00F1FF">西站分局</td>
-                            <td width="60px" onclick="onSpecialDataClick('开发局分局')" style="cursor: pointer;color: #00F1FF">开发局<br>分局</td>
+                            <!--<td width="60px" onclick="onSpecialDataClick('开发局分局')" style="cursor: pointer;color: #00F1FF">开发局<br>分局</td>-->
                             <td width="60px" onclick="onSpecialDataClick('清河分局')" style="cursor: pointer;color: #00F1FF">清河分局</td>
                         </tr>
                         <tbody id="special_da"> </tbody>
@@ -223,7 +230,7 @@
                                     </td>
                                     <td style="width: 20%">
                                         <div id="fj_col3" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                                        <div align="center">培训工作</div>
+                                        <div align="center">带犬力量分布图</div>
                                     </td>
                                 </tr>
                             </table>
@@ -318,6 +325,13 @@
 </div>
 
 <script>
+    function showNewsList(newType) {
+        var url = location.href;
+        url = url.split('views')[0];
+        url = url + '#!/app/news.showList' ;
+        localStorage.setItem("newType", newType);
+        window.open(url, '_parent');
+    }
     (function(){
         var w = $(window).width();
 //        var left = (w - 16)/5 * 2;
@@ -357,7 +371,7 @@
         if(is_show_all){
             params = {newsType: '动态新闻'};
         }
-        parent.doPost('news/getList/13/1', params, function(resp){
+        parent.doPost('news/getList/14/1', params, function(resp){
             var data = resp.result;
             var ht = '';
             for(var i =0; i<data.length; i++){
@@ -384,7 +398,7 @@
         if(!is_show_all){
             params = {newsType: '动态新闻', workUnit: USER_INFO.workUnit};
         }
-        parent.doPost('news/getList/13/1', params, function(resp){
+        parent.doPost('news/getList/14/1', params, function(resp){
             var data = resp.result;
             var ht = '';
             for(var i =0; i<data.length; i++){
@@ -408,12 +422,19 @@
     // **** 全局各指标start ****//
     function getAnalysisData() {
         if (is_show_all) {
-            parent.doPost('dogBaseInfo/getAnalysisData', {}, function (resp) {
+            var params = {};
+            if(["SuperMan", "JuZhang", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1){
+                params = {workUnit: USER_INFO.workUnit};
+            }
+            parent.doPost('dogBaseInfo/getAnalysisData', params, function (resp) {
                 if (resp.success) {
                     var arr = resp.result;
                     var data = {};
                     var pr_name = [];
                     var pr_data = [];
+                    var workStage_name = [];
+                    var workStage_data = [];
+                    var workStage = {};
                     for (var i = 0; i < arr.length; i++) {
                         var key = arr[i].att_name;
                         data[key] = arr[i].val;
@@ -421,9 +442,17 @@
                             pr_name.push(key.replace('pro_', ''));
                             pr_data.push({value: arr[i].val, name: key.replace('pro_', '')});
                         }
+                        if (key.indexOf("workStage_") != -1) {
+                            workStage_name.push(workStageMapping[key.replace('workStage_', '')]);
+                            workStage_data.push({value: arr[i].val, name: key.replace('workStage_', '')});
+                            workStage['st' + key.replace('workStage_', '')] = arr[i].val;
+                        }
                     }
                     try{
                         renderUserDog(data);
+                    }catch(e){}
+                    try{
+                        renderDogWorkStage(workStage);
                     }catch(e){}
                     try{
                         renderUser(data);
@@ -506,8 +535,8 @@
                 '<td>' + it.policeCount + '</td>' +
                 '<td>' + it.dogCount + '</td>' +
                 '<td>' + bi + '</td>' +
-                '<td style="color: '+(it.workCount ? '#fff': '#d1d1d1')+'">' + (it.workCount || 0)+ '</td>' +
-                '<td style="color: '+(it.newsCount ? '#fff': '#d1d1d1')+'">' + (it.newsCount || 0) + '</td>' +
+                '<td style="color: '+(it.workCount ? '#fff': '#81c6e7')+'">' + (it.workCount || 0)+ '</td>' +
+                '<td style="color: '+(it.newsCount ? '#fff': '#81c6e7')+'">' + (it.newsCount || 0) + '</td>' +
                 '</tr>';
         }
         table.append(htm);
@@ -1020,9 +1049,9 @@
                 if(org.dogQty){
                     per = parseInt( org.empQty / org.dogQty);
                 }
-                if(["警院", "机场", "警卫局", "振远", "消防"].indexOf(org.orgName) != -1){
+                if(["警院", "机场", "警卫局", "振远", "消防", "开发局分局"].indexOf(org.orgName) != -1){
 
-                }else if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "开发局分局", "清河分局"].indexOf(org.orgName) != -1){
+                }else if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "清河分局"].indexOf(org.orgName) != -1){
                     otherFj.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty, breederCount: org.policeCount || '0'} );
                     data[org.orgArea + '_' +i] = {
                         orgName: org.orgName,
@@ -1033,7 +1062,7 @@
                         data: org,
                         breederCount: org.policeCount || '0'
                     };
-                    if([ "天安门分局", "西站分局", "清河分局"].indexOf(org.orgName) != -1){
+                    if([ "天安门分局", "西站分局", "清河分局", "刑侦总队", "公交总队", "特警总队"].indexOf(org.orgName) != -1){
                         fjda.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty} );
                     }
                 } else {
@@ -1228,12 +1257,36 @@
             }
         };
     };
+    var getUserCount = function (workUnit) {
+        var count = 0;
+        for(var i = 0; i<fjda.length; i++){
+            count += fjda[i].policeCount;
+            if(workUnit && fjda[i].fj == workUnit){
+                return fjda[i].policeCount;
+            }
+        }
+        return count;
+    }
+    var getDogCount = function (workUnit) {
+        var count = 0;
+        for(var i = 0; i<fjda.length; i++){
+            count += fjda[i].dogCount;
+            if(workUnit && fjda[i].fj == workUnit){
+                return fjda[i].dogCount;
+            }
+        }
+        return count;
+    }
     //人犬比
     function renderUserDog(data, domId, tag) {
         var fontSize = '16';
         if(domId) fontSize = "12";
         domId = domId || 'qj_col1';
-        var totalPoliceman = 44039;
+        var workUnit = null;
+        if(["SuperMan", "JuZhang", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1){
+            workUnit = USER_INFO.workUnit;
+        }
+        var totalPoliceman = getUserCount(workUnit);
         var totalDog = data.totalDog || 0;
         var bl = Math.round(totalPoliceman / totalDog);
         echarts.init(document.getElementById(domId), 'vintage').setOption({
@@ -1297,7 +1350,7 @@
                     itemStyle: itemStyle(tag),
                     data: [
                         {value: data.st1 || 0, name: '在训'},
-                        {value: data.st1 || 0, name: '在职'},
+                        {value: data.st2 || 0, name: '在职'},
                         {value: data.st5 || 0, name: '后备'},
                         {value: ( (data.st6 || 0) + (data.st3 || 0) ), name: '退役'},
                     ]
@@ -1306,8 +1359,9 @@
         });
     }
     //带犬民警
-    function renderUser(data, tag) {
-        echarts.init(document.getElementById('qj_col2'), 'vintage').setOption({
+    function renderUser(data, id, tag) {
+        id = id || 'qj_col2';
+        echarts.init(document.getElementById(id), 'vintage').setOption({
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -1337,7 +1391,7 @@
         });
     }
     //警犬专业
-    function renderDogPro(keyArr, data, domId, tag) {
+    function renderDogPro(keyArr, data, domId, tag, workUnit) {
         var fontSize = '16';
         if(domId) fontSize = "12";
         domId = domId || 'qj_col3';
@@ -1751,7 +1805,7 @@
         renderAllUser(cName, legendData, da);
     }
 
-    //分局警犬年龄
+    //分局警犬年龄 -- 废弃
     function randerPie(){
         echarts.init(document.getElementById('fj_col1'), 'vintage').setOption({
             tooltip: {
@@ -1792,7 +1846,7 @@
                         {value:  parseInt(Math.random() * 1000), name:'1-3岁'},
                         {value:  parseInt(Math.random() * 1000), name:'3-6岁'},
                         {value:  parseInt(Math.random() * 1000), name:'6-8岁'},
-                        {value:  parseInt(Math.random() * 1000), name:'大于8岁'},
+                        {value:  parseInt(Math.random() * 1000), name:'大于8岁'}
                     ]
                 }
             ]
@@ -1836,7 +1890,7 @@
                         {value:  parseInt(Math.random() * 1000), name:'史宾格'},
                         {value:  parseInt(Math.random() * 1000), name:'拉布拉多'},
                         {value:  parseInt(Math.random() * 1000), name:'德国牧羊犬'},
-                        {value:  parseInt(Math.random() * 1000), name:'昆明犬'},
+                        {value:  parseInt(Math.random() * 1000), name:'昆明犬'}
                     ]
                 }
             ]
@@ -2013,10 +2067,10 @@
                     renderDogWorkStage(workStage, 'fj_col1_1', 1);
                 }catch(e){}
                 try{
-                    renderDogPro(pr_name, pr_data, 'fj_col2', 1); //
+                    renderDogPro(pr_name, pr_data, 'fj_col2', 1, workUnit); //
                 }catch(e){}
                 try{
-                    renderTrainInfo(data, 'fj_col3', 1);
+                    renderUser(data, 'fj_col3', 1);
                 }catch(e){}
                 try{
                     renderTickoutDie(data, 'fj_col5', 1);

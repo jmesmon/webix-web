@@ -52,7 +52,8 @@ define([
                                 {view: "richselect", label: "来源", name: 'dogSource',  value:"-1", options: constant.getDogSourceOptions() },
                                 {view: "richselect", label: "毛色", name: 'dogColour',  value:"-1", options: constant.getDogColorOptions() },
                                 {view: "richselect", label: "毛型", name: 'hairType',  value:"-1", options: constant.getHairTypeOptions() },
-                                {view: "richselect", label: "工作类型", name: 'dogType',  value:"-1", options: constant.getWorkType() }
+                                {view: "richselect", label: "工作类型", name: 'dogType',  value:"-1", options: constant.getWorkType() },
+                                {view: "text", label: "父犬名称", name: 'fatherName',  value:"" }
                                 // {view: "richselect", label: "犬种等级", name: 'dogLevel',  value:"-1", options: constant.getDogLevel() }
                             ]
                         },{width: DEFAULT_PADDING * 2},{
@@ -106,6 +107,7 @@ define([
                                 // ]},
                                 {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea() },
                                 {view: "multiselect", label: "专业方向", name: 'mainPro', id: 'dogMainPro', options: constant.getDogPro()},
+                                {view: "text", label: "母犬名称", name: 'motherName',  value:"" }
                             ]
                         }]
                     },{

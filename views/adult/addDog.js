@@ -54,8 +54,8 @@ define([
                                                 {view: "datepicker", label: "出生日期", name: "birthdayStr", format:"%Y-%m-%d", stringResult: true},
                                                 {view: "text", label: "繁殖单位", name: "breeder", disabled: false},
                                                 {view: "text", label: "训导员", name: "tutor", disabled: false, hidden: true},
+                                                {view: "text", label: "父犬名称", name: "fatherName"},
                                                 {template: "<div style='line-height: 4px'>带犬民警：&nbsp;"+USER_INFO.policeName+"</div>", height: 20, borderless: true },
-
                                             ]
                                         }, {
                                             width: DEFAULT_PADDING * 2
@@ -96,7 +96,7 @@ define([
                                                 {view: "richselect", label: "毛色", id: 'dogColor', name: 'dogColour', value:"-1", options: constant.getDogColorOptions() },
                                                 {view: "richselect", label: "毛型", id: 'hairType', name: 'hairType', value:"-1", options: constant.getHairTypeOptions() },
                                                 {view: "richselect", label: "工作类型", name: 'dogType', value:"1", options: constant.getWorkType() },
-                                                {view: "multiselect", label: "专业方向", name: 'mainPro', options: constant.getDogPro() },
+                                                {view: "text", label: "母犬名称", name: "motherName"},
                                                 {view: "richselect", label: "犬种等级", name: 'dogLevel', value:"", options: constant.getDogLevel(), hidden: true },
                                                 {view: "richselect", label: "犬种等级", id: 'dogPhoto', name: 'dogPhoto', value:"", options: constant.getDogLevel(), hidden: true },
                                             ]
@@ -113,8 +113,8 @@ define([
                                                     {id: '优秀', value: "优秀"}
                                                 ]},
                                                 {view: "richselect", label: "工作单位", name: "workPlace", options: constant.getUnitOptions(), value: USER_INFO.workUnit, readonly: (USER_INFO.workUnit != 'JiuZhiDui')},
-                                                {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea(), value: '2' }
-
+                                                {view: "richselect", label: "所属片区", name: "workArea", options: constant.getDogArea(), value: '2' },
+                                                {view: "multiselect", label: "专业方向", name: 'mainPro', options: constant.getDogPro() },
                                             ]
                                         },{}
                                     ]

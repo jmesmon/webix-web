@@ -82,17 +82,21 @@ define([
                             }
                         }
                         try{
-                            var age = new Date().getFullYear() - new Date(item.birthday).getFullYear();
-                            if(age == 0){
-                                var day = new Date().getTime() - new Date(item.birthday).getTime();
-                                day = parseInt(day/1000/60/60/24);
-                                age = day + '天';
+                            if(item.birthday) {
+                                var age = new Date().getFullYear() - new Date(item.birthday).getFullYear();
+                                if (age == 0) {
+                                    var day = new Date().getTime() - new Date(item.birthday).getTime();
+                                    day = parseInt(day / 1000 / 60 / 60 / 24);
+                                    age = day + '天';
+                                } else {
+                                    age += '岁';
+                                }
+                                item.age = age;
+                                item.birthday = item.birthday.split(' ')[0];
                             }else{
-                                age += '岁';
+                                item.age = '-';
                             }
-                            item.age = age;
-                            item.birthday = item.birthday.split(' ')[0];
-                        }catch(e){}
+                        }catch(e){item.age = '-';}
                         var mainPro = item.mainPro;
                         var dogPro = item.dogPros;
                         if(mainPro){
