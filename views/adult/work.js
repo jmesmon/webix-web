@@ -703,7 +703,7 @@ define([
                         }
                     ]
                 }]
-        }, {width: 440, height: 180});
+        }, {width: 540, height: 180});
         win.show();
     };
     var editData = function () {

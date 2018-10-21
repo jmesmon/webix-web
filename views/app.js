@@ -21,13 +21,18 @@ define([
             // {view: "icon", icon: "search",  width: 45, popup: "searchPopup"},
             // {view: "icon", icon: "envelope-o", value: 3, width: 45, popup: "mailPopup"},
             {template: '<div style="line-height: 38px;font-size:14px"><a href="#!/app/adult.adultList" style="color: #FFF900;font-weight:bold">进入系统</a></div>', borderless: true, width: 100, hidden: (USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'JuZhang')},
-            {view: "icon", icon: "comments-o", value: '0', width: 45, id:'todoTip', click: function(){showTodoList('1')}, hidden: (USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'JuZhang')},
+            {view: "icon", icon: "comments-o", value: '0', width: 60, id:'todoTip', click: function(){showTodoList('1')}, hidden: (USER_INFO.userRole == 'FJ_JuZhang' || USER_INFO.userRole == 'JuZhang')},
             {
-                height: 46, id: "person_template", css: "header_person", borderless: true, width: 150,
+                height: 46, id: "person_template", css: "header_person", borderless: true, width: 192,
                 data: {id: 3, name: USER_INFO.policeName},
                 template: function (obj) {
+                    var width = obj.name.length * 25;
+                    if(width < 150){
+                        width = 150;
+                    }
+                    $$('person_template').define('width', width);
                     var html = "<div align='right' style='height:100%;width:100%;' onclick='webix.$$(\"profilePopup\").show(this)'>";
-                    html += "<img class='photo' src='assets/imgs/photos/" + obj.id + ".png' /><div style='float: left;width: 68px;text-align: left;margin-left: 9px;color:#fff;'>" + obj.name + "</div>";
+                    html += "<img class='photo' src='assets/imgs/photos/" + obj.id + ".png' /><div style='float: left;width: " + (width - 90) + "px;text-align: right;margin-left: 9px;color:#fff;'>" + obj.name + "</div>";
                     html += "<span class='webix_icon fa-angle-down'></span></div>";
                     return html;
                 }

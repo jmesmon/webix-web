@@ -659,7 +659,7 @@ define([
                 borderless: true,
                 template: '一共选择了' + data.length + '条数据，其中'+arr.length+'条需要审批（'+errorCount+'条已经审批），请审批'
             }, {
-                view: "richselect", label: "是否通过", id: 'workState', width: 200, value: '通过', labelWidth: 60,
+                view: "richselect", label: "是否通过", id: 'workState', width: 200, value: '通过', labelWidth: 80,
                 options: [
                     {id: '通过', value: "通过"},
                     {id: '驳回', value: "驳回"}
@@ -669,10 +669,10 @@ define([
                 label: "审批意见",
                 name: "approve",
                 id: 'approve',
-                labelWidth: 60,
+                labelWidth: 80,
                 attributes: {maxlength: 64}
             },
-                {width: 400},
+                {width: 500},
                 {
                     cols: [
                         {},
@@ -704,7 +704,7 @@ define([
                         }
                     ]
                 }]
-        }, {width: 440, height: 180});
+        }, {width: 540, height: 180});
         win.show();
     };
     var editData = function () {

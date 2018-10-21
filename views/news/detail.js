@@ -9,9 +9,9 @@ define([], function () {
                     height: 50,
                     id: 'new_title',
                     borderless: true,
-                    data: {title: '休闲鞋'}
+                    data: {title: ''}
                 }, {
-                    height: 25,
+                    height: 30,
                     template: '<div align="center">作者：#author#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：#date#</div>',
                     id: 'new_info',
                     borderless: true,

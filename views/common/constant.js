@@ -215,8 +215,10 @@ define([
         },
         getWorkStage: function () {
             return [
-                {id: '1', value: '待分配'},
-                {id: '2', value: '已分配'},
+                {id: '1', value: '在训'},
+                {id: '2', value: '在职'},
+                {id: '5', value: '后备'},
+                {id: '6', value: '退役'},
                 {id: '3', value: '已淘汰'},
                 {id: '4', value: '死亡'}
             ];
@@ -631,13 +633,13 @@ define([
             var win = getWin('选择带犬人员', {
                 rows: [{
                     cols: [
-                        {view: "richselect", label: "工作单位", id: 'workUnit_id', name: "workPlace", labelWidth: 60, width: 180,
+                        {view: "richselect", label: "工作单位", id: 'workUnit_id', name: "workPlace", labelWidth: 70, width: 180,
                             options: constant.getUnitOptions(),
                             value: USER_INFO.workUnit,
                             hidden: (["FanZhiRenYuan", "PeiXunRenYuan", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1)
                         },
                         {width: 20},
-                        {view: "text", label: "姓名",id: 'policeNameLike', width: 200, labelWidth: 35},
+                        {view: "text", label: "姓名",id: 'policeNameLike', width: 200, labelWidth: 45},
                         {view: "button", label: "搜索", width: 65, click: function(){
                             var params = { workUnit: $$('workUnit_id').getValue()};
                             if($$('policeNameLike').getValue()){

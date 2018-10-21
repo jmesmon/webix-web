@@ -73,7 +73,7 @@ define([
         var datatable = $$(datatableId);
         var params = $$('form').getValues();
         removeEmptyProperty(params, true);
-        // params.growthStage = 2;
+        params.state = 1;
         datatable.config.customUrl.params = params;
         datatable.reload();
         checkMap = {};

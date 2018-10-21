@@ -279,7 +279,7 @@ var checkCount = 0;
                     // autoload: true,
                     url: webix.proxy('customProxy','/policeDog/services/dogBaseInfo/getTrainList/{pageSize}/{curPage}'),
                     httpMethod: 'post',
-                    params: {growthStage: 2, workStage: 2},
+                    params: {growthStage: 2, state: 1},
                     datatype: 'customJson'
                 },
                 pager: "pagerA"
