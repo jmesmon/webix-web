@@ -4,10 +4,10 @@ define([
     'views/common/editDogInfo',
     'views/common/constant',
     'views/allotList/action',
-], function (columns, tickout, editDog, constant, Actions) {
+], function (columns, tickout, editDog, constant, actions) {
     var datatableId = webix.uid().toString();
     var formId = webix.uid().toString();
-    Actions.init(formId, datatableId);
+    var Actions = actions.init(formId, datatableId);
 
     var searchForm = {
         type: "clean",
@@ -26,7 +26,7 @@ define([
             },
             {
                 view: "form",
-                id: 'form',
+                id: formId,
                 elementsConfig: {
                     labelWidth: 90
                 },
@@ -34,23 +34,12 @@ define([
                     {
                         rows: [{
                             cols: [
-                                {view: "text", label: "警犬名称", name: "dogNameLike", width: 180, labelWidth: 70, placeholder: '支持搜索'},
-                                {width: DEFAULT_PADDING},
-                                {
-                                    view: "richselect", label: "工作单位", name: 'workPlace',  width: 170, value: '-1', labelWidth: 70,
-                                    options: constant.getUnitOptions(true)
-                                },
-                                {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 180, labelWidth: 80, placeholder: '支持搜索'},
-                                {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 70},
+                                {view: "text", label: "警犬名称", name: "dogNameLike", width: 200, labelWidth: 70, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
                                 {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
-                                        $$('form').clear();
-                                    }},
-                                {view: "button", label: "查找", type: "form", width: 70, paddingX: 10, click: function(){
-                                    Actions.doSearch('form', datatableId);
+                                    $$(formId).clear();
                                 }},
+                                {view: "button", label: "查找", type: "form", width: 70, paddingX: 10, click: Actions.doSearch },
                                 {}
                             ]
                         }]
@@ -85,9 +74,8 @@ define([
                         paddingX: 10,
                         height: 36,
                         cols: [
-                            {view: "button", label: "新建申请", width: 70,},
-                            {view: "button", label: "批量审批", width: 70, permission: 'apply.dog.approve'},
-                            {view: "button", label: "删除", width: 70},
+                            {view: "button", label: "新建", width: 70, click: Actions.add},
+                            {view: "button", label: "删除", width: 70, click: Actions.delete},
                             {}
                         ]
                     },
@@ -108,28 +96,20 @@ define([
                                 id: "id",
                                 header: "操作",
                                 template: function (item) {
-                                    if(item.applyState == 1 || item.applyState == 3){
-                                        return '<a class="my_link edit" href="javascript:void(0)"><span class="webix_icon icon fa-pencil-square-o"></span></a>';
-                                    }else{
-                                        return '';//<span class="webix_icon icon fa-pencil-square-o"></span>'
-                                    }
+                                    return '<a class="my_link edit" href="javascript:void(0)"><span class="webix_icon icon fa-pencil-square-o"></span></a>';
                                 },
                                 tooltip: '编辑',
                                 width: 55
                             },
-                            {id: "creationDate", header: "申请日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d") },
-                            {id: "workUnit", header: "申请单位", width: 90, sort: "string"},
-                            {id: "applyAmount", header: "数量", width: 60, sort: "string"},
-                            {id: "applyState", header: "审批状态", width: 140, template: function(obj, common, value){
-                                    return {
-                                        "1": "待审批",
-                                        "2": "审批通过，待配发",
-                                        "3": "申请驳回",
-                                        "4": "配发完成"}[value] || "";
-                                }},
-                            {id: "lastUpdateDate", header: "审批日期", width: 94, format: webix.Date.dateToStr("%Y-%m-%d")},
-                            {id: "approveDetail", header: "审批日志", width: 110},
-                            {id: "applyDesc", header: "备注", sort: "string", fillspace: 1},
+                            {id: "dogName", header: "警犬名称", width: 100, sort: "string"},
+                            {id: "breed", header: "品种", width: 90, sort: "string"},
+                            {id: "hairType", header: "毛型", width: 80, sort: "string"},
+                            {id: "dogColor", header: "毛色", width: 80, sort: "string"},
+                            {id: "sex", header: "性别", width: 60, sort: "string"},
+                            {id: "owner", header: "带犬人", width: 100, sort: "string"},
+                            {id: "workUnit", header: "带犬单位", width: 120, sort: "string"},
+                            {id: "allotDate", header: "分配日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
+                            {id: "remark", header: "备注", sort: "string", fillspace: 1},
                         ],
                         on: {
                             onBeforeLoad: function () {
@@ -138,6 +118,9 @@ define([
                             onAfterLoad: function () {
                                 this.hideOverlay();
                             }
+                        },
+                        onClick: {
+                            edit: Actions.update
                         },
                         tooltip:true,
                         minHeight: 80,

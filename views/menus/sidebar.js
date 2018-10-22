@@ -31,7 +31,7 @@ define(function(){
         {id: "apply", open: true, value:"配发管理", data:[
             { id: "apply.list", value: "申请配发", permission: 'apply.dog', icon: "table", $css: "products", details:""},
             { id: "adult.allot", value: "警犬调配", permission: 'apply.allot', icon: "table", $css: "products", details:""},
-            { id: "allotList.index", value: "配发记录", permission: 'apply.allot', icon: "table", $css: "products", details:""},
+            { id: "allotList.index", value: "配发记录", permission: 'apply.allot.list', icon: "table", $css: "products", details:""},
         ]},
 
         {id: "main", value: "繁育管理", open: true, data:[
