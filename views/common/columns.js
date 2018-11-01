@@ -3,7 +3,7 @@ define([
 ], function (constant) {
     var columns = {
         '窝编号': {id: "nestNo", header: "窝编号", width: 120, sort: "string"},
-        '犬名': {id: "dogName", header: "犬名", width: 100},
+        '犬名': {id: "dogName", header: "犬名", width: 120},
         '芯片号': {id: "chipNo", header: "芯片号", width: 110},
         '芯片注入日期': {id: "chipNoInject", header: "芯片注入日期", width: 90, format: webix.Date.dateToStr("%Y-%m-%d")},
         '性别': {id: "sex", header: "性别", width: 60, template: function(obj){ return '<div align="center">' + (obj.sex == 1 ? '公' : '母') + '</div>'; } },
@@ -22,7 +22,7 @@ define([
 
 
         '窝编号_2':{id: "dogInfo.nestNo", header: "窝编号", width: 90, template: function(obj){ return obj.dogInfo.nestNo || ''; } },
-        '犬名_2':{id: "dogInfo.dogName", header: "犬名", width: 90, template: function(obj){ return obj.dogInfo.dogName || ''; } },
+        '犬名_2':{id: "dogInfo.dogName", header: "犬名", width: 150, template: function(obj){ return obj.dogInfo.dogName || ''; } },
         '芯片号_2':{id: "dogInfo.chipNo", header: "芯片号", width: 90, template: function(obj){ return obj.dogInfo.chipNo || ''; } },
         '芯片注入日期_2' :{id: "dogInfo.chipNoInject", header: "芯片注入日期", width: 85, template: function(item){
                 return webix.Date.dateToStr("%Y-%m-%d")(item.dogInfo.chipNoInject);
@@ -192,5 +192,6 @@ define([
             return columns[name];
         }
     };
+    window._column_methods = methods;
     return methods;
 });

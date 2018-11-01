@@ -1,6 +1,6 @@
 define([
-    'views/common/columns'
-], function (columnsDef) {
+    "views/common/columns"
+], function (column) {
 
     var constant = {
         /**
@@ -299,6 +299,220 @@ define([
             }, {width: 730, height: 350});
             win.show();
         },
+        showDogImmue: function(dogId){
+            var win = getWin('警犬免疫详细', {
+                css: 'dogDetail',
+                modal: true,
+                rows: [
+                    {
+                        view: "datatable",
+                        select: true,
+                        width: 800,
+                        columns: [
+                            {id: "$index", header: "NO.", width: 45},
+                            {id: "dogInfo.dogName", header: "犬名", width: 140, template: function(obj){ return _.get(obj, 'dogInfo.dogName', ''); } },
+                            {id: "immueDate", header: "免疫日期", width: 98, format: webix.Date.dateToStr("%Y-%m-%d")},
+                            {id: "immueName", header: "疫苗名称", width: 100},
+                            {id: "immueState", header: "状态", width: 70, template: function(obj, common, value){
+                                    if(value == 2){
+                                        return '<span class="green_color">已完成</span>';
+                                    }else if(value == 3){
+                                        return '<span class="orange_color" style="font-weight: bold;">进行中</span>'
+                                    }else if(new Date(obj.immueDate) <= new Date()){
+                                        return '<span class="red_color">已超期</span>'
+                                    }else{
+                                        return '未进行';
+                                    }
+                                }},
+                            // {id: "nestNo", header: "窝编号", width: 130, sort: "string"},
+                            {id: "dogInfo.sex", header: "性别", width: 60, template: function(obj){ return '<div align="center">' + ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]) + '</div>'; } },
+                            {id: "dogInfo.birthday", header: "出生日期", width: 98, sort: "string", template: function(item){
+                                    return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
+                                }},
+                            {id: "dogInfo.breed", header: "品种", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
+                            {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
+                            {id: "dogInfo.policeName", header: "带犬人员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
+                        ],
+                        on: {
+                            onBeforeLoad: function () {
+                                this.showOverlay("Loading...");
+                            },
+                            onAfterLoad: function () {
+                                this.hideOverlay();
+                            }
+                        },
+                        onClick: {
+                            edit: function (a, b, c) {
+                                console.log([a, b, c]);
+                            },
+                            webix_icon: function (e, id) {
+                                webix.confirm({
+                                    text: "Are you sure sdfds", ok: "Yes", cancel: "Cancel",
+                                    callback: function (res) {
+                                        if (res) {
+                                            webix.$$("orderData").remove(id);
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        tooltip:true,
+                        minHeight: 80,
+                        datafetch: 20,
+                        customUrl: {
+                            url: webix.proxy('customProxy','/policeDog/services/wormImmue/list/immue/{pageSize}/{curPage}'),
+                            httpMethod: 'post',
+                            datatype: 'customJson',
+                            params: {dogId: dogId}
+                        },
+                        pager: "pagerB"
+                    },
+                    {
+                        view: "pager",
+                        id: "pagerB",
+                        size: 20,
+                        group: 5,
+                        template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
+                    }
+                ]
+            }, {height: 530, width: 900});
+            win.show();
+        },
+        showDogWorm: function(dogId){
+            var win = getWin('警犬驱虫详细', {
+                css: 'dogDetail',
+                modal: true,
+                rows: [
+                    {
+                        view: "datatable",
+                        select: true,
+                        width: 800,
+                        columns: [
+                            {id: "$index", header: "NO.", width: 45},
+                            {id: "dogInfo.dogName", header: "犬名", width: 200, template: function(obj){ return _.get(obj, 'dogInfo.dogName','') ; } },
+                            {id: "wormDate", header: "驱虫日期", width: 108, format: webix.Date.dateToStr("%Y-%m-%d")},
+                            {id: "wormDesc", header: "驱虫方式/周期", width: 140},
+                            {id: "wormState", header: "状态", width: 65, template: function(obj, common, value){
+                                    if(value == 2){
+                                        return '<span class="green_color">已完成</span>';
+                                    }else if(value == 3){
+                                        return '<span class="orange_color" style="font-weight: bold;">进行中</span>'
+                                    }else if(new Date(obj.wormDate) <= new Date()){
+                                        return '<span class="red_color">已超期</span>'
+                                    }else{
+                                        return '未进行';
+                                    }
+                                }},
+                            {id: "dogInfo.sex", header: "性别", width: 60, template: function(obj){ return '<div align="center">' + ({'1': '公', '2':'母', '3': ''}[_.get(obj, 'dogInfo.sex', '3')]) + '</div>'; } },
+                            {id: "dogInfo.birthday", header: "出生日期", width: 100, sort: "string", template: function(item){
+                                    return webix.Date.dateToStr("%Y-%m-%d")( _.get(item, 'dogInfo.birthday', '') );
+                                }},
+                            {id: "dogInfo.breed", header: "品种", width: 120, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.breed', ''); } },
+                            {id: "dogInfo.dogColour", header: "毛色", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.dogColour', ''); } },
+                            {id: "dogInfo.policeName", header: "带犬人员", width: 100, sort: "string", template: function(obj){ return _.get(obj, 'dogInfo.policeName', '') || ''; } }
+                        ],
+                        on: {
+                            onBeforeLoad: function () {
+                                this.showOverlay("Loading...");
+                            },
+                            onAfterLoad: function () {
+                                this.hideOverlay();
+                            }
+                        },
+                        onClick: {
+                            edit: function (a, b, c) {
+                                console.log([a, b, c]);
+                            },
+                            webix_icon: function (e, id) {
+                                webix.confirm({
+                                    text: "Are you sure sdfds", ok: "Yes", cancel: "Cancel",
+                                    callback: function (res) {
+                                        if (res) {
+                                            webix.$$("orderData").remove(id);
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        tooltip:true,
+                        minHeight: 80,
+                        datafetch: 20,
+                        customUrl: {
+                            url: webix.proxy('customProxy','/policeDog/services/wormImmue/list/worm/{pageSize}/{curPage}'),
+                            httpMethod: 'post',
+                            datatype: 'customJson',
+                            params: {dogId: dogId}
+                        },
+                        pager: "pagerC"
+                    },
+                    {
+                        view: "pager",
+                        id: "pagerC",
+                        size: 20,
+                        group: 5,
+                        template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
+                    }
+                ]
+            }, {height: 530, width: 900});
+            win.show();
+        },
+        showDogTrain: function(dogId){
+            var win = getWin('警犬培训详细', {
+                css: 'dogDetail',
+                modal: true,
+                rows: [
+                    {
+                        view: "datatable",
+                        select: true,
+                        width: 900,
+                        columns: window._column_methods.getColumns([
+                            "开始日期", "结束日期", "培训科目", "培训单位", "犬名_2", "带犬民警",  "培训成绩",  "教员", "工作单位", "下次培训时间", "培训地点"
+                        ], []),
+                        on: {
+                            onBeforeLoad: function () {
+                                this.showOverlay("Loading...");
+                            },
+                            onAfterLoad: function () {
+                                this.hideOverlay();
+                            }
+                        },
+                        onClick: {
+                            edit: function (a, b, c) {
+                                console.log([a, b, c]);
+                            },
+                            webix_icon: function (e, id) {
+                                webix.confirm({
+                                    text: "Are you sure sdfds", ok: "Yes", cancel: "Cancel",
+                                    callback: function (res) {
+                                        if (res) {
+                                            webix.$$("orderData").remove(id);
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        tooltip:true,
+                        minHeight: 80,
+                        datafetch: 20,
+                        customUrl: {
+                            url: webix.proxy('customProxy','/policeDog/services/train/getList/{pageSize}/{curPage}'),
+                            httpMethod: 'post',
+                            datatype: 'customJson',
+                            params: {dogId: dogId}
+                        },
+                        pager: "pagerB"
+                    },
+                    {
+                        view: "pager",
+                        id: "pagerB",
+                        size: 20,
+                        group: 5,
+                        template: "{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}<div style='float: right'>总共#count#条</div>"
+                    }
+                ]
+            }, {height: 530, width: 900});
+            win.show();
+        },
         showDogDetail: function(item){
             if(item.sex == 1){
                 item.sexStr = '公';
@@ -359,6 +573,17 @@ define([
                                 '<span class="tab_label">警犬专业：</span>#mergePro#'+
                                 '<div><span class="tab_label"">立功受奖：</span>#rewardInfo#</div>',
                                 data: item
+                            },
+                            {
+                                height: 26,
+                                cols: [
+                                    {view: "button", label: "免疫详细", click: function(){ constant.showDogImmue(item.id)} },
+                                    {width: 10},
+                                    {view: "button", label: "驱虫详细", click: function(){ constant.showDogWorm(item.id)} },
+                                    {width: 10},
+                                    {view: "button", label: "培训详细", click: function(){ constant.showDogTrain(item.id)} },
+                                    {width: 15}
+                                ]
                             }
                         ]
                     },
