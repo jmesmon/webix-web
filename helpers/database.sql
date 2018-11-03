@@ -1,3 +1,40 @@
+ALTER TABLE `t_org_config`
+	ADD COLUMN `dog_house_qty` INT(11) NULL DEFAULT NULL COMMENT '犬舍' AFTER `dog_qty`,
+	ADD COLUMN `trained_qty` INT(11) NULL DEFAULT NULL COMMENT '培训数量' AFTER `dog_house_qty`,
+	ADD COLUMN `untrain_qty` INT(11) NULL DEFAULT NULL COMMENT '未培训数量' AFTER `trained_qty`,
+	ADD COLUMN `unit_area` INT(11) NULL DEFAULT NULL COMMENT '单位面积' AFTER `untrain_qty`;
+CREATE TABLE `t_breed_sum` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`breed_qty` INT(11) NULL DEFAULT '0',
+	`allot_qty` INT(11) NULL DEFAULT '0',
+	`last_update_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+;
+insert into t_breed_sum values(null , 100, 100, now());
+CREATE TABLE `t_dog_work_sum` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`work_type` VARCHAR(32) NULL DEFAULT NULL,
+	`work_unit` VARCHAR(32) NULL DEFAULT '0',
+	`date_start` VARCHAR(16) NULL DEFAULT '0',
+	`date_end` VARCHAR(16) NULL DEFAULT '0',
+	`att_qty` INT(11) NULL DEFAULT '0',
+	`att_per_qty` INT(11) NULL DEFAULT '0',
+	`att_dog_qty` INT(11) NULL DEFAULT '0',
+	`wjp_qty` INT(11) NULL DEFAULT '0',
+	`dp_qty` INT(11) NULL DEFAULT '0',
+	`check_area` INT(11) NULL DEFAULT '0',
+	`check_car_qty` INT(11) NULL DEFAULT '0',
+	`work_hours` INT(11) NULL DEFAULT '0',
+	`pa_qty` INT(11) NULL DEFAULT '0',
+	`last_update_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	INDEX `work_type` (`work_type`)
+)
+ENGINE=InnoDB
+;
+
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
 -- 服务器版本:                        5.0.45-community-nt - MySQL Community Edition (GPL)
