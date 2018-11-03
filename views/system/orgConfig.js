@@ -27,32 +27,45 @@ var width = 400;
                                     {view: "text", label: "单位名称：", width: width, name: 'orgName', readonly: true},
                                     {view: "text", label: "单位负责人：", width: width, name: 'orgLeader'},
                                     {view: "text", label: "单位地址：", width: width, name: 'orgAddr'},
-                                    {view: "text", label: "联系方式：", width: width, name: 'orgConcat'},
-                                    {view: "text", label: "员工数量：", width: width, name: 'empQty'},
+                                    {view: "text", label: "单位电话：", width: width, name: 'orgConcat'},
+                                    {view: "text", label: "分局民警总数：", width: width, name: 'empQty'},
+                                    {
+                                        cols: [
+                                            {view: "text", label: "犬舍：", width: width, name: 'dogHouseQty', width: 120, labelWidth: 55},
+                                            {view: "text", label: "培训数量：", width: width, name: 'trainedQty', width: 140, labelWidth: 80},
+                                            {view: "text", label: "未培训数量：", width: width, name: 'untrainQty', width: 170, labelWidth: 100},
+                                            {}
+                                        ]
+                                    },
                                     // {view: "text", label: "警犬数量：", width: width, name: 'dogQty'},
                                     {view: "text", hidden: true, name: 'orgPic', id: 'form_orgPic'},
                                     {
-                                        view: "richselect", label: "单位所在区：", width: width, name: 'orgArea',
-                                        options: [
-                                            {id: '东城区', value: '东城区'},
-                                            {id: '西城区', value: '西城区'},
-                                            {id: '朝阳区', value: '朝阳区'},
-                                            {id: '丰台区', value: '丰台区'},
-                                            {id: '石景山区', value: '石景山区'},
-                                            {id: '海淀区', value: '海淀区'},
-                                            {id: '顺义区', value: '顺义区'},
-                                            {id: '通州区', value: '通州区'},
-                                            {id: '大兴区', value: '大兴区'},
-                                            {id: '房山区', value: '房山区'},
-                                            {id: '门头沟区', value: '门头沟区'},
-                                            {id: '昌平区', value: '昌平区'},
-                                            {id: '平谷区', value: '平谷区'},
-                                            {id: '密云区', value: '密云区'},
-                                            {id: '怀柔区', value: '怀柔区'},
-                                            {id: '延庆区', value: '延庆区'}
+                                        cols: [
+                                            {
+                                                view: "richselect", label: "单位所在区：", width: width, name: 'orgArea', width: 260,
+                                                options: [
+                                                    {id: '东城区', value: '东城区'},
+                                                    {id: '西城区', value: '西城区'},
+                                                    {id: '朝阳区', value: '朝阳区'},
+                                                    {id: '丰台区', value: '丰台区'},
+                                                    {id: '石景山区', value: '石景山区'},
+                                                    {id: '海淀区', value: '海淀区'},
+                                                    {id: '顺义区', value: '顺义区'},
+                                                    {id: '通州区', value: '通州区'},
+                                                    {id: '大兴区', value: '大兴区'},
+                                                    {id: '房山区', value: '房山区'},
+                                                    {id: '门头沟区', value: '门头沟区'},
+                                                    {id: '昌平区', value: '昌平区'},
+                                                    {id: '平谷区', value: '平谷区'},
+                                                    {id: '密云区', value: '密云区'},
+                                                    {id: '怀柔区', value: '怀柔区'},
+                                                    {id: '延庆区', value: '延庆区'}
+                                                ]
+                                            },
+                                            {view: "text", label: "单位面积：", width: width, name: 'unitArea', width: 180, labelWidth: 85},
                                         ]
                                     },
-                                    {view: "textarea", label: "简要介绍：", width: width + 200, name: 'orgDesc', height: 100, attributes:{ maxlength: 200 }},
+                                    {view: "textarea", label: "单位介绍：<br>(限200字符)", width: width + 200, name: 'orgDesc', height: 140, attributes:{ maxlength: 200 }},
                                     {
                                         cols: [
                                             {width: 100},

@@ -18,6 +18,7 @@ define(function(){
             { id: "adult.work", value: "警犬工作管理", permission: 'work', icon: "flag-o", $css: "products", details:""},
             { id: "adult.myApply", value: "我的申请", permission: 'work', icon: "flag-o", $css: "products", details:""},
             { id: "adult.myApprove", value: "待审批列表", permission: 'work.approve', icon: "flag-o", $css: "products", details:""},
+            { id: "workSum.list", value: "工作汇总管理", permission: 'work', icon: "flag-o", $css: "products", details:""},
         ]},
 
         {id: "train", open: true, value:"培训管理", data:[
@@ -40,7 +41,8 @@ define(function(){
             { id: "youngDog.index", value: "幼犬管理", icon: "github-alt", permission: 'breed', $css: "orders", details:""},
 
             { id: "wormImmue.worm", value: "驱虫管理", icon: "bug", details: "" },
-            { id: "wormImmue.immue", value: "免疫管理", icon: "eyedropper", details: ""}
+            { id: "wormImmue.immue", value: "免疫管理", icon: "eyedropper", details: ""},
+            { id: "breed.breedSum", value: "繁育数据", icon: "venus-mars", details: ""}
         ]},
 
 
@@ -136,7 +138,12 @@ define(function(){
 					data: data
 				}
 			]
-		}
+		},
+        $oninit:function(){
+		    setTimeout(function() {
+                $$('app:menu').closeAll();
+            }, 450);
+        }
 	};
 
 });

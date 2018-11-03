@@ -105,7 +105,7 @@ define([
                                         }, {
                                             width: 320,
                                             rows: [
-                                                {view: "richselect", label: "工作状态", name: 'workStage', value:"2", options: constant.getWorkStage()},
+                                                {view: "richselect", label: "警犬状态", name: 'workStage', value:"2", options: constant.getWorkStage()},
                                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
                                                 {view: "richselect", label: "复训成绩", name: "trainScore", options: [
                                                     {id: '不合格', value: "不合格"},

@@ -96,7 +96,7 @@ define([
                                     ]
                                 },
                                 {view: "richselect", label: "成长阶段", name:"growthStage", options: constant.getGrowthStage()},
-                                {view: "richselect", label: "工作状态", name:"workStage", options: constant.getWorkStage()},
+                                {view: "richselect", label: "警犬状态", name:"workStage", options: constant.getWorkStage()},
                                 {view: "text", label: "警犬档案号", name: "fileNo", disabled: false},
                                 {view: "text", label: "繁育单位", name: "breeder", disabled: false},
                                 // {view: "text", label: "训导员", name: "tutor", disabled: false},

@@ -138,7 +138,8 @@ define([
             "密云分局",
             "延庆县分局",
             "消防",
-            "振远",
+            // "振远",
+            "社会化犬防",
             "警卫局",
             "机场",
             "警院"
@@ -215,8 +216,8 @@ define([
         getWorkStage: function () {
             return [
                 {id: '1', value: '在训'},
-                {id: '2', value: '在职'},
-                {id: '5', value: '后备'},
+                {id: '2', value: '出勤'},
+                {id: '5', value: '种犬'},
                 {id: '6', value: '退役'},
                 {id: '3', value: '已淘汰'},
                 {id: '4', value: '死亡'}
@@ -548,7 +549,7 @@ define([
             }else{
                 item.dName = item.dogName ;
             }
-
+            console.log(item);
             var win = getWin('警犬详细信息', {
                 css: 'dogDetail',
                 cols: [
@@ -557,6 +558,8 @@ define([
                             {
                                 borderless: true,
                                 template:
+                                '<span class="tab_label">母犬名称：</span>#motherName#<br>' +
+                                '<span class="tab_label">父犬名称：</span>#fatherName#<br>' +
                                 '<span class="tab_label">犬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>#dName#<br>' +
                                 '<span class="tab_label">芯&nbsp;&nbsp;片&nbsp;&nbsp;号：</span>#chipNo#<br>' +
                                 '<span class="tab_label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#sexStr#<br>' +
@@ -564,24 +567,22 @@ define([
                                 '<span class="tab_label">品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;种：</span>#breed#<br>' +
                                 '<span class="tab_label">#masterLabel#：</span>#masterVal#<br>' +
                                 '<span class="tab_label">来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源：</span>#dogSource#<br>' +
-                                '<span class="tab_label">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>#dogColour#<br>' +
-                                '<span class="tab_label">父犬名称：</span>#fatherName#<br>' +
                                 // '<span class="tab_label">外貌特征：</span><br>' +
                                 '<span class="tab_label">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>#dogTypeStr#<br>' +
-                                '<span class="tab_label">工作单位：</span>#workPlace#<br>' +
                                 '<span class="tab_label">省&nbsp;&nbsp;区&nbsp;&nbsp;市：</span>北京<br>' +
-                                '<span class="tab_label">警犬专业：</span>#mergePro#'+
+                                '<span class="tab_label">警犬专业：</span>#mainPro#<br>'+
+                                '<span class="tab_label">培训记录：</span>#dogPros#<br>'+
                                 '<div><span class="tab_label"">立功受奖：</span>#rewardInfo#</div>',
                                 data: item
                             },
                             {
                                 height: 26,
                                 cols: [
-                                    {view: "button", label: "免疫详细", click: function(){ constant.showDogImmue(item.id)} },
+                                    {view: "button", label: "免疫详情", click: function(){ constant.showDogImmue(item.id)} },
                                     {width: 10},
-                                    {view: "button", label: "驱虫详细", click: function(){ constant.showDogWorm(item.id)} },
+                                    {view: "button", label: "驱虫详情", click: function(){ constant.showDogWorm(item.id)} },
                                     {width: 10},
-                                    {view: "button", label: "培训详细", click: function(){ constant.showDogTrain(item.id)} },
+                                    {view: "button", label: "培训详情", click: function(){ constant.showDogTrain(item.id)} },
                                     {width: 15}
                                 ]
                             }
@@ -600,14 +601,14 @@ define([
                             {height: 210, borderless: true,
                                 template:
                                 '<div><span class="tab_label"">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>#hairType#</div>' +
-                                '<div><span class="tab_label"">母犬名称：</span>#motherName#</div>' +
+                                '<span class="tab_label">毛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>#dogColour#<br>' +
+                                '<span class="tab_label">工作单位：</span>#workPlace#<br>' +
+                                '<div><span class="tab_label"">片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>'+areaName+'</div>' +
                                 '<div style="height: 58px"></div>' +
-                                '<div style="height: 30px"></div>' +
-                                '<div><span class="tab_label"">片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>'+areaName+'</div>',
+                                '<div style="height: 30px"></div>',
                                 data: item
                             },
                             {height: 12},
-                            {height: 35, borderless: true, template: '<span class="tab_label"">填写日期：</span>&nbsp;&nbsp;' + webix.Date.dateToStr("%Y&nbsp;年&nbsp;%m&nbsp;月&nbsp;%d&nbsp;日")(new Date()) },
                             {}
                         ]
                     }

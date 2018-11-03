@@ -123,9 +123,9 @@ define([
                         }else if(item.workStage == 4){
                             item.dName = item.dogName + '(死亡)';
                         }else{
-                            item.dName = item.dogName ;
+                            var workStageMapping = {"1": "在训", "2": "出勤", "3": "淘汰", "4": "死亡", "5": "种犬", "6": "退役"};
+                            item.dName = item.dogName + '&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px;background: #dedede;color: #001625;padding: 0px 1px 2px 1px;">'+(workStageMapping[item.workStage] || '其他')+'</span>' ;
                         }
-
                         var html = '<table width="100%">' +
                             '<tr style="height: 120px">' +
                             '<td style="width: 120px"><img src="#dogPhoto#" height="120" width="140"></td>' +
@@ -141,7 +141,8 @@ define([
                             '</td>' +
                             '<td valign="top">' +
                             '<div><span class="tab_label">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>#age#（#birthday#）</div>' +
-                            '<div><span class="tab_label">专业技能：</span>#mergePro#</div>' +
+                            '<div><span class="tab_label">专业技能：</span>#mainPro#</div>' +
+                            '<div><span class="tab_label">培训记录：</span>#dogPros#</div>' +
                             '<div><span class="tab_label">立功受奖：</span>#rewardInfo#</div>' +
                             '</td>' +
                             '</tr>' +
