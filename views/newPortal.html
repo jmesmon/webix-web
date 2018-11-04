@@ -138,19 +138,19 @@
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
                     <div><div align="center" style="height: 280px" id="qj_col1"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬比例</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬占比</div>
                 </div>
             </td>
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
                     <div><div align="center" style="height: 280px" id="qj_col1_1"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬类别</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬状态分布</div>
                 </div>
             </td>
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
                     <div><div align="center" style="height: 280px" id="qj_col2"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">带犬力量分布图</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬专业构成</div>
                 </div>
             </td>
         </tr>
@@ -159,19 +159,19 @@
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
                     <div><div align="center" style="height: 280px" id="qj_col3"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬专业分布图</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">训导员构成</div>
                 </div>
             </td>
             <td style="width: 32%;">
                 <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
                     <div><div align="center" style="height: 280px" id="qj_col4"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">培训比例</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">培训完成比</div>
                 </div>
             </td>
             <td style="width: 32%;">
                 <div style="margin: 0 0px 0 0;height: 320px" class="def_bk">
                     <div style="height: 280px" id="qj_col7"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
-                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">淘汰死亡</div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">繁育配发</div>
                 </div>
             </td>
         </tr>
@@ -375,11 +375,11 @@
     var USER_ROLE = USER_INFO.userRole;
 
     var is_show_all = true;
-    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang' && USER_ROLE != "GuanLiYuan"  ) {
+    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang'  ) {
         is_show_all = false;
         //全局各项指标不可见
         $('#gold_sp').hide();
-        $('#gold_area').hide();
+        // $('#gold_area').hide();
         $('#breed_age_area').hide();
         $('#gold_work_area').hide();
         $('#gold_work_sp').hide();
@@ -393,10 +393,60 @@
     var allDogQty = 0;
     var tutor = 0;
 
+    var curDogQty = 0;
+    var curPoliceQty = 0;
+
     var table1Data = []; //表格1，3条数据
     var table2Data = []; //表格2，19条数据
     var table3Data = []; //表格3，社会化犬防
 
+    var workUnitDataMapping = {};
+    var areaDataMapping = {
+        密云区: { orgName: '密云分局', policeman: 1072, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538662.jpg', desc: ''},
+        怀柔区: { orgName: '怀柔分局', policeman: 936, dog: 39, pic: '/policeDog/resource/2017-10-04/1507106538679.jpg', desc: ''},
+        延庆区: { orgName: '延庆县分局', policeman: 917, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538719.jpg', desc: ''},
+        昌平区: { orgName: '昌平分局', policeman: 2000, dog: 40, pic: '/policeDog/resource/2017-10-04/1507106538856.jpg', desc: ''},
+        顺义区: { orgName: '顺义分局', policeman: 1631, dog: 54, pic: '/policeDog/resource/2017-10-04/1507106538961.jpg', desc: ''},
+        平谷区: { orgName: '平谷分局', policeman: 838, dog: 35, pic: '/policeDog/resource/2017-10-07/1507378384611.jpg', desc: ''},
+        门头沟区: { orgName: '门头沟分局', policeman: 773, dog: 42, pic: '/policeDog/resource/2017-10-07/1507378386863.jpg', desc: ''},
+        海淀区: { orgName: '海淀分局', policeman: 5050, dog: 51, pic: '/policeDog/resource/2017-10-07/1507378389648.jpg', desc: ''},
+        朝阳区: { orgName: '朝阳分局', policeman: 4599, dog: 115, pic: '/policeDog/resource/2017-10-07/1507378389648.jpg', desc: ''},
+        东城区: { orgName: '东城分局', policeman: 3200, dog: 87, pic: '/policeDog/resource/2017-10-07/1507378389804.jpg', desc: ''},
+        西城区: { orgName: '西城分局', policeman: 3615, dog: 85, pic: '/policeDog/resource/2017-10-06/1507294921071.jpg', desc: ''},
+        石景山区: { orgName: '石景山分局', policeman: 1073, dog: 30, pic: '/policeDog/resource/2017-10-04/1507121919501.jpg', desc: ''},
+        通州区: { orgName: '通州分局', policeman: 3260, dog: 65, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        丰台区: { orgName: '丰台分局', policeman: 3148, dog: 42, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        房山区: { orgName: '房山分局', policeman: 1596, dog: 39, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区: { orgName: '大兴分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区2: { orgName: '刑侦总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区3: { orgName: '公交总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区4: { orgName: '特警总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区5: { orgName: '天安门分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区6: { orgName: '西站分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区7: { orgName: '开发局分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区8: { orgName: '清河分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+    };
+    var otherFj = [];
+    function renderOrgFj(){
+        var policeCount = '<tr style="height: 23px"><td>民警总数</td>';
+        var userCount = '<tr style="height: 23px"><td>带犬警力</td>';
+        var docCount = '<tr style="height: 23px"><td>警犬总数</td>';
+        var perCount = '<tr style="height: 23px"><td>警犬占比</td>';
+        for(var i = 0; i<otherFj.length; i++) {
+            var item = otherFj[i];
+            item.per = parseInt(item.policeCount / item.dogCount) + ':1';
+            policeCount += '<td>' + item.policeCount + '</td>';
+            userCount += '<td>' + item.breederCount + '</td>';
+            docCount += '<td>' + item.dogCount + '</td>';
+            perCount += '<td>' + item.per + '</td>';
+        }
+        policeCount += '</tr>';
+        userCount += '</tr>';
+        docCount += '</tr>';
+        perCount += '</tr>';
+        $('#special_da').empty();
+        $('#special_da').html( policeCount + userCount + docCount + perCount);
+    }
     /*** 加载基础数据 开始 ***/
     (function(){
         parent.doPost('config/getOrgList', {}, function(res){
@@ -407,12 +457,27 @@
                     if(["警院", "机场", "警卫局", "振远", "消防", "开发局分局"].indexOf(item.orgName) != -1){
                         continue;
                     }
+
+                    workUnitDataMapping[item.orgName] = item;
+                    var areaData = areaDataMapping[item.orgArea];
+                    if(areaData.orgName == item.orgName){
+                        areaDataMapping[item.orgArea] = item;
+                    }else{
+                        for(var n in areaDataMapping){
+                            if(areaDataMapping[n].orgName == item.orgName){
+                                areaDataMapping[n] = item;
+                                break;
+                            }
+                        }
+                    }
                     item.jing_quan_bi_li = parseInt( item.empQty / item.dogQty) || 0;
                     allTrainedQty += item.trainedQty;
                     allUntrainQty += item.untrainQty;
                     if(item.orgName == USER_INFO.workUnit){
                         unitTrainQty = item.trainedQty;
                         unitUntrainQty = item.untrainQty;
+                        curDogQty = item.dogQty;
+                        curPoliceQty = item.empQty;
                     }
                     allPoliceQty += item.empQty;
                     allDogQty += item.dogQty;
@@ -425,12 +490,54 @@
                     }else{
                         table2Data.push(item);
                     }
+                    if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "清河分局"].indexOf(item.orgName) != -1){
+                        otherFj.push( {fj: item.orgName, policeCount: item.empQty, dogCount: item.dogQty, per: item.jing_quan_bi_li, workCount: item.workHours, newsCount: item.newQty, breederCount: item.policeCount || '0'} );
+                    }
                 }
                 //渲染表格数据
                 renderUnitInfo('orderTable1', table1Data);
                 renderUnitInfo('orderTable2', table2Data);
                 renderUnitInfo('orderTable3', table3Data);
+
+                //渲染 培训完成比、警犬占比 数据
+                var trainData = [
+                    {name: '已培训', value: allTrainedQty},
+                    {name: '未培训', value: allUntrainQty}
+                ];
+                var policeAndDogData = [
+                    {name: '警犬总数', value: allDogQty},
+                    {name: '民警总数', value: allPoliceQty}
+                ];
+                if(!is_show_all){
+                    trainData = [
+                        {name: '已培训', value: unitTrainQty},
+                        {name: '未培训', value: unitUntrainQty}
+                    ];
+                    policeAndDogData = [
+                        {name: '警犬总数', value: curDogQty},
+                        {name: '民警总数', value: curPoliceQty}
+                    ];
+                }
+                renderDogPowerData( '培训完成比', trainData, 'qj_col4');
+                renderDogPowerData( '警犬占比', policeAndDogData, 'qj_col1');
+                //渲染地图
+                renderMap();
+                //渲染地图下表格
+                renderOrgFj();
             }
+        });
+
+        //渲染 繁育配发 数据
+        parent.doPost('config/getBreedSumOrgList', {}, function(resp){
+            console.log(resp);
+            if(!resp.result){
+                resp.result = {allotQty: 0, breedQty: 0};
+            }
+            var trainData = [
+                {name: '繁育警犬', value: resp.result.breedQty},
+                {name: '配发警犬', value: resp.result.allotQty}
+            ];
+            renderDogPowerData( '繁育配发', trainData, 'qj_col7');
         });
     })();
     /*** 加载基础数据 结束 ***/
@@ -518,6 +625,123 @@
     })();
     /** 新闻部分 开始 **/
 
+    /* ---------------3x3------------------- */
+    var  radius = ['34%', '70%'];
+    var label = {
+        normal: {
+            show: true,
+            position: 'outside',
+        }
+    };
+    var itemStyle = function(tag) {
+        return {
+            normal: {
+                label: {
+                    show: !tag,
+                    formatter: "{b}：{c}\n({d}%)",
+                    textStyle: {
+                        fontSize: '16',
+                    }
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+
+            }
+        };
+    };
+    var dogProStyle = function (tag) {
+        return {
+            normal: {
+                label: {
+                    show: !tag,
+                    formatter: "{b}\n{c} ({d}%)"
+                },
+                color: function (params) {
+                    var color_mapping = {
+                        搜毒: "#FFA500",
+                        搜爆: "#ccca80",
+                        治安防范: "#dcbf27",
+                        救援: "#efa18d",
+
+                        搜捕: "#94dae3",
+                        物证搜索: "#49c2e3",
+                        追踪: "#3893f3",
+                        鉴别: "#2059ee",
+                        物证搜索: "#0200e3",
+                        其他: "#ece9ef"
+                    };
+                    return color_mapping[params.name];
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        };
+    };
+    function renderDogPowerData(name, data, domId, tag, isPro) {
+        var fontSize = '16';
+        echarts.init(document.getElementById(domId), 'vintage').setOption({
+            color: ["#00e35b", "#ffec1d"],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)",
+                position:function(p){   //其中p为当前鼠标的位置
+                    return [p[0] + 10, p[1] - 10];
+                }
+            },
+            series: [
+                {
+                    name: name, //'警犬占比：' + bl + ":1",
+                    type: 'pie',
+                    radius: radius,
+                    itemStyle: isPro ? dogProStyle(tag) : itemStyle(tag),
+                    data: data
+                }
+            ]
+        });
+    }
+    var dogProMapping = {'1': '在训', '2': '出勤', '3': '淘汰', '4': '死亡', '5': '种犬', '6': '退役'};
+    (function(){
+        var params = {};
+        if(!is_show_all){
+            params.workUnit = USER_INFO.workUnit;
+        }
+        //警犬工作中状态、带犬人员职业数据
+        parent.doPost('config/getDogPowerAnalysis', params, function (resp){
+            if(resp.success){
+                var workStage = []; //警犬状态分布
+                var userType = []; //训导员构成
+                for(var i = 0; i<resp.result.length; i++){
+                    var item = resp.result[i];
+                    if(item.xtype == 'workStage'){
+                        workStage.push({name: dogProMapping[item.xname], value: item.qty});
+                    }else if(item.xtype == 'workType'){
+                        userType.push({name: item.xname || '其他', value: item.qty});
+                    }
+                }
+                renderDogPowerData( '警犬状态分布', workStage, 'qj_col1_1');
+                renderDogPowerData( '训导员构成', userType, 'qj_col3');
+            }
+        });
+        //警犬专业数据
+        parent.doPost('config/getDogProAnalysis', params, function (resp){
+            console.log(resp);
+            if(resp.success) {
+                var data = [];
+                for(var n in resp.result){
+                    data.push({name: n, value: resp.result[n]})
+                }
+                renderDogPowerData('警犬专业构成', data, 'qj_col2', false, true);
+            }
+        });
+    })();
+    /* ---------------3x3 end------------------- */
+
     /** 全局警犬技术力量分析 开始 **/
     var renderWorkSumView = function (domId, xAxisData, data, color) {
         var option = {
@@ -568,7 +792,7 @@
     //加载分局警犬技术工作详情
     function loadWorkSumAnalysis() {
         var params = {};
-        if(["JuZhang", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1){
+        if(!is_show_all){
             params.workUnit = USER_INFO.workUnit;
         }
         var domIdMapping = {"搜爆安检": "work_sum_1", "治安防范": "work_sum_2", "其他（备勤）": "work_sum_3", "刑侦侦查": "work_sum_4"};
@@ -621,7 +845,219 @@
     /** 全局警犬技术力量分析 结束 **/
 
     /** 底部图表 开始 **/
+    //警犬分析-数据提取分析
+    var dogAnalysis = {
+            breed: [],
+            dog_colour: [],
+            hair_type: [],
+            dog_level: [],
+            work_stage: [],
+            pro: [],
+            age: []
+        };
+    parent.doPost('config/getDogAnalysis', {}, function(resp){
+        if(resp.success){
+            var arr = resp.result;
+            for(var i = 0; i<arr.length; i++){
+                var item = arr[i];
+                var a = dogAnalysis[item.ctype];
+                if(a){
+                    a.push(item);
+                }
+            }
+            console.log(dogAnalysis);
+            renderDogByType('breed', '品种');
 
+            var d = dogAnalysis['age'];
+            var qty = 0;
+            for(var i = 0; i<d.length; i++){
+                qty += d[i].val;
+            }
+            $('#all_dog_qty').html(qty);
+        }
+    });
+    //警犬分析
+    var lastBreed = 1;
+    function workChangeBreed(tag){
+        if(tag != lastBreed){
+            $('#breed_' + lastBreed).css('backgroundColor', '');
+            $('#breed_' + tag).css('backgroundColor', '#002F75');
+            lastBreed = tag;
+            switch (tag){
+                case 1:
+                    renderDogByType('breed', '品种');
+                    break;
+                case 2:
+                    renderDogByType('dog_colour', '毛色');
+                    break;
+                case 3:
+                    renderDogByType('hair_type', '毛型');
+                    break;
+                case 4:
+                    renderDogByType('pro', '专业');
+                    break;
+                case 5:
+                    renderDogByType('work_stage', '淘汰');
+                    break;
+                case 6:
+                    renderDogByType('age', '年龄');
+                    break;
+                default:
+                    renderDogByType('breed', '专业');
+                    break;
+
+            }
+        }
+    }
+    //民警分析
+    var lastUser = 3;
+    function workChangeUser(tag){
+        if(tag != lastUser){
+            $('#change_user_' + lastUser).css('backgroundColor', '');
+            $('#change_user_' + tag).css('backgroundColor', '#002F75');
+            lastUser = tag;
+            switch (tag){
+                case 1:
+                    renderUserByType('job_title', '职称');
+                    break;
+                case 2:
+                    renderUserByType('job', '职务');
+                    break;
+                case 3:
+                    renderUserByType('work_type', '类别');
+                    break;
+                case 4:
+                    renderUserByType('degree', '学历');
+                    break;
+                default:
+                    renderUserByType('sex', '性别');
+                    break;
+
+            }
+        }
+    }
+    function renderDog(name, legendData, data) {
+        echarts.init(document.getElementById('dog_analysis'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                right: 'right',
+                bottom: 10,
+                data: legendData
+            },
+            series: [
+                {
+                    name: name,
+                    type: 'pie',
+                    center: ['40%', '50%'],
+                    data: data,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true,
+                                formatter: "{b}:{c}",
+                                textStyle: {
+                                    fontSize: '16',
+                                }
+                            }
+                        },
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+
+                        }
+                    }
+                }
+            ]
+        });
+    }
+    function renderDogByType(name, cName){
+        var ori_data = dogAnalysis[name];
+        var legendData = [], da = [];
+        for(var i = 0 ; i<ori_data.length; i++){
+            var ite = ori_data[i];
+            if(name == 'work_stage'){
+                var ntitle = dogProMapping[ite.att_name] || ite.att_name;
+                legendData.push(ntitle);
+                da.push({"name": ntitle, "value": ite.val});
+            }else {
+                legendData.push(ite.att_name);
+                da.push({"name": ite.att_name, "value": ite.val});
+            }
+        }
+        renderDog(cName, legendData, da);
+    }
+    //民警分析
+    function renderAllUser(name, legendData, data) {
+        echarts.init(document.getElementById('user_analysis'), 'vintage').setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                right: 'left',
+                bottom: 10,
+                data: legendData
+            },
+            series: [
+                {
+                    name: name,
+                    type: 'pie',
+                    center: ['40%', '50%'],
+                    data: data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+    //民警分析-数据提取分析
+    function renderUserByType(name, cName){
+        var ori_data = userAnalysis[name];
+        var legendData = [], da = [];
+        for(var i = 0 ; i<ori_data.length; i++){
+            var ite = ori_data[i];
+            legendData.push(ite.att_name);
+            da.push( {"name": ite.att_name, "value": ite.val} );
+        }
+        renderAllUser(cName, legendData, da);
+    }
+    var userAnalysis = {
+        sex: [],
+        degree: [],
+        work_type: [],
+        job_title: [],
+        job: []
+    };
+    parent.doPost('config/getUserAnalysis', {}, function(resp){
+        if(resp.success){
+            var arr = resp.result;
+            for(var i = 0; i<arr.length; i++){
+                var item = arr[i];
+                var a = userAnalysis[item.ctype];
+                if(a){
+                    a.push(item);
+                }
+            }
+            renderUserByType('work_type', '类别');
+            var d = userAnalysis['sex'];
+            var qty = 0;
+            for(var i = 0; i<d.length; i++){
+                qty += d[i].val;
+            }
+            $('#police_qty').html(qty);
+        }
+    });
     /** 底部图表 结束 **/
 
     var lastClick = {"1": "", "2": ""};
@@ -667,6 +1103,294 @@
             }
             return rst;
         });
+    }
+    /// =============================================地图部分
+    function renderOrgDesc(name){
+        for(var i in areaDataMapping){
+            var item = areaDataMapping[i];
+            if(item.orgName == name){
+                $('#org_contact').text('负责人：' + item.orgLeader + '，联系方式：' + item.orgConcat);
+                document.getElementById('workUnitPic').src = item.orgPic;
+                $('#workUnitDesc').text(item.orgDesc);
+                $('#area_name').text(item.orgName);
+                break;
+            }
+        }
+        renderOrgChart(name);
+    }
+    function renderAreaData(workUnit) {
+        workUnit = workUnit || '刑侦总队';
+        parent.doPost('dogBaseInfo/getAnalysisData', {workUnit: workUnit}, function (resp) {
+            if (resp.success) {
+                var arr = resp.result;
+                var data = {};
+                var pr_name = [];
+                var pr_data = [];
+
+                var workStage_name = [];
+                var workStage_data = [];
+                var workStage = {};
+                for (var i = 0; i < arr.length; i++) {
+                    var key = arr[i].att_name;
+                    data[key] = arr[i].val;
+                    if (key.indexOf("pro_") != -1) {
+                        pr_name.push(key.replace('pro_', ''));
+                        pr_data.push({value: arr[i].val, name: key.replace('pro_', '')});
+                    }
+                    if (key.indexOf("workStage_") != -1) {
+                        workStage_name.push(dogProMapping[key.replace('workStage_', '')]);
+                        workStage_data.push({value: arr[i].val, name: key.replace('workStage_', '')});
+                        workStage['st' + key.replace('workStage_', '')] = arr[i].val;
+                    }
+                }
+                try{
+                    renderUserDog(data, 'fj_col1', 1);
+                }catch(e){}
+                try{
+                    renderDogWorkStage(workStage, 'fj_col1_1', 1);
+                }catch(e){}
+                try{
+                    renderDogPro(pr_name, pr_data, 'fj_col2', 1, workUnit); //
+                }catch(e){}
+                try{
+                    renderUser(data, 'fj_col3', 1);
+                }catch(e){}
+                try{
+                    renderTickoutDie(data, 'fj_col5', 1);
+                }catch(e){}
+                try{
+                    renderAllot(data, 'fj_col4', 1);
+                }catch(e){}
+            }
+        });
+    }
+    var org_workData = {
+        '其他（备勤）': [],
+        '刑侦侦查': [],
+        '搜爆安检': [],
+        '治安防范': []
+    };
+    var lastTab_org = '1';
+    function workChangeOrg(tag){
+        if(tag != lastTab_org){
+            $('#work_type_org_' + lastTab_org).css('backgroundColor', '');
+            $('#work_type_org_' + tag).css('backgroundColor', '#002F75');
+            lastTab_org = tag;
+            switch (tag){
+                case 1:
+                    renderOrgMonthWork('搜爆安检');
+                    break;
+                case 2:
+                    renderOrgMonthWork('治安防范');
+                    break;
+                case 3:
+                    renderOrgMonthWork('刑侦侦查');
+                    break;
+                default:
+                    renderOrgMonthWork('其他（备勤）');
+                    break;
+
+            }
+        }
+    }
+    function getWorkDataByOrgName(orgName){
+        var params = {workUnit: orgName};
+        parent.doPost('work/getWorkSumAnalysis', params, function (resp) {
+            if (resp.success) {
+                if(resp.result.length == 0){
+                    org_workData = {
+                        '其他（备勤）': [],
+                        '刑侦侦查': [],
+                        '搜爆安检': [],
+                        '治安防范': []
+                    };
+                }else{
+                    for (var i = 0; i < resp.result.length; i++) {
+                        var item = resp.result[i];
+                        if(item.work_type == '搜爆安检'){
+                            //出勤次数、出勤人数、出勤犬数、安检面积（千平米）、安检车辆数、查获违禁品数（件）、查获毒品（克）
+                            xAxios = ["出勤次数", "出勤人数", "出勤犬数", "安检面积\n(千平米)", "安检车辆数"];
+                            data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.check_area, item.check_car_qty ];
+                            color = ["#a8dc78"];
+                        }else if(item.work_type == '治安防范'){
+                            //巡逻次数、出勤人数、出勤犬数、巡逻时长（单位：小时）、查获违禁品数（件）、查获毒品（克）
+                            xAxios = ["巡逻次数", "出勤人数", "出勤犬数", "巡逻时长\n(小时)"];
+                            data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.work_hours ];
+                            color = ["#adffc1"]
+                        }else if(item.work_type == '其他（备勤）'){
+                            //备勤次数、出勤人数、出勤犬数、备勤时长（单位：小时）、查获违禁品数（件）、查获毒品（克）
+                            xAxios = ["备勤次数", "出勤人数", "出勤犬数", "备勤时长\n(小时)"];
+                            data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.work_hours ];
+                            color = ["#dbe3ad"]
+                        }else if(item.work_type == '刑侦侦查'){
+                            //出勤次数、出勤人数、出勤犬数、破案数、查获违禁品数（件）、查获毒品（克）
+                            xAxios = ["出勤次数", "出勤人数", "出勤犬数", "破案数"];
+                            data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.pa_qty ];
+                            color = ["#00cee3"]
+                        }
+
+                        if(item.wjp_qty){
+                            xAxios.push("查获违禁品数\n(件)");
+                            data.push(item.wjp_qty);
+                        }
+                        if(item.dp_qty){
+                            xAxios.push("查获毒品\n(克)");
+                            data.push(item.dp_qty);
+                        }
+                        org_workData[item.work_type] = {
+                            xAxios: xAxios,
+                            data: data,
+                            color: color
+                        };
+                    }
+                }
+                renderOrgMonthWork('搜爆安检');
+                $('#work_type_org_' + lastTab_org).css('backgroundColor', '');
+                $('#work_type_org_1').css('backgroundColor', '#002F75');
+                lastTab_org = 1;
+            }
+        });
+    }
+    function renderOrgMonthWork(workType){
+        var da = org_workData[workType];
+        renderWorkSumView('chart_1', da.xAxios, da.data, da.color);
+    }
+    function renderOrgChart(orgName){
+        var orgData = workUnitDataMapping[orgName];
+        renderDogPowerData(
+            '警犬占比',
+            [
+                {name: '警犬总数', value: orgData.dogQty},
+                {name: '民警总数', value: orgData.empQty}
+            ],
+            'fj_col1',
+            true
+        );
+        //config/getDogProAnalysis
+        parent.doPost('config/getDogProAnalysis', {workPlace: orgData.orgName}, function (resp){
+            console.log(resp);
+            if(resp.success) {
+                var data = [];
+                for(var n in resp.result){
+                    data.push({name: n, value: resp.result[n]})
+                }
+                renderDogPowerData('警犬专业构成', data, 'fj_col2', true, true);
+            }
+        });
+        //config/getDogPowerAnalysis
+        //警犬工作中状态、带犬人员职业数据
+        parent.doPost('config/getDogPowerAnalysis', {workUnit: orgData.orgName}, function (resp){
+            if(resp.success){
+                var workStage = []; //警犬状态分布
+                var userType = []; //训导员构成
+                for(var i = 0; i<resp.result.length; i++){
+                    var item = resp.result[i];
+                    if(item.xtype == 'workStage'){
+                        workStage.push({name: dogProMapping[item.xname], value: item.qty});
+                    }else if(item.xtype == 'workType'){
+                        userType.push({name: item.xname || '其他', value: item.qty});
+                    }
+                }
+                renderDogPowerData( '警犬状态分布', workStage, 'fj_col1_1', true);
+                renderDogPowerData( '训导员构成', userType, 'fj_col3', true);
+            }
+        });
+    }
+    function onSpecialDataClick(name){
+        if(USER_ROLE == 'JuZhang' || USER_ROLE == 'SuperMan' || USER_ROLE == 'JiuZhiDui' ) {
+            renderAreaData(name);
+            renderOrgDesc(name);
+            getWorkDataByOrgName(name);
+        }
+    };
+    function renderMap() {
+        var map_data = [];
+        for(var n in areaDataMapping){
+            var info = areaDataMapping[n];
+            var selected = false;
+            if(info.orgName == USER_INFO.workUnit){
+                selected = true;
+            }
+            var val = parseInt(info.empQty/info.dogQty);
+            map_data.push({name: n, /*selected: !selected,*/ value: val, policeman: info.policeCount, total: info.empQty, dog: info.dogQty});
+        }
+        var myChart = echarts.init(document.getElementById('main'), 'vintage');
+        myChart.setOption(option = {
+            visualMap: {
+                left: -10000,
+                type: 'piecewise',
+                pieces: [
+                    {min: 0, max: 40, color: '#6cfe2b'},
+                    {min: 41, max: 60, color: '#fcfe1d'},
+                    {min: 61, max: 1000, color: '#e73c43'}
+                ],
+                color: ['#E0022B', '#E09107', '#A3E00B']
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: function(params){
+                    var d = params.data;
+                    var val = d.value ? (d.value + ':1') : '-';
+                    return '<div style="font-weight: bold;">' + d.name + '</div>带犬警力：' + d.policeman + '<br>警犬数量：' + d.dog + '<br>警犬占比：' + val;
+                },
+                position:function(p){
+                    return [p[0] + 10, p[1] - 10];
+                }
+            },
+            grid:{
+                x: 80,
+                width:'90%',
+                borderWidth: 0
+            },
+            series: [
+                {
+                    type: 'map',
+                    mapType: '北京',
+                    mapLocation:{
+                        x:'center',
+                        y: 'center',
+                        height: 500
+                    },
+                    label: {
+                        emphasis: {
+                            position: ['50%', '50%'],
+                            textStyle: {
+                                color: 'rgba(0, 0, 0, 0)'
+                            }
+                        }
+                    },
+                    data: map_data,
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#fff',
+                            areaColor: '#fff',
+                        },
+                        emphasis: {
+                            areaColor: 'rgba(0, 0, 0, 0.5)',
+                            borderWidth: 0
+                        }
+                    },
+                    animation: false
+                }
+            ]
+        });
+        myChart.on('click', function (params) {
+            if(USER_ROLE == 'JuZhang' || USER_ROLE == 'SuperMan' || USER_ROLE == 'JiuZhiDui' ) {
+                var city = params.name;
+                var orgName = areaDataMapping[city].orgName;
+                renderOrgDesc(orgName);
+                renderAreaData(orgName);
+                getWorkDataByOrgName(orgName);
+            }
+        });
+        renderAreaData();
+        if(is_show_all) {
+            renderOrgDesc('刑侦总队');
+            getWorkDataByOrgName('刑侦总队');
+        }else{
+            renderOrgDesc(USER_INFO.workUnit);
+            getWorkDataByOrgName(USER_INFO.workUnit);
+        }
     }
 </script>
 
