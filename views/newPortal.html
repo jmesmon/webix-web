@@ -368,6 +368,11 @@
         localStorage.setItem("newType", newType);
         window.open(url, '_parent');
     }
+    function showNews(id){
+        sessionStorage.removeItem("newId");
+        sessionStorage.setItem("newId", id);
+        parent.window.open('../#!/news.detail:id=' + id, '_blank');
+    }
     (function(){
         var w = $(window).width();
     })();
