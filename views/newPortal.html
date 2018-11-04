@@ -282,10 +282,10 @@
                                                 <td align="right" style="padding-right: 8px" class="table-c">
                                                     <table border="0" cellspacing="0" cellpadding="0" height="20">
                                                         <tr>
-                                                            <td style="width: 50px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">安检</td>
-                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">巡逻</td>
-                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦</td>
-                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">备勤</td>
+                                                            <td style="width: 80px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">搜爆安检</td>
+                                                            <td style="width: 80px;font-size:16px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">治安防范</td>
+                                                            <td style="width: 100px;font-size:16px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">其他(备勤)</td>
+                                                            <td style="width: 80px;font-size:16px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦侦查</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -666,11 +666,11 @@
                         治安防范: "#dcbf27",
                         救援: "#efa18d",
 
-                        搜捕: "#94dae3",
-                        物证搜索: "#49c2e3",
-                        追踪: "#3893f3",
-                        鉴别: "#2059ee",
-                        物证搜索: "#0200e3",
+                        '搜捕(刑)': "#94dae3",
+                        // 物证搜索: "#49c2e3",
+                        '追踪(刑)': "#3893f3",
+                        '鉴别(刑)': "#2059ee",
+                        '物证搜索(刑)': "#0200e3",
                         其他: "#ece9ef"
                     };
                     return color_mapping[params.name];
@@ -762,7 +762,13 @@
             xAxis : [{
                 type : 'category',
                 splitLine: { show: false },
-                axisLabel:{interval: 0, rotate: 0},
+                axisLabel:{
+                    interval: 0,
+                    rotate: 0,
+                    textStyle:{
+                        fontSize: 14
+                    }
+                },
                 data : xAxisData
             }],
             yAxis : [{
@@ -829,7 +835,7 @@
                     }
 
                     if(item.wjp_qty){
-                        xAxios.push("查获违禁品数\n(件)");
+                        xAxios.push("查获违禁品\n数(件)");
                         data.push(item.wjp_qty);
                     }
                     if(item.dp_qty){
@@ -1230,7 +1236,7 @@
                         }
 
                         if(item.wjp_qty){
-                            xAxios.push("查获违禁品数\n(件)");
+                            xAxios.push("查获违禁品\n数(件)");
                             data.push(item.wjp_qty);
                         }
                         if(item.dp_qty){

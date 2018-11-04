@@ -189,10 +189,10 @@ define([
         },
         getDogPro: function () {
             return [
-                {id: '追踪', value: "追踪"},
-                {id: '鉴别', value: "鉴别"},
-                {id: '物证搜索', value: "物证搜索"},
-                {id: '搜捕', value: "搜捕"},
+                {id: '追踪(刑)', value: "追踪(刑)"},
+                {id: '鉴别(刑)', value: "鉴别(刑)"},
+                {id: '物证搜索(刑)', value: "物证搜索(刑)"},
+                {id: '搜捕(刑)', value: "搜捕(刑)"},
                 {id: '治安防范', value: "治安防范"},
                 {id: '搜爆', value: "搜爆"},
                 {id: '搜毒', value: "搜毒"},

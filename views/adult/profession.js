@@ -68,13 +68,12 @@ define([
                                 {view: "text", label: "警犬芯片号", name: "dogId", width: 280, attributes:{ maxlength: 64 }},
                                 {view: "richselect", label: "技能信息", value:"-1", width: 280, options:[
                                     {id: '-1', value: "全部"},
-                                    {id: '6', value: "鉴别"},
-                                    {id: '5', value: "追踪"},
-                                    {id: '8', value: "血迹搜索"},
-                                    {id: '1', value: "爬墙"},
+                                    {id: '6', value: "鉴别(刑)"},
+                                    {id: '5', value: "追踪(刑)"},
+                                    {id: '8', value: "血迹搜索(刑)"},
                                     {id: '2', value: "搜爆"},
                                     {id: '3', value: "搜毒"},
-                                    {id: '7', value: "搜捕"},
+                                    {id: '7', value: "搜捕(刑)"},
                                     {id: '5', value: "刑侦"}
                                 ]},
                                 {view: "datepicker", label: "获得日期", name: "wormDateStr", width: 180, format:"%Y-%m-%d", stringResult: true},
