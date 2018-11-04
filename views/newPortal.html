@@ -971,7 +971,7 @@
                                 show: true,
                                 formatter: "{b}:{c}",
                                 textStyle: {
-                                    fontSize: '16',
+                                    fontSize: '14',
                                 }
                             }
                         },
@@ -1022,10 +1022,20 @@
                     center: ['40%', '50%'],
                     data: data,
                     itemStyle: {
+                        normal: {
+                            label: {
+                                show: true,
+                                formatter: "{b}：{c}",
+                                textStyle: {
+                                    fontSize: '14',
+                                }
+                            }
+                        },
                         emphasis: {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+
                         }
                     }
                 }
