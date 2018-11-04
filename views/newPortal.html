@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../echarts/echarts.min.js"></script>
+    <script src="../echarts/theme.js"></script>
+    <script src="../echarts/map/map-all.js"></script>
+    <script src="../echarts/jquery-1.9.1.min.js"></script>
+    <style>
+        .contain {
+            color: #fff;
+            margin-right: 2px;
+        }
+        tr, td {
+            /*border: 1px solid red;*/
+            /*vertical-align: top;*/
+        }
+        .def_bk {
+            background-color: rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+        .title{
+            font-weight: bold; margin: 8px 0 0 8px
+        }
+        .table-c table{border-right:1px solid rgba(255, 255, 255, 0.47);border-bottom:1px solid rgba(255, 255, 255, 0.47)
+        }
+        .table-c table tr{height: 30px}
+        .table-c table td{border-left:1px solid rgba(255, 255, 255, 0.47);border-top:1px solid rgba(255, 255, 255, 0.47); text-align: center}
+        .point td {
+            cursor: pointer;
+        }
+        a {
+            color: #fff;
+            text-decoration:none
+        }
+        a:hover{
+            color: yellow;
+            text-decoration:underline;
+        }
+        .module_title {
+            font-weight: bold;
+            padding: 5px 10px;
+            background: rgba(5, 36, 60, 0.7);
+        }
+        .text-center{
+            text-align: center;
+        }
+        .chart_bottom_title {
+            height: 30px; padding: 4px;font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="contain">
+    <!--分局工作情况-->
+    <table width="100%" height="750">
+        <tr>
+            <td class="def_bk" style="width:48%" valign="top">
+                <div class="module_title text-center">全局警犬技术工作信息</div>
+                <div id="order" class="table-c" style="height:450px;padding: 8px 16px 16px 16px">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr style="height: 38px" class="point" onclick="doOrder" id="tab_header1">
+                            <td style="width: 60px">序号</td>
+                            <td style="width: 120px" id="tab_1_1">单位名称</td>
+                            <td style="width: 100px" onclick="doOrder(1, 2)" id="tab_1_2">训导员人数</td>
+                            <td style="width: 90px" onclick="doOrder(1, 3)" id="tab_1_3">警犬总数</td>
+                            <td style="width: 100px" onclick="doOrder(1, 4)" id="tab_1_4">警犬警力比</td>
+                            <td style="width: 120px" onclick="doOrder(1, 5)" id="tab_1_5">前30日工作量（人犬次）</td>
+                        </tr>
+                        <tbody id="orderTable1">
+
+                        </tbody>
+                    </table>
+                    <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+                        <tr style="height: 38px" class="point" onclick="doOrder" id="tab_header2">
+                            <td style="width: 60px">序号</td>
+                            <td style="width: 120px" id="tab_2_1">单位名称</td>
+                            <td style="width: 100px" onclick="doOrder(2, 2)" id="tab_2_2">训导员人数</td>
+                            <td style="width: 90px" onclick="doOrder(2, 3)" id="tab_2_3">警犬总数</td>
+                            <td style="width: 100px" onclick="doOrder(2, 4)" id="tab_2_4">警犬警力比</td>
+                            <td style="width: 120px" onclick="doOrder(2, 5)" id="tab_2_5">前30日工作量（人犬次）</td>
+                        </tr>
+                        <tbody id="orderTable2">
+
+                        </tbody>
+                    </table>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr style="height: 0px;">
+                            <td style="width: 60px"></td>
+                            <td style="width: 120px"></td>
+                            <td style="width: 100px" onclick="doOrder(2)"></td>
+                            <td style="width: 90px" onclick="doOrder(3)"></td>
+                            <td style="width: 100px" onclick="doOrder(4)"></td>
+                            <td style="width: 120px" onclick="doOrder(5)"></td>
+                        </tr>
+                        <tbody id="orderTable3">
+
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 16px"></td>
+            <td valign="top">
+                <div class="def_bk" style="height:355px;">
+                    <div class="module_title">
+                        <span>动态新闻</span>
+                        <span style="display: inline-block; float: right; font-weight: normal; cursor: pointer;" onclick="showNewsList('1')">更多</span>
+                    </div>
+                    <div style="height:10px;"></div>
+                    <div style="overflow: hidden;height: 310px">
+                            <table width="100%" id="newList">
+                                <tr><td><div align="center"><img src="../assets/imgs/loading.gif" height="45px" width="45px"></div></td></tr>
+                            </table>
+                    </div>
+                </div>
+                <div style="height: 16px"></div>
+                <div class="def_bk" style="height:375px">
+                    <div class="module_title">
+                        <span>通知公告</span>
+                        <span style="display: inline-block; float: right; font-weight: normal; margin-right: 5px; cursor: pointer;" onclick="showNewsList('2')">更多</span>
+                    </div>
+                    <div style="height:10px;"></div>
+                    <div style="overflow: hidden;height: 305px">
+                            <table width="100%" id="newList2">
+                            </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="height: 16px;" id="gold_sp"></div>
+    <!--全局各项指标-->
+    <div class="module_title text-center" style="margin-bottom: -2px;">全局警犬技术力量分析</div>
+    <table width="100%" id="gold_area">
+        <tr style="height: 320px">
+            <td style="width: 32%;">
+                <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
+                    <div><div align="center" style="height: 280px" id="qj_col1"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬比例</div>
+                </div>
+            </td>
+            <td style="width: 32%;">
+                <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
+                    <div><div align="center" style="height: 280px" id="qj_col1_1"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬类别</div>
+                </div>
+            </td>
+            <td style="width: 32%;">
+                <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
+                    <div><div align="center" style="height: 280px" id="qj_col2"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">带犬力量分布图</div>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 7px"></tr>
+        <tr style="height: 320px">
+            <td style="width: 32%;">
+                <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
+                    <div><div align="center" style="height: 280px" id="qj_col3"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">警犬专业分布图</div>
+                </div>
+            </td>
+            <td style="width: 32%;">
+                <div style="margin: 0 8px 0 0;height: 320px" class="def_bk">
+                    <div><div align="center" style="height: 280px" id="qj_col4"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">培训比例</div>
+                </div>
+            </td>
+            <td style="width: 32%;">
+                <div style="margin: 0 0px 0 0;height: 320px" class="def_bk">
+                    <div style="height: 280px" id="qj_col7"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                    <div style="height: 30px; padding: 4px;font-weight: bold;" align="center">淘汰死亡</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="height: 16px;"></div>
+
+    <!-- 警犬技术工作详情 全局/分局-->
+    <div class="module_title text-center" style="margin-bottom: -2px;">全局警犬技术工作量分析</div>
+    <div>
+        <table style="width: 100%">
+            <tr style="height: 300px">
+                <td class="def_bk" style="width: 50%">
+                    <div id="work_sum_1" style="height: 290px;"></div>
+                    <div class="chart_bottom_title">搜爆安检</div>
+                </td>
+                <td style="width: 16px"></td>
+                <td class="def_bk">
+                    <div id="work_sum_2" style="height: 290px;"></div>
+                    <div class="chart_bottom_title">治安防范</div>
+                </td>
+            </tr>
+            <tr style="height: 8px;"> <td colspan="3"></td> </tr>
+            <tr style="height: 300px">
+                <td class="def_bk" style="width: 50%">
+                    <div id="work_sum_3" style="height: 290px;"></div>
+                    <div class="chart_bottom_title">其他（备勤）</div>
+                </td>
+                <td style="width: 16px"></td>
+                <td class="def_bk">
+                    <div id="work_sum_4" style="height: 290px;"></div>
+                    <div class="chart_bottom_title">刑侦侦查</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 分局警犬技术工作详情 -->
+    <div style="height: 16px;" id="map_padding"></div>
+    <table width="100%"  id="map_contain">
+        <tr>
+            <td id="col1" class="def_bk" style="width: 50%" valign="top">
+                <div class="module_title">分局警犬技术工作详情</div>
+                <div style="height: 30px"></div>
+                <div id="main" style="height:520px;"></div>
+                <div style="height: 20px"></div>
+                <div style=" height: 117px; margin: 0px 10px 0px 10px" class="table-c" id="specialData_id">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr onclick="onSpecialDataClick">
+                            <td width="60px"></td>
+                            <td width="60px" onclick="onSpecialDataClick('刑侦总队')" style="cursor: pointer;color: #00F1FF">刑侦总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('公交总队')" style="cursor: pointer;color: #00F1FF">公交总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('特警总队')" style="cursor: pointer;color: #00F1FF">特警总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('天安门分局')" style="cursor: pointer;color: #00F1FF">天安门<br>分局</td>
+                            <td width="60px" onclick="onSpecialDataClick('西站分局')" style="cursor: pointer;color: #00F1FF">西站分局</td>
+                            <!--<td width="60px" onclick="onSpecialDataClick('开发局分局')" style="cursor: pointer;color: #00F1FF">开发局<br>分局</td>-->
+                            <td width="60px" onclick="onSpecialDataClick('清河分局')" style="cursor: pointer;color: #00F1FF">清河分局</td>
+                        </tr>
+                        <tbody id="special_da"> </tbody>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 16px"></td>
+            <td valign="top" class="def_bk">
+                <div>
+                    <div>
+                        <div class="module_title"><span id="area_name"></span><span id="org_contact" style="display: inline-block; float: right; font-weight: normal;"></span></div>
+                        <div style="margin: 16px 0 0 16px; line-height: 25px">
+                            <table>
+                                <tr style="height: 200px">
+                                    <td style="width: 262px" valign="top"><div style=""><span id="policeman_num">
+                                        <img src="" id="workUnitPic" width="260" height="200">
+                                    </span></div></td>
+                                    <td valign="top"><div style="height: 200px; overflow: hidden;padding: 8px;"><span style="font-weight: bold;">简介：</span><span id="workUnitDesc"></span></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="height: 140px; padding:10px">
+                            <table width="100%">
+                                <tr>
+                                    <td style="width: 20%">
+                                        <div id="fj_col1" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">警犬占比</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col1_1" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">警犬状态</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col2" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">警犬专业</div>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <div id="fj_col3" style="width: 100%; height: 130px"><div align="center"><img style="margin-top: 80px" src="../assets/imgs/loading.gif" height="45px" width="45px"></div></div>
+                                        <div align="center">带犬力量分布图</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td style="width: 300px">
+                                                    <div style="padding: 16px 0 0 8px;font-weight: bold;">警犬工作</div>
+                                                </td>
+                                                <td align="right" style="padding-right: 8px" class="table-c">
+                                                    <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                                        <tr>
+                                                            <td style="width: 50px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeOrg(1)" id="work_type_org_1">安检</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(2)" id="work_type_org_2">巡逻</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(3)" id="work_type_org_3">刑侦</td>
+                                                            <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeOrg(4)" id="work_type_org_4">备勤</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="chart_1_contain">
+                            <div id="chart_1" style="height: 250px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!--警犬品种，警犬年龄-->
+    <div style="height: 16px;"></div>
+    <table width="100%" id="breed_age_area">
+        <tr style="height: 350px">
+            <td style="width: 50%;"  class="def_bk">
+                <div class="title">
+                    <table width="100%">
+                        <tr>
+                            <td style="width: 300px">
+                                <div style="font-weight: bold;">民警分析（总人数：<span id="police_qty"></span>）</div>
+                            </td>
+                            <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
+                                <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                    <tr>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer; background-color: #002F75;" onclick="workChangeUser(3)" id="change_user_3">类别</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(2)" id="change_user_2">职务</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(1)" id="change_user_1">职称</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(4)" id="change_user_4">学历</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeUser(5)" id="change_user_5">性别</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="user_analysis" style="height: 330px"></div>
+            </td>
+            <td style="width: 16px;"></td>
+            <td class="def_bk">
+                <div class="title">
+                    <table width="100%">
+                        <tr>
+                            <td style="width: 300px">
+                                <div style="font-weight: bold;">警犬分析（总犬数：<span id="all_dog_qty"></span>）</div>
+                            </td>
+                            <td align="right" style="padding-right: 8px;font-weight: normal" class="table-c">
+                                <table border="0" cellspacing="0" cellpadding="0" height="20">
+                                    <tr>
+                                        <td style="width: 50px;font-size:16px; background-color: #002F75;cursor: pointer" onclick="workChangeBreed(1)" id="breed_1">品种</td>
+                                        <!--<td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(2)" id="breed_2">毛色</td>-->
+                                        <!--<td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(3)" id="breed_3">毛型</td>-->
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(4)" id="breed_4">专业</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(6)" id="breed_6">年龄</td>
+                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">淘汰</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="dog_analysis" style="height: 330px"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    function showNewsList(newType) {
+        var url = location.href;
+        url = url.split('views')[0];
+        url = url + '#!/app/news.showList' ;
+        localStorage.setItem("newType", newType);
+        window.open(url, '_parent');
+    }
+    (function(){
+        var w = $(window).width();
+    })();
+    var USER_INFO = parent.USER_INFO;
+    var USER_ROLE = USER_INFO.userRole;
+
+    var is_show_all = true;
+    if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang' && USER_ROLE != "GuanLiYuan"  ) {
+        is_show_all = false;
+        //全局各项指标不可见
+        $('#gold_sp').hide();
+        $('#gold_area').hide();
+        $('#breed_age_area').hide();
+        $('#gold_work_area').hide();
+        $('#gold_work_sp').hide();
+    }
+    var UNIT_DATA = [];
+    var allTrainedQty = 0;
+    var allUntrainQty = 0;
+    var unitTrainQty = 0;
+    var unitUntrainQty = 0;
+    var allPoliceQty = 0;
+    var allDogQty = 0;
+    var tutor = 0;
+
+    var table1Data = []; //表格1，3条数据
+    var table2Data = []; //表格2，19条数据
+    var table3Data = []; //表格3，社会化犬防
+
+    /*** 加载基础数据 开始 ***/
+    (function(){
+        parent.doPost('config/getOrgList', {}, function(res){
+            if(res.success){
+                UNIT_DATA = res.result;
+                for(var i = 0; i<UNIT_DATA.length; i++){
+                    var item = UNIT_DATA[i];
+                    if(["警院", "机场", "警卫局", "振远", "消防", "开发局分局"].indexOf(item.orgName) != -1){
+                        continue;
+                    }
+                    item.jing_quan_bi_li = parseInt( item.empQty / item.dogQty) || 0;
+                    allTrainedQty += item.trainedQty;
+                    allUntrainQty += item.untrainQty;
+                    if(item.orgName == USER_INFO.workUnit){
+                        unitTrainQty = item.trainedQty;
+                        unitUntrainQty = item.untrainQty;
+                    }
+                    allPoliceQty += item.empQty;
+                    allDogQty += item.dogQty;
+                    tutor += item.policeCount;
+
+                    if(["刑侦总队", "公交总队", "特警总队"].indexOf(item.orgName) != -1){
+                        table1Data.push(item);
+                    }else if(["社会化犬防"].indexOf(item.orgName) != -1){
+                        table3Data.push(item);
+                    }else{
+                        table2Data.push(item);
+                    }
+                }
+                //渲染表格数据
+                renderUnitInfo('orderTable1', table1Data);
+                renderUnitInfo('orderTable2', table2Data);
+                renderUnitInfo('orderTable3', table3Data);
+            }
+        });
+    })();
+    /*** 加载基础数据 结束 ***/
+
+    /** 表格：全局警犬技术工作信息 开始 **/
+    function renderUnitInfo(domId, data){
+        var html = '';
+
+        for(var i = 0; i<data.length; i++){
+            var item = data[i];
+            html += '<tr style="height:26px;">';
+            if(domId != 'orderTable3') {
+                html += '<td>' + (i + 1) + '</td>';
+            }else{
+                html += '<td></td>';
+            }
+            html += '<td>' + (item.orgName || 0) + '</td>';
+            html += '<td>' + (item.policeCount || 0) + '</td>';
+            html += '<td>' + (item.dogQty || 0) + '</td>';
+            if(item.jing_quan_bi_li >= 50){
+                html += '<td style="color: red"> ' + item.jing_quan_bi_li+ ' </td>'
+            }else if(item.jing_quan_bi_li >= 40){
+                html += '<td style="color: yellow"> ' + item.jing_quan_bi_li+ ' </td>'
+            }else{
+                html += '<td style="color: #00FFF5"> ' + item.jing_quan_bi_li+ ' </td>'
+            }
+            html += '<td>' + (item.workQty || 0) + '</td>';
+            html += '</tr>';
+        }
+        $('#' + domId).empty();
+        $('#' + domId).html( html);
+    }
+    /** 全局警犬技术工作信息 结束 **/
+
+    /** 新闻部分 开始 **/
+    //动态新闻
+    (function(){
+        var params = {newsType: '动态新闻', workUnit: USER_INFO.workUnit};
+        if(is_show_all){
+            params = {newsType: '动态新闻'};
+        }
+        parent.doPost('news/getList/14/1', params, function(resp){
+            var data = resp.result;
+            var ht = '';
+            for(var i =0; i<data.length; i++){
+                var ne = data[i];
+                var title = ne.title;
+                if(title.length > 24){
+                    title = title.substr(0, 23) + '...';
+                }
+                ht += '<tr>' +
+                    '<td style="width: 120px" align="center">【' + ne.workUnit + '】</td>' +
+                    '<td><a href="javascript:void(0)"><div style="overflow: hidden" onclick="showNews('+ne.id+')">' + title + '</div></a></td>' +
+                    '<td style="width: 120px" align="center">' + ne.publishDate.split(' ')[0] + '</td>' +
+                    '</tr>';
+            }
+            $('#newList').empty();
+            $('#newList').append(ht);
+        });
+    })();
+    //通知公告
+    (function (){
+        var params = {newsType: '通知公告'};
+        if(!is_show_all){
+            params = {newsType: '动态新闻', workUnit: USER_INFO.workUnit};
+        }
+        parent.doPost('news/getList/14/1', params, function(resp){
+            var data = resp.result;
+            var ht = '';
+            for(var i =0; i<data.length; i++){
+                var ne = data[i];
+                var title = ne.title;
+                if(title.length > 24){
+                    title = title.substr(0, 23) + '...';
+                }
+                ht += '<tr>' +
+                    '<td style="width: 120px" align="center">【' + ne.workUnit + '】</td>' +
+                    '<td><a href="javascript:void(0)"><div style="overflow: hidden" onclick="showNews('+ne.id+')">' + title + '</div></a></td>' +
+                    '<td style="width: 120px" align="center">' + ne.publishDate.split(' ')[0] + '</td>' +
+                    '</tr>';
+            }
+            $('#newList2').empty();
+            $('#newList2').append(ht);
+        });
+    })();
+    /** 新闻部分 开始 **/
+
+    /** 全局警犬技术力量分析 开始 **/
+    var renderWorkSumView = function (domId, xAxisData, data, color) {
+        var option = {
+            color: color,
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                top: '12%',
+                left: '6%',
+                right: '8%',
+                bottom: '6%',
+                containLabel: true
+            },
+            xAxis : [{
+                type : 'category',
+                splitLine: { show: false },
+                axisLabel:{interval: 0, rotate: 0},
+                data : xAxisData
+            }],
+            yAxis : [{
+                type : 'value',
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(255, 255, 255, 0.47)'
+                    }
+                }
+            }],
+            series : [{
+                name:'累计',
+                type:'bar',
+                barWidth: '50%',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                data: data
+            }]
+        };
+        echarts.init(document.getElementById(domId), 'vintage').setOption(option);
+    };
+    //加载分局警犬技术工作详情
+    function loadWorkSumAnalysis() {
+        var params = {};
+        if(["JuZhang", "SuperMan", "JiuZhiDui"].indexOf(USER_INFO.userRole) == -1){
+            params.workUnit = USER_INFO.workUnit;
+        }
+        var domIdMapping = {"搜爆安检": "work_sum_1", "治安防范": "work_sum_2", "其他（备勤）": "work_sum_3", "刑侦侦查": "work_sum_4"};
+        parent.doPost('work/getWorkSumAnalysis', params, function (resp) {
+            if(resp.success){
+                console.log(resp);
+                for(var i = 0; i<resp.result.length; i++) {
+                    var item = resp.result[i];
+                    var domId = domIdMapping[item.work_type];
+                    console.log(domId);
+                    var xAxios = [];
+                    var data = [];
+                    var color = [];
+                    if(item.work_type == '搜爆安检'){
+                        //出勤次数、出勤人数、出勤犬数、安检面积（千平米）、安检车辆数、查获违禁品数（件）、查获毒品（克）
+                        xAxios = ["出勤次数", "出勤人数", "出勤犬数", "安检面积\n(千平米)", "安检车辆数"];
+                        data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.check_area, item.check_car_qty ];
+                        color = ["#a8dc78"];
+                    }else if(item.work_type == '治安防范'){
+                        //巡逻次数、出勤人数、出勤犬数、巡逻时长（单位：小时）、查获违禁品数（件）、查获毒品（克）
+                        xAxios = ["巡逻次数", "出勤人数", "出勤犬数", "巡逻时长\n(小时)"];
+                        data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.work_hours ];
+                        color = ["#adffc1"]
+                    }else if(item.work_type == '其他（备勤）'){
+                        //备勤次数、出勤人数、出勤犬数、备勤时长（单位：小时）、查获违禁品数（件）、查获毒品（克）
+                        xAxios = ["备勤次数", "出勤人数", "出勤犬数", "备勤时长\n(小时)"];
+                        data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.work_hours ];
+                        color = ["#dbe3ad"]
+                    }else if(item.work_type == '刑侦侦查'){
+                        //出勤次数、出勤人数、出勤犬数、破案数、查获违禁品数（件）、查获毒品（克）
+                        xAxios = ["出勤次数", "出勤人数", "出勤犬数", "破案数"];
+                        data = [item.att_qty, item.att_per_qty, item.att_dog_qty, item.pa_qty ];
+                        color = ["#00cee3"]
+                    }
+
+                    if(item.wjp_qty){
+                        xAxios.push("查获违禁品数\n(件)");
+                        data.push(item.wjp_qty);
+                    }
+                    if(item.dp_qty){
+                        xAxios.push("查获毒品\n(克)");
+                        data.push(item.dp_qty);
+                    }
+                    renderWorkSumView(domId, xAxios, data, color);
+                }
+            }
+        });
+    }
+    loadWorkSumAnalysis();
+    /** 全局警犬技术力量分析 结束 **/
+
+    /** 底部图表 开始 **/
+
+    /** 底部图表 结束 **/
+
+    var lastClick = {"1": "", "2": ""};
+    var lastDesc = {"1": "desc", "2": "desc"};
+    function doOrder(tabNum, colNum){
+        var curOrderBy = '';
+        var data = [];
+        if(tabNum == 1){
+            data = table1Data;
+        }else if(tabNum == 2){
+            data = table2Data;
+        }
+        if(lastClick[tabNum] != colNum) {
+            $('#tab_' + tabNum + '_' + lastClick[tabNum]).text($('#tab_' + tabNum + '_' + lastClick[tabNum]).text().replace('↓', '').replace('↑', ''));
+            $('#tab_' + tabNum + '_' + colNum).text($('#tab_' + tabNum + '_' + colNum).text() + '↓');
+            lastClick[tabNum] = colNum;
+            lastDesc[tabNum] = 'desc';
+        }else{
+            if(lastDesc[tabNum] == 'desc'){
+                $('#tab_' + tabNum + '_' + lastClick[tabNum]).text($('#tab_' + tabNum + '_' + lastClick[tabNum]).text().replace('↓', '↑'));
+            }else{
+                $('#tab_' + tabNum + '_' + lastClick[tabNum]).text($('#tab_' + tabNum + '_' + lastClick[tabNum]).text().replace('↑', '↓'));
+            }
+            lastDesc[tabNum] = (lastDesc[tabNum] == 'desc' ?  'asc' : 'desc');
+        }
+        var fieldMapping = {"2": "policeCount", "3": "dogQty", "4": "jing_quan_bi_li", "5": "workQty"};
+        orderByPer(fieldMapping[colNum], data, lastDesc[tabNum]);
+        renderUnitInfo('orderTable' + tabNum, data);
+    }
+    function orderByPer(field, data, orderBy){
+        console.log(orderBy);
+        data.sort(function(a, b){
+            var rst = 1;
+            if( a[field] < b[field] ) {
+                rst = 1
+            }else if( a[field] > b[field] ){
+                rst = -1;
+            }else{
+                rst = 0;
+            }
+            if(orderBy == 'asc'){
+                rst = 0 - rst;
+            }
+            return rst;
+        });
+    }
+</script>
+
+</html>

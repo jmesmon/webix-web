@@ -134,37 +134,37 @@ define([
                             {id: 'dateStart', header: "开始时间", width: 100},
                             {id: 'dateEnd', header: "结束时间", width: 100},
                             //搜爆安检
-                            {batch: 'sbaj', header: "出勤次数", fillspace: 1, template: '#attQty#'},
-                            {batch: 'sbaj', header: "出勤人数", fillspace: 1, template: '#attPerQty#'},
-                            {batch: 'sbaj', header: "出勤犬数", fillspace: 1, template: '#attDogQty#'},
-                            {batch: 'sbaj', header: "安检面积", fillspace: 1, template: '#checkArea#'},
-                            {batch: 'sbaj', header: "安检车辆数", fillspace: 1, template: '#checkCarQty#'},
-                            {batch: 'sbaj', header: "查获违禁品数", fillspace: 1, template: '#wjpQty#'},
-                            {batch: 'sbaj', header: "查获毒品", fillspace: 1, template: '#dpQty#'},
+                            {batch: 'sbaj', header: "出勤次数", fillspace: 1, template: function(item){ return item.attQty || 0;} },
+                            {batch: 'sbaj', header: "出勤人数", fillspace: 1, template: function(item){ return item.attPerQty || 0;} },
+                            {batch: 'sbaj', header: "出勤犬数", fillspace: 1, template: function(item){ return item.attDogQty|| 0;}},
+                            {batch: 'sbaj', header: "安检面积", fillspace: 1, template: function(item){ return item.checkArea|| 0;}},
+                            {batch: 'sbaj', header: "安检车辆数", fillspace: 1, template: function(item){ return item.checkCarQty|| 0;}},
+                            {batch: 'sbaj', header: "查获违禁品数", fillspace: 1, template: function(item){ return item.wjpQty|| 0;}},
+                            {batch: 'sbaj', header: "查获毒品", fillspace: 1, template: function(item){ return item.dpQty|| 0;}},
 
                             //治安防范
-                            {batch: 'zaff', header: "巡逻次数", fillspace: 1, template: '#attQty#', hidden: true},
-                            {batch: 'zaff', header: "出勤人数", fillspace: 1, template: '#attPerQty#', hidden: true},
-                            {batch: 'zaff', header: "出勤犬数", fillspace: 1, template: '#attDogQty#', hidden: true},
-                            {batch: 'zaff', header: "巡逻时长", fillspace: 1, template: '#workHours#', hidden: true},
-                            {batch: 'zaff', header: "查获违禁品数", fillspace: 1, template: '#wjpQty#', hidden: true},
-                            {batch: 'zaff', header: "查获毒品", fillspace: 1, template: '#dpQty#', hidden: true},
+                            {batch: 'zaff', header: "巡逻次数", fillspace: 1, template: function(item){ return item.attQty|| 0;}, hidden: true},
+                            {batch: 'zaff', header: "出勤人数", fillspace: 1, template: function(item){ return item.attPerQty|| 0;}, hidden: true},
+                            {batch: 'zaff', header: "出勤犬数", fillspace: 1, template: function(item){ return item.attDogQty|| 0;}, hidden: true},
+                            {batch: 'zaff', header: "巡逻时长", fillspace: 1, template: function(item){ return item.workHours|| 0;}, hidden: true},
+                            {batch: 'zaff', header: "查获违禁品数", fillspace: 1, template: function(item){ return item.wjpQty|| 0;}, hidden: true},
+                            {batch: 'zaff', header: "查获毒品", fillspace: 1, template: function(item){ return item.dpQty|| 0;}, hidden: true},
 
                             //其他（备勤）
-                            {batch: 'bq', header: "备勤次数", fillspace: 1, template: '#attQty#', hidden: true},
-                            {batch: 'bq', header: "出勤人数", fillspace: 1, template: '#attPerQty#', hidden: true},
-                            {batch: 'bq', header: "出勤犬数", fillspace: 1, template: '#attDogQty#', hidden: true},
-                            {batch: 'bq', header: "备勤时长", fillspace: 1, template: '#workHours#', hidden: true},
-                            {batch: 'bq', header: "查获违禁品数", fillspace: 1, template: '#wjpQty#', hidden: true},
-                            {batch: 'bq', header: "查获毒品", fillspace: 1, template: '#dpQty#', hidden: true},
+                            {batch: 'bq', header: "备勤次数", fillspace: 1, template: function(item){ return item.attQty|| 0;}, hidden: true},
+                            {batch: 'bq', header: "出勤人数", fillspace: 1, template: function(item){ return item.attPerQty|| 0;}, hidden: true},
+                            {batch: 'bq', header: "出勤犬数", fillspace: 1, template: function(item){ return item.attDogQty|| 0;}, hidden: true},
+                            {batch: 'bq', header: "备勤时长", fillspace: 1, template: function(item){ return item.workHours|| 0;}, hidden: true},
+                            {batch: 'bq', header: "查获违禁品数", fillspace: 1, template: function(item){ return item.wjpQty|| 0;}, hidden: true},
+                            {batch: 'bq', header: "查获毒品", fillspace: 1, template: function(item){ return item.dpQty|| 0;}, hidden: true},
 
                             //刑侦侦查
-                            {batch: 'xzzc', header: "出勤次数", fillspace: 1, template: '#attQty#', hidden: true},
-                            {batch: 'xzzc', header: "出勤人数", fillspace: 1, template: '#attPerQty#', hidden: true},
-                            {batch: 'xzzc', header: "出勤犬数", fillspace: 1, template: '#attDogQty#', hidden: true},
-                            {batch: 'xzzc', header: "破案数", fillspace: 1, template: '#paQty#', hidden: true},
-                            {batch: 'xzzc', header: "查获违禁品数", fillspace: 1, template: '#wjpQty#', hidden: true},
-                            {batch: 'xzzc', header: "查获毒品", fillspace: 1, template: '#dpQty#', hidden: true}
+                            {batch: 'xzzc', header: "出勤次数", fillspace: 1, template: function(item){ return item.attQty|| 0;}, hidden: true},
+                            {batch: 'xzzc', header: "出勤人数", fillspace: 1, template: function(item){ return item.attPerQty|| 0;}, hidden: true},
+                            {batch: 'xzzc', header: "出勤犬数", fillspace: 1, template: function(item){ return item.attDogQty|| 0;}, hidden: true},
+                            {batch: 'xzzc', header: "破案数", fillspace: 1, template: function(item){ return item.paQty|| 0;}, hidden: true},
+                            {batch: 'xzzc', header: "查获违禁品数", fillspace: 1, template: function(item){ return item.wjpQty|| 0;}, hidden: true},
+                            {batch: 'xzzc', header: "查获毒品", fillspace: 1, template: function(item){ return item.dpQty|| 0;}, hidden: true}
                         ],
                         on: {
                             onBeforeLoad: function () {

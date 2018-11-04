@@ -69,7 +69,7 @@ define([
         });
         field.push({
             cols: [
-                {view: "text", label: "查获违禁品数", name: 'dpQty', value:"" },
+                {view: "text", label: "查获毒品数", name: 'dpQty', value:"" },
                 {template: '克', borderless: 1}
             ]
         });
@@ -123,6 +123,7 @@ define([
                     var datatable = $$(datatableId);
                     var params = $$(formId).getValues();
                     removeEmptyProperty(params);
+                    params.workUnit = USER_INFO.workUnit;
                     datatable.config.customUrl.params = params;
                     var workType = params.workType;
                     datatable.showColumnBatch(columnBatchMapping[workType]);

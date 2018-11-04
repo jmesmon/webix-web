@@ -53,7 +53,7 @@ define([
 				]
             },{
             	height: 1,
-                view:"iframe", id:"frame-body", src:"views/portal.html?_" + new Date() * 1, on: {
+                view:"iframe", id:"frame-body", src:"views/newPortal.html?_" + new Date() * 1, on: {
                     onAfterLoad: function(){
                     	$$('frame-body').define('height', null);
                     	$$('loading_logo').hide();
