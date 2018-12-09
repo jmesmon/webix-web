@@ -292,7 +292,7 @@ define([
                                         {view: "text", label: "驱虫方式", name: "wormDesc", value: '', width: 300, attributes:{ maxlength: 64 }, placeholder: '体内/体外/内服/外用'},
                                         {view: "datepicker", label: "驱虫日期", name: "wormDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
                                         {
-                                            view: "richselect", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
+                                            view: "combo", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
                                             options: userList
                                         }
                                     ],
@@ -391,7 +391,7 @@ define([
                                         {view: "text", label: "疫苗名称", name: "immueName", value: '', width: 300, attributes:{ maxlength: 64 }},
                                         {view: "datepicker", label: "免疫日期", name: "immueDateStr", width: 240, format:"%Y-%m-%d", stringResult: true},
                                         {
-                                            view: "richselect", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
+                                            view: "combo", label: "操作人员", name: 'policeName', id: 'policeName', width: 300,
                                             options: userList
                                         }
                                     ],
@@ -601,7 +601,7 @@ var checkCount = 0;
                                         {
                                            cols: [
                                                {
-                                                   view: "richselect", label: "请选择接收民警", id: 'policeUser', labelWidth: 115, width: 320,
+                                                   view: "combo", label: "请选择接收民警", id: 'policeUser', labelWidth: 115, width: 320,
                                                    options: userList
                                                },
                                                {}

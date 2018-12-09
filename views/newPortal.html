@@ -132,7 +132,7 @@
     </table>
     <div style="height: 16px;" id="gold_sp"></div>
     <!--全局各项指标-->
-    <div class="module_title text-center" style="margin-bottom: -2px;">全局警犬技术力量分析</div>
+    <div class="module_title text-center" style="margin-bottom: -2px;" id="quanju_1">全局警犬技术力量分析</div>
     <table width="100%" id="gold_area">
         <tr style="height: 320px">
             <td style="width: 32%;">
@@ -179,7 +179,7 @@
     <div style="height: 16px;"></div>
 
     <!-- 警犬技术工作详情 全局/分局-->
-    <div class="module_title text-center" style="margin-bottom: -2px;">全局警犬技术工作量分析</div>
+    <div class="module_title text-center" style="margin-bottom: -2px;" id="qj_work_title">全局警犬技术工作量分析</div>
     <div>
         <table style="width: 100%">
             <tr style="height: 300px">
@@ -382,12 +382,21 @@
     var is_show_all = true;
     if(USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang'  ) {
         is_show_all = false;
-        //全局各项指标不可见
+        //如果是分局登录，全局各项指标不可见
         $('#gold_sp').hide();
         // $('#gold_area').hide();
-        $('#breed_age_area').hide();
+        // $('#breed_age_area').hide();
         $('#gold_work_area').hide();
         $('#gold_work_sp').hide();
+        //隐藏 全局警犬技术力量分析
+        $('#map_padding').hide();
+        $('#quanju_1').hide();
+        $('#gold_area').hide();
+        //隐藏 分局警犬技术工作详情、
+        $('#map_contain').hide();
+
+        $('#qj_work_title').html('分局警犬技术工作量分析')
+
     }
     var UNIT_DATA = [];
     var allTrainedQty = 0;
@@ -409,7 +418,7 @@
     var areaDataMapping = {
         密云区: { orgName: '密云分局', policeman: 1072, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538662.jpg', desc: ''},
         怀柔区: { orgName: '怀柔分局', policeman: 936, dog: 39, pic: '/policeDog/resource/2017-10-04/1507106538679.jpg', desc: ''},
-        延庆区: { orgName: '延庆县分局', policeman: 917, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538719.jpg', desc: ''},
+        延庆区: { orgName: '延庆分局', policeman: 917, dog: 20, pic: '/policeDog/resource/2017-10-04/1507106538719.jpg', desc: ''},
         昌平区: { orgName: '昌平分局', policeman: 2000, dog: 40, pic: '/policeDog/resource/2017-10-04/1507106538856.jpg', desc: ''},
         顺义区: { orgName: '顺义分局', policeman: 1631, dog: 54, pic: '/policeDog/resource/2017-10-04/1507106538961.jpg', desc: ''},
         平谷区: { orgName: '平谷分局', policeman: 838, dog: 35, pic: '/policeDog/resource/2017-10-07/1507378384611.jpg', desc: ''},
@@ -488,7 +497,7 @@
                     allDogQty += item.dogQty;
                     tutor += item.policeCount;
 
-                    if(["刑侦总队", "公交总队", "特警总队"].indexOf(item.orgName) != -1){
+                    if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "清河分局"].indexOf(item.orgName) != -1){
                         table1Data.push(item);
                     }else if(["社会化犬防"].indexOf(item.orgName) != -1){
                         table3Data.push(item);
@@ -662,7 +671,10 @@
             normal: {
                 label: {
                     show: !tag,
-                    formatter: "{b}\n{c} ({d}%)"
+                    formatter: "{b}\n{c} ({d}%)",
+                    textStyle: {
+                        fontSize: '16',
+                    }
                 },
                 color: function (params) {
                     var color_mapping = {
@@ -676,7 +688,8 @@
                         '追踪(刑)': "#3893f3",
                         '鉴别(刑)': "#2059ee",
                         '物证搜索(刑)': "#0200e3",
-                        其他: "#ece9ef"
+                        其他: "#5de6ff",
+                        未知: "#e2efde",
                     };
                     return color_mapping[params.name];
                 }
