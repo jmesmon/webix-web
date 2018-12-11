@@ -74,6 +74,9 @@ define([
     var search = function () {
         var datatable = $$(datatableId);
         var params = $$('form').getValues();
+        if(params.breed == '其他'){
+            params.breed = $$('other_breed').getValue();
+        }
         removeEmptyProperty(params, true);
         params.state = 1;
         datatable.config.customUrl.params = params;
@@ -448,8 +451,18 @@ define([
                                 {width: DEFAULT_PADDING},
                                 {
                                     view: "richselect", label: "警犬品种", name: 'breed', width: 170, value: '-1', labelWidth: 70,
-                                    options: constant.getBreedTypeOptions(true)
+                                    options: constant.getBreedTypeOptions(true),
+                                    on: {
+                                        onChange: function(val){
+                                            if(val == '其他') {
+                                                $$('other_breed').show();
+                                            }else{
+                                                $$('other_breed').hide();
+                                            }
+                                        }
+                                    }
                                 },
+                                {view: "text", id: 'other_breed', hidden: true, width: 100, placeholder: '其他品种名称' , attributes:{ maxlength: 16 } },
                                 {width: DEFAULT_PADDING},
                                 {view: "text", label: "警犬年龄", width: 110, labelWidth: 70, labelAlign: 'right',
                                     on: {
@@ -488,6 +501,9 @@ define([
                                     {view: "datepicker", label: "-", name: "birthdayEnd", id: 'end', labelWidth: 10, width: 120, format:"%Y-%m-%d", stringResult: true},
                                     {}
                                 ]} ,
+                                {view: "richselect", label: "警犬状态", name: "workStage", width: 180, labelWidth: 68,
+                                    options: constant.getWorkStage().slice(0, 4)
+                                },
                                 {}
                             ]
                         },{
@@ -501,7 +517,7 @@ define([
                                 {width: DEFAULT_PADDING},
                                 {view: "text", label: "警犬芯片号", name: "chipNoLike", width: 180, labelWidth: 80, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
-                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 70},
+                                {view: "text", label: "警犬专业", name: "mainProLike", width: 180, labelWidth: 68},
                                 {width: DEFAULT_PADDING},
                                 {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
                                     $$('form').clear();

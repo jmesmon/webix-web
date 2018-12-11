@@ -5,7 +5,7 @@ define([
     var datatableId = webix.uid().toString();
     var formId = webix.uid().toString();
     var Actions = actions.getActions(datatableId, formId);
-
+    var USER_ROLE = USER_INFO.userRole;
     var searchForm = {
         type: "clean",
         rows: [
@@ -32,6 +32,11 @@ define([
                         rows: [{
                             cols: [
                                 {
+                                    view: "richselect", label: "工作单位", name: 'workUnitFilter',  width: 200, value: '-1', labelWidth: 70,
+                                    options: constant.getUnitOptions(true),
+                                    hidden: (USER_ROLE != 'JuZhang' && USER_ROLE != 'SuperMan' && USER_ROLE != 'JiuZhiDui' && USER_ROLE != 'FJ_JuZhang')
+                                },
+                                {
                                     view: "richselect", label: "工作类型", name: 'workType',  width: 210, value: '搜爆安检', labelWidth: 70,
                                     options: [
                                         {id: '搜爆安检', value: '搜爆安检'},
@@ -57,7 +62,7 @@ define([
     };
     webix.ui({
         view:"popup",
-        id:"my_pop",
+        id:"my_pop4",
         width: 150,
         body:{
             view:"list",
@@ -68,7 +73,7 @@ define([
             ],
             on:{
                 onItemClick: function(id){
-                    $$('my_pop').hide();
+                    $$('my_pop4').hide();
                     Actions.add(id);
                 }
             },
@@ -103,7 +108,7 @@ define([
                         paddingX: 10,
                         height: 36,
                         cols: [
-                            {view: "button", label: "添加", width: 70, popup:"my_pop"},
+                            {view: "button", label: "添加", width: 70, popup:"my_pop4"},
                             {view: "button", label: "删除", width: 70, click: Actions.delete},
                             {}
                         ]
@@ -130,6 +135,7 @@ define([
                                 tooltip: '编辑',
                                 width: 55
                             },
+                            {id: 'workUnit', header: "工作单位", width: 120},
                             {id: 'workType', header: "工作类型", width: 120},
                             {id: 'dateStart', header: "开始时间", width: 100},
                             {id: 'dateEnd', header: "结束时间", width: 100},

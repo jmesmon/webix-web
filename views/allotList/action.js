@@ -3,7 +3,7 @@ define([
     'views/common/columns'
 ], function (constant, columnsDef) {
     var getWinForm = function (title, formId, onSubmit) {
-        var win = getWin("添加", {
+        var win = getWin(title, {
             rows: [
                 {
                     view:"scrollview",
@@ -22,11 +22,11 @@ define([
                                     {view: "text", name: 'id', value:"", hidden: true},
                                     {view: "text", label: "犬名", name: 'dogName', value:"", width: 300},
                                     {view: "richselect", label: "品种", name: 'breed', value:"", width: 300, options: constant.breedType},
-                                    {view: "richselect", label: "毛型", name: 'hairType', value:"", width: 300, options: constant.hairType},
-                                    {view: "richselect", label: "毛色", name: 'dogColor', value:"", width: 300, options: constant.dogColor},
+                                    {view: "text", label: "芯片号", name: 'hairType', value:"", width: 300}, //毛型 => 芯片号
+                                    {view: "datepicker", label: "出生日期", name: 'dogColor', value:"", width: 300, format:"%Y-%m-%d", stringResult: true},
                                     {view: "richselect", label: "性别", name: 'sex', value:"", width: 300, options: ["公", "母"]},
-                                    {view: "text", label: "带犬人", name: "owner", value: '', width: 300, attributes:{ maxlength: 64 }},
-                                    {view: "text", label: "带犬单位", name: "workUnit", value: '', width: 300, attributes:{ maxlength: 64 }},
+                                    {view: "text", label: "所属单位", name: "workUnit", value: '', width: 300, attributes:{ maxlength: 64 }},
+                                    {view: "text", label: "训导员", name: "owner", value: '', width: 300, attributes:{ maxlength: 64 }},
                                     {view: "datepicker", label: "分配日期", name: "allotDate", width: 240, format:"%Y-%m-%d", stringResult: true},
                                     {view: "textarea", label: "其他备注", name: "remark", value: '', width: 500,  height: 100, attributes:{ maxlength: 200 },placeholder: '仅限200字'},
                                 ],
@@ -57,7 +57,9 @@ define([
             return {
                 doSearch: function () {
                     var datatable = $$(datatableId);
-                    datatable.config.customUrl.params = $$(formId).getValues();
+                    var params = $$(formId).getValues();
+                    removeEmptyProperty(params);
+                    datatable.config.customUrl.params = params;
                     datatable.reload();
                 },
                 add: function () {
@@ -83,10 +85,10 @@ define([
                     var win = getWinForm('修改', formId, function () {
                         var params = $$(formId).getValues();
                         console.log(params);
-                        doIPost('alot/list/add', params, function (data) {
+                        doIPost('alot/list/update', params, function (data) {
                             console.log(data);
                             if (data.success) {
-                                msgBox('操作成功，记录新增成功');
+                                msgBox('操作成功');
                                 $$(datatableId).reload();
                                 win.close();
                             } else {

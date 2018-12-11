@@ -42,7 +42,7 @@ define(function(){
 
             { id: "wormImmue.worm", value: "驱虫管理", icon: "bug", details: "" },
             { id: "wormImmue.immue", value: "免疫管理", icon: "eyedropper", details: ""},
-            { id: "breed.breedSum", value: "繁育数据", icon: "venus-mars", details: ""}
+            { id: "breed.breedSum", value: "繁育数据", permission: 'breed', icon: "venus-mars", details: ""}
         ]},
 
 
@@ -56,9 +56,9 @@ define(function(){
         ]},
 
         {id: "news", open: true, value:"宣传模块", data:[
-            { id: "news.publish2", value: "动态发布", permission:'news.publish', icon: "pencil", $css: "products", details:""},
-            { id: "news.list", value: "动态管理", permission: 'news.list', icon: "list", $css: "products", details:""},
-            { id: "news.showList", value: "新闻动态",  icon: "list", $css: "products", details:""},
+            { id: "news.publish2", value: "新闻通知发布", permission:'news.publish', icon: "pencil", $css: "products", details:""},
+            { id: "news.list", value: "新闻通知管理", permission: 'news.list', icon: "list", $css: "products", details:""},
+            { id: "news.showList", value: "新闻通知列表",  icon: "list", $css: "products", details:""},
         ]},
         {id: "reporter", open: true, value:"报表中心", data:[
             { id: "reporter.export", value: "报表导出", permission: 'org.config', icon: "list", $css: "products", details:""},
@@ -67,6 +67,7 @@ define(function(){
         {id: "sysConfig", open: true, value:"系统设置", data:[
             { id: "user.list", value: "人员管理", permission: 'org.user', icon: "list", $css: "products", details:""},
             { id: "system.orgConfig", value: "单位信息", permission: 'org.config', icon: "list", $css: "products", details:""},
+            { id: "system.orgList", value: "单位列表", permission: 'apply.allot.list', icon: "list", $css: "products", details:""},
         ]},
         {id: "user", open: true, value:"个人中心", anyone:true, data:[
             { id: "user.profile", value: "个人信息", permission: 'news.list', icon: "list", $css: "products", details:""},

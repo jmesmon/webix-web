@@ -139,8 +139,8 @@ define([
                                             //警犬技术初级工程师、警犬技术中级工程师、警犬技术高级工程师、正高级
                                             {id: '警犬技术初级工程师', value: '警犬技术初级工程师'},
                                             {id: '警犬技术中级工程师', value: '警犬技术中级工程师'},
-                                            {id: '警犬技术高级工程师', value: '警犬技术高级工程师'},
-                                            {id: '正高级', value: '正高级'},
+                                            {id: '警犬技术副高级工程师', value: '警犬技术副高级工程师'},
+                                            {id: '警犬技术正高级工程师', value: '警犬技术正高级工程师'}
                                         ]
                                     },
                                     {}
@@ -193,8 +193,7 @@ define([
                                             {id: '大专', value: '大专'},
                                             {id: '本科', value: '本科'},
                                             {id: '硕士研究生', value: '硕士研究生'},
-                                            {id: '博士研究生', value: '博士研究生'},
-                                            {id: '博士后', value: '博士后'},
+                                            {id: '博士研究生', value: '博士研究生'}
                                         ]
                                     },
                                     {view: "richselect", label: "学位：", width: 400, name: 'degree',
@@ -211,7 +210,7 @@ define([
                             },
                             {
                                 cols: [
-                                    {view: "richselect", label: "证书资格：", width: 400, name: 'certQuali',
+                                    {view: "text", label: "证书资格：", width: 400, name: 'certQuali',
                                         options: [
                                             //警犬训练一级、警犬训练二级、警犬训练三级、警犬训练四级
                                             {id: '警犬训练一级', value: '警犬训练一级'},

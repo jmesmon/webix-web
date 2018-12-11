@@ -27,11 +27,11 @@ var width = 400;
                                     {view: "text", label: "单位名称：", width: width, name: 'orgName', readonly: true},
                                     {view: "text", label: "单位负责人：", width: width, name: 'orgLeader'},
                                     {view: "text", label: "单位地址：", width: width, name: 'orgAddr'},
-                                    {view: "text", label: "单位电话：", width: width, name: 'orgConcat'},
+                                    {view: "text", label: "负责人电话：", width: width, name: 'orgConcat'},
                                     {view: "text", label: "分局民警总数：", width: width, name: 'empQty'},
                                     {
                                         cols: [
-                                            {view: "text", label: "犬舍：", width: width, name: 'dogHouseQty', width: 120, labelWidth: 55},
+                                            {view: "text", label: "犬舍数：", width: width, name: 'dogHouseQty', width: 130, labelWidth: 70},
                                             {view: "text", label: "培训数量：", width: width, name: 'trainedQty', width: 140, labelWidth: 80},
                                             {view: "text", label: "未培训数量：", width: width, name: 'untrainQty', width: 170, labelWidth: 100},
                                             {}

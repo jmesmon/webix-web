@@ -36,6 +36,10 @@ define([
                             cols: [
                                 {view: "text", label: "警犬名称", name: "dogNameLike", width: 200, labelWidth: 70, placeholder: '支持搜索'},
                                 {width: DEFAULT_PADDING},
+                                {view: "text", label: "芯片号", name: "hairType", width: 200, labelWidth: 70, placeholder: '支持搜索'},
+                                {width: DEFAULT_PADDING},
+                                {view: "text", label: "单位名称", name: "workUnit", width: 200, labelWidth: 70, placeholder: '支持搜索'},
+                                {width: DEFAULT_PADDING},
                                 {view: "button", label: "清空", type: "form", width: 70, paddingX: 10, click: function(){
                                     $$(formId).clear();
                                 }},
@@ -47,6 +51,60 @@ define([
                 ]
             }
         ]
+    };
+    var exportData = function(){
+        var win = {};
+        win = getWin("导出名单", {
+            rows: [{
+                height: 400,
+                view: "datatable",
+                id: 'for_export',
+                select: true,
+                columns: [
+                    {id: "$index", header: "NO.", width: 45},
+                    {id: "dogName", header: "警犬名称", width: 100, sort: "string"},
+                    {id: "breed", header: "品种", width: 90, sort: "string"},
+                    {id: "hairType", header: "芯片号", width: 80, sort: "string"},
+                    {id: "dogColor", header: "出生日期", width: 80, sort: "string"},
+                    {id: "sex", header: "性别", width: 60, sort: "string"},
+                    {id: "owner", header: "训导员", width: 100, sort: "string"},
+                    {id: "workUnit", header: "所属单位", width: 120, sort: "string"},
+                    {id: "allotDate", header: "分配日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
+                    {id: "remark", header: "备注", sort: "string", fillspace: 1}
+                ],
+                on: {
+                    onBeforeLoad: function () {
+                        this.showOverlay("Loading...");
+                    },
+                    onAfterLoad: function () {
+                        this.hideOverlay();
+                    }
+                },
+                tooltip:true,
+                minHeight: 80,
+                datafetch: 20,
+                customUrl: {
+                    url: webix.proxy('customProxy','/policeDog/services/alot/list/getList/1000000/1'),
+                    httpMethod: 'post',
+                    datatype: 'customJson',
+                    params: $$(datatableId).config.customUrl.params
+                }
+            },{width: 800},
+                {
+                    cols:[
+                        {},
+                        {width: 16},
+                        {view: "button", label: "下载Excel", width: 65, click: function(){
+                                var win = loading('正在生成');
+                                setTimeout(function(){
+                                    webix.toExcel($$('for_export'), {filename: '警犬列表_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
+                                    win.close();
+                                }, 10);
+                            }}
+                    ]
+                }]
+        },{width: 800, height: 500});
+        win.show();
     };
     var datatable = {
         type: "clean",
@@ -76,7 +134,8 @@ define([
                         cols: [
                             {view: "button", label: "新建", width: 70, click: Actions.add},
                             {view: "button", label: "删除", width: 70, click: Actions.delete},
-                            {}
+                            {},
+                            {view: "button", label: "导出数据", width: 80, click: exportData}
                         ]
                     },
                     {
@@ -103,11 +162,11 @@ define([
                             },
                             {id: "dogName", header: "警犬名称", width: 100, sort: "string"},
                             {id: "breed", header: "品种", width: 90, sort: "string"},
-                            {id: "hairType", header: "毛型", width: 80, sort: "string"},
-                            {id: "dogColor", header: "毛色", width: 80, sort: "string"},
+                            {id: "hairType", header: "芯片号", width: 100, sort: "string"},
+                            {id: "dogColor", header: "出生日期", width: 100, sort: "string", format: webix.Date.dateToStr("%Y-%m-%d")},
                             {id: "sex", header: "性别", width: 60, sort: "string"},
-                            {id: "owner", header: "带犬人", width: 100, sort: "string"},
-                            {id: "workUnit", header: "带犬单位", width: 120, sort: "string"},
+                            {id: "owner", header: "训导员", width: 100, sort: "string"},
+                            {id: "workUnit", header: "所属单位", width: 120, sort: "string"},
                             {id: "allotDate", header: "分配日期", width: 100, format: webix.Date.dateToStr("%Y-%m-%d")},
                             {id: "remark", header: "备注", sort: "string", fillspace: 1},
                         ],

@@ -363,6 +363,11 @@ define([
                                     baseInfo.breed = other_breed;
                                 }
                             }
+                            for(var k in baseInfo){
+                                if(baseInfo[k] == -1){
+                                    baseInfo[k] = '';
+                                }
+                            }
                             var load = doIPost('dogBaseInfo/addDogInfo', {
                                 baseInfo: baseInfo,
                                 trainData: trainData,

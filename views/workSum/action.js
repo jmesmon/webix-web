@@ -23,7 +23,7 @@ define([
                 {
                     cols: [
                         {view: "text", label: "安检面积", name: 'checkArea', value:""},
-                        {template: '千平米', borderless: 1}
+                        {template: '平米', borderless: 1}
                     ]
                 },
                 {view: "text", label: "安检车辆数", name: 'checkCarQty', value:""}
@@ -124,6 +124,9 @@ define([
                     var params = $$(formId).getValues();
                     removeEmptyProperty(params);
                     params.workUnit = USER_INFO.workUnit;
+                    if(params.workUnitFilter == -1){
+                        delete params.workUnitFilter;
+                    }
                     datatable.config.customUrl.params = params;
                     var workType = params.workType;
                     datatable.showColumnBatch(columnBatchMapping[workType]);

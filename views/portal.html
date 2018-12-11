@@ -188,7 +188,7 @@
                             <td width="60px"></td>
                             <td width="60px" onclick="onSpecialDataClick('刑侦总队')" style="cursor: pointer;color: #00F1FF">刑侦总队</td>
                             <td width="60px" onclick="onSpecialDataClick('公交总队')" style="cursor: pointer;color: #00F1FF">公交总队</td>
-                            <td width="60px" onclick="onSpecialDataClick('特警总队')" style="cursor: pointer;color: #00F1FF">特警总队</td>
+                            <td width="60px" onclick="onSpecialDataClick('反特总队')" style="cursor: pointer;color: #00F1FF">反特总队</td>
                             <td width="60px" onclick="onSpecialDataClick('天安门分局')" style="cursor: pointer;color: #00F1FF">天安门<br>分局</td>
                             <td width="60px" onclick="onSpecialDataClick('西站分局')" style="cursor: pointer;color: #00F1FF">西站分局</td>
                             <!--<td width="60px" onclick="onSpecialDataClick('开发局分局')" style="cursor: pointer;color: #00F1FF">开发局<br>分局</td>-->
@@ -1031,7 +1031,7 @@
         大兴区: { orgName: '大兴分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
         大兴区2: { orgName: '刑侦总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
         大兴区3: { orgName: '公交总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
-        大兴区4: { orgName: '特警总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
+        大兴区4: { orgName: '反特总队', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
         大兴区5: { orgName: '天安门分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
         大兴区6: { orgName: '西站分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
         大兴区7: { orgName: '开发局分局', policeman: 2059, dog: 48, pic: '/policeDog/resource/2017-10-07/1507378702645.JPG', desc: ''},
@@ -1051,7 +1051,7 @@
                 }
                 if(["警院", "机场", "警卫局", "振远", "消防", "开发局分局", "社会化犬防"].indexOf(org.orgName) != -1){
 
-                }else if(["刑侦总队", "公交总队", "特警总队", "天安门分局", "西站分局", "清河分局"].indexOf(org.orgName) != -1){
+                }else if(["刑侦总队", "公交总队", "反特总队", "天安门分局", "西站分局", "清河分局"].indexOf(org.orgName) != -1){
                     otherFj.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty, breederCount: org.policeCount || '0'} );
                     data[org.orgArea + '_' +i] = {
                         orgName: org.orgName,
@@ -1062,7 +1062,7 @@
                         data: org,
                         breederCount: org.policeCount || '0'
                     };
-                    if([ "天安门分局", "西站分局", "清河分局", "刑侦总队", "公交总队", "特警总队"].indexOf(org.orgName) != -1){
+                    if([ "天安门分局", "西站分局", "清河分局", "刑侦总队", "公交总队", "反特总队"].indexOf(org.orgName) != -1){
                         fjda.push( {fj: org.orgName, policeCount: org.empQty, dogCount: org.dogQty, per: per, workCount: org.workHours, newsCount: org.newQty} );
                     }
                 } else {

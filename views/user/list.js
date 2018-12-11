@@ -80,10 +80,12 @@ define([
                                 var form = $$('user_form');
                                 if(form.validate()){
                                     var url = 'user/add';
+                                    var data = form.getValues();
                                     if(item.id){
                                         url = 'user/update';
+                                    }else{
+                                        data.userRole='JingYuan';
                                     }
-                                    var data = form.getValues();
                                     if(!data.policeId){
                                         msgBox('请输入警号/登录名称');
                                         return ;
@@ -237,6 +239,86 @@ define([
         win.show();
     };
 
+    var exportData = function(){
+        var win = {};
+        win = getWin("导出名单", {
+            rows: [{
+                height: 400,
+                view: "datatable",
+                id: 'for_export',
+                select: true,
+                columns: [
+                    {id: "$index", header: "NO.", width: 45},
+                    {id: "policeId", header: "警号", width: 80, sort: "string"},
+                    {id: "policeName", header: "姓名", width: 80, sort: "string"},
+                    {id: "userRole", header: "系统角色", width: 100, sort: "string", template: function (item) {
+                            return {
+                                "JingYuan": "带犬民警",
+                                "JuZhang": "市局局长",
+                                "FJ_JuZhang": "分局局长",
+                                "JiuZhiDui": "九支队",
+                                "GuanLiYuan": "分局管理员",
+                                "FanZhiRenYuan": "繁殖人员",
+                                "PeiXunRenYuan": "培训人员",
+                                "SuperMan": "超级管理员"
+                            }[item.userRole] || '未配置';
+                        }},
+                    {id: "sex", header: "性别", width: 50, sort: "string"},
+                    {id: "national", header: "民族", width: 50, sort: "string"},
+                    {id: "idNun", header: "身份证号", width: 170, template: '#idNun#'},
+                    {id: "birthday", header: "出生日期", width: 95, sort: "string"},
+                    {id: "onFace", header: "政治面貌", width: 80, sort: "string"},
+                    {id: "education", header: "学历", width: 90, sort: "string"},
+                    {id: "degree", header: "学位", width: 80, sort: "string"},
+                    {id: "graduFrom", header: "毕业院校", width: 80, sort: "string"},
+                    {id: "major", header: "专业", width: 120, sort: "string"},
+                    {id: "contactInfo", header: "联系方式", width: 100, sort: "string"},
+                    {id: "workUnit", header: "工作单位", width: 120, sort: "string"},
+                    {id: "workType", header: "身份类别", width: 90, sort: "string"},
+                    {id: "dept", header: "部门", width: 90, sort: "string"},
+                    {id: "jobTitle", header: "职称", width: 90, sort: "string"},
+                    {id: "job", header: "职务", width: 90, sort: "string"},
+                    {id: "certQuali", header: "证书资格", width: 94, sort: "string"},
+                    {id: "certNum", header: "证书编号", width: 94, sort: "string"},
+                    {id: "rewardInfo", header: "立功授奖信息", width: 100, sort: "string"},
+                    // {id: "approveRole", header: "是否审批人", width: 80, sort: "string", template: function(item){ if(item.approveRole) return '是'; else return '' }},
+                    {id: "creationDate", header: "创建日期", width: 95, format: webix.Date.dateToStr("%Y-%m-%d")},
+                ],
+                on: {
+                    onBeforeLoad: function () {
+                        this.showOverlay("Loading...");
+                    },
+                    onAfterLoad: function () {
+                        this.hideOverlay();
+                    }
+                },
+                tooltip:true,
+                minHeight: 80,
+                datafetch: 20,
+                customUrl: {
+                    url: webix.proxy('customProxy','/policeDog/services/user/getList/1000000/1'),
+                    httpMethod: 'post',
+                    datatype: 'customJson',
+                    params: $$(datatableId).config.customUrl.params
+                }
+            },{width: 800},
+                {
+                    cols:[
+                        {},
+                        {width: 16},
+                        {view: "button", label: "下载Excel", width: 65, click: function(){
+                                var win = loading('正在生成');
+                                setTimeout(function(){
+                                    webix.toExcel($$('for_export'), {filename: '警犬列表_' + webix.Date.dateToStr("%Y%m%d%H%i%s")(new Date()) });
+                                    win.close();
+                                }, 10);
+                            }}
+                    ]
+                }]
+        },{width: 800, height: 500});
+        win.show();
+    };
+
     var gridPager = {
         rows: [
             {
@@ -251,6 +333,7 @@ define([
                     {view: "button", label: "重置密码", width: 70, click: resetPwd},
                     {view: "button", label: "分配权限", width: 80, click: changeRole},
                     {},
+                    {view: "button", label: "导出数据", width: 80, click: exportData},
                 ]
             },
             {
