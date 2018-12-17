@@ -356,7 +356,7 @@
                                         <!--<td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(3)" id="breed_3">毛型</td>-->
                                         <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(4)" id="breed_4">专业</td>
                                         <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(6)" id="breed_6">年龄</td>
-                                        <td style="width: 50px;font-size:16px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">淘汰</td>
+                                        <td style="width: 83px;font-size:16px;cursor: pointer" onclick="workChangeBreed(5)" id="breed_5">警犬状态</td>
                                     </tr>
                                 </table>
                             </td>
@@ -380,7 +380,8 @@
     function showNews(id){
         sessionStorage.removeItem("newId");
         sessionStorage.setItem("newId", id);
-        parent.window.open('../#!/news.detail:id=' + id, '_blank');
+        // parent.window.open('../#!/news.detail:id=' + id, '_blank');
+        parent.window.open('../views/read.html?id=' + id, '_blank');
     }
     (function(){
         var w = $(window).width();
@@ -961,7 +962,7 @@
                     renderDogByType('pro', '专业');
                     break;
                 case 5:
-                    renderDogByType('work_stage', '淘汰');
+                    renderDogByType('work_stage', '警犬状态');
                     break;
                 case 6:
                     renderDogByType('age', '年龄');

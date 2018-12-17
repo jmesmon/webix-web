@@ -263,8 +263,8 @@ define([
                                 "SuperMan": "超级管理员"
                             }[item.userRole] || '未配置';
                         }},
-                    {id: "sex", header: "性别", width: 50, sort: "string"},
-                    {id: "national", header: "民族", width: 50, sort: "string"},
+                    {id: "sex", header: "性别", width: 60, sort: "string"},
+                    {id: "national", header: "民族", width: 60, sort: "string"},
                     {id: "idNun", header: "身份证号", width: 170, template: '#idNun#'},
                     {id: "birthday", header: "出生日期", width: 95, sort: "string"},
                     {id: "onFace", header: "政治面貌", width: 80, sort: "string"},
@@ -371,11 +371,11 @@ define([
                             "SuperMan": "超级管理员"
                         }[item.userRole] || '未配置';
                     }},
-                    {id: "sex", header: "性别", width: 50, sort: "string"},
-                    {id: "national", header: "民族", width: 50, sort: "string"},
+                    {id: "sex", header: "性别", width: 60, sort: "string"},
+                    {id: "national", header: "民族", width: 60, sort: "string"},
                     {id: "idNun", header: "身份证号", width: 170, template: '#idNun#'},
                     {id: "birthday", header: "出生日期", width: 95, sort: "string"},
-                    {id: "onFace", header: "政治面貌", width: 80, sort: "string"},
+                    {id: "onFace", header: "政治面貌", width: 90, sort: "string"},
                     {id: "education", header: "学历", width: 90, sort: "string"},
                     {id: "degree", header: "学位", width: 80, sort: "string"},
                     {id: "graduFrom", header: "毕业院校", width: 80, sort: "string"},

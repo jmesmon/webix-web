@@ -72,9 +72,7 @@ define(function(){
         {id: "user", open: true, value:"个人中心", anyone:true, data:[
             { id: "user.profile", value: "个人信息", permission: 'news.list', icon: "list", $css: "products", details:""},
             { id: "user.password", value: "修改密码", permission: 'news.list', icon: "list", $css: "products", details:""},
-        ]},
-
-        { id: "news.detail", value: "&nbsp;&nbsp;&nbsp;", icon: "", details: "", hidden: true},
+        ]}
     ];
 
 	var data = [];

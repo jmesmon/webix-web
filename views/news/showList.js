@@ -36,7 +36,8 @@ define([
                         showDetail: function (e, obj) {
                             var item = $$(tableId).getItem(obj.row);
                             sessionStorage.setItem("newId", item.id);
-                            window.open('#!/app/news.detail:id=' + item.id, '_self');
+                            // window.open('#!/app/news.detail:id=' + item.id, '_self');
+                            window.open('views/read.html?id=' + item.id, '_blank');
                         }
                     },
                     tooltip: true,

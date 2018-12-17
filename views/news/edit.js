@@ -30,7 +30,7 @@ define([], function () {
                                     {id: '通知公告', value: '通知公告'},
                                 ]
                             },
-                            {view: "datepicker", label: "发布日期：", name: "date", id: 'ndate', labelWidth: 70, width: 180, value: new Date(), labelAlign: 'right', format:"%Y-%m-%d", stringResult: true},
+                            {view: "datepicker", label: "发布日期：", name: "date", id: 'ndate', labelWidth: 90, width: 180, value: new Date(), labelAlign: 'right', format:"%Y-%m-%d", stringResult: true},
                             {view: 'text', label: '工作单位：', id: 'nworkUnit', value: USER_INFO.workUnit, readonly: true, labelAlign: 'right',labelAlign: 'right'},
                             {},
                         ]
@@ -83,7 +83,7 @@ define([], function () {
                                     if(data.success){
                                         msgBox("保存成功");
                                         win.close();
-                                        window.open('#!/app/news.list', '_self');
+                                        window.open('#!/app/news.showList', '_self');
                                     }else{
                                         msgBox("保存失败")
                                     }
@@ -95,8 +95,8 @@ define([], function () {
                 ]
             }, {width: document.body.offsetWidth, height: document.body.offsetHeight-55, hideHeader: false, hideCloseBtn: true});
             win.attachEvent("onDestruct", function(){
-                win.close();
-                window.open('#!/app/news.list', '_self');
+                // win.close();
+                // window.open('#!/app/news.list', '_self');
             });
             win.show();
             setTimeout(function(){
